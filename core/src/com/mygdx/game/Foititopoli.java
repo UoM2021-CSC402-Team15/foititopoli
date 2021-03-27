@@ -1,16 +1,17 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mygdx.game.Screens.MainMenuScreen;
 
 public class Foititopoli extends Game {
 
 	static public Skin gameSkin;
+
+	private GameInstance gameInstance;
+
+	public Boolean backgroundMusicPlaying = false;
 
 	public void create() {
 		gameSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
@@ -22,5 +23,13 @@ public class Foititopoli extends Game {
 	}
 
 	public void dispose() {
+	}
+
+	public GameInstance getGameInstance() {
+		return gameInstance;
+	}
+
+	public void setGameInstance(GameInstance gameInstance) {
+		this.gameInstance = gameInstance;
 	}
 }

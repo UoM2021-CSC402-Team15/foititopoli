@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Foititopoli;
 
 public class MainMenuScreen implements Screen {
 
@@ -45,7 +46,7 @@ public class MainMenuScreen implements Screen {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameSetupScreen(game));
             }
         });
 
@@ -80,6 +81,7 @@ public class MainMenuScreen implements Screen {
         introAmbience.setVolume(0.3f);
         introAmbience.setLooping(true);
 
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
 
@@ -109,7 +111,11 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
-        introAmbience.play();
+        if (!game.backgroundMusicPlaying) {
+            introAmbience.play();
+            game.backgroundMusicPlaying = true;
+        }
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -130,6 +136,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-        introAmbience.stop();
+        //introAmbience.stop();
     }
 }
