@@ -16,15 +16,15 @@ com/mygdx/game/Screens/LoadGameScreen.java
  com.mygdx.game.Screens.LoadGameScreen$SavedGameItem
  com.mygdx.game.Screens.LoadGameScreen$SavedGameItem$1
  com.mygdx.game.Screens.LoadGameScreen$SavedGameItem$2
-com/mygdx/game/Screens/GameScreen.java
- com.mygdx.game.Screens.GameScreen
- com.mygdx.game.Screens.GameScreen$1
 com/mygdx/game/Screens/GameSetupScreen.java
  com.mygdx.game.Screens.GameSetupScreen
  com.mygdx.game.Screens.GameSetupScreen$1
  com.mygdx.game.Screens.GameSetupScreen$2
  com.mygdx.game.Screens.GameSetupScreen$3
  com.mygdx.game.Screens.GameSetupScreen$4
+com/mygdx/game/Screens/GameScreen.java
+ com.mygdx.game.Screens.GameScreen
+ com.mygdx.game.Screens.GameScreen$1
 com/mygdx/game/Screens/MainMenuScreen.java
  com.mygdx.game.Screens.MainMenuScreen
  com.mygdx.game.Screens.MainMenuScreen$1
