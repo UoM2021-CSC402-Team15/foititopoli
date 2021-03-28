@@ -25,6 +25,7 @@ public class GameScreen implements Screen {
     Texture background;
     Batch batch;
     //me lene panteli
+    // geia panteli
 
     OrthographicCamera camera;
 
