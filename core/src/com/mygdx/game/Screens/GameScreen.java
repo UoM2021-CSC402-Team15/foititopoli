@@ -27,6 +27,7 @@ public class GameScreen implements Screen {
     //me lene panteli
     // geia panteli
     // try again
+    // teleia
 
     OrthographicCamera camera;
 
