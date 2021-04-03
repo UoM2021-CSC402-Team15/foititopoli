@@ -65,7 +65,7 @@ public class GameSetupScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 GameInstance gameInstance = new GameInstance( (int)playersSlider.getValue(), currencySlider.getValue());
                 game.setGameInstance(gameInstance);
-                game.setScreen(new PlayerCreateScreen(game));
+                game.setScreen(new PlayerCreateScreen(game, game.getGameInstance().getAvailablePawns()));
             }
         });
 

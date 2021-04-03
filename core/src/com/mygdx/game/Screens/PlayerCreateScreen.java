@@ -9,7 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Foititopoli;
+import com.mygdx.game.GameInstance;
 import com.mygdx.game.Pawn;
+
+import java.util.ArrayList;
 
 
 public class PlayerCreateScreen implements Screen {
@@ -17,44 +20,56 @@ public class PlayerCreateScreen implements Screen {
     Foititopoli game;
     Stage stage;
 
-    public PlayerCreateScreen(final Foititopoli game) {
+    public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns) {
         this.game = game;
         this.stage = new Stage(new ScreenViewport());
-
-        final boolean isLastPlayer = !game.getGameInstance().nextPlayerToSetupExists();
 
         int currentPlayerNumber = game.getGameInstance().getPlayers().size()+1;
         Label title = new Label("Create Player " + currentPlayerNumber, Foititopoli.gameSkin);
 
         final TextField nameText = new TextField("Enter a name", Foititopoli.gameSkin);
 
-        String[] availablePawnsStrings = game.getGameInstance().getAvailablePawnStrings();
+        // Pawn Selector
+        String[] strings = new String[availablePawns.size()];
+        for (int i = 0; i < availablePawns.size(); i++) {
+            strings[i] = availablePawns.get(i).toString();
+        }
         final SelectBox pawnSelect = new SelectBox(Foititopoli.gameSkin);
-        pawnSelect.setItems(availablePawnsStrings);
+        pawnSelect.setItems(strings);
 
-        TextButton backButton = new TextButton("Back", Foititopoli.gameSkin);
-        backButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new MainMenuScreen(game));
-            }
-        });
-
+        // Next Player Button / Start Game Button
         TextButton NextPlayerOrStartGameButton = new TextButton("Next Player", Foititopoli.gameSkin);
+        final boolean isLastPlayer = game.getGameInstance().getPlayers().size() == ( game.getGameInstance().getNumberOfPlayers()-1 );
         if (isLastPlayer) {
             NextPlayerOrStartGameButton.setText("Start Game");
         }
         NextPlayerOrStartGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Pawn pawn = game.getGameInstance().getPawnFromString((String) pawnSelect.getSelected());
-                game.getGameInstance().setupPlayer(nameText.getText(), pawn );
-                game.getGameInstance().removeFromAvailablePawns(pawn);
+                // Take player selected pawn
+                Pawn selectedPawn = null;
+                for (Pawn pawn: availablePawns) {
+                    if (pawn.toString().equals(pawnSelect.getSelected())) {
+                        selectedPawn = pawn;
+                    }
+                }
+                // Setup player
+                game.getGameInstance().setupPlayer(nameText.getText(), selectedPawn);
+                // Remove pawn from available pawns
+                availablePawns.remove(selectedPawn);
                 if (isLastPlayer) {
                     game.setScreen(new GameScreen(game));
                 } else {
-                    game.setScreen(new PlayerCreateScreen(game));
+                    game.setScreen(new PlayerCreateScreen(game, availablePawns));
                 }
+            }
+        });
+
+        TextButton backButton = new TextButton("Back", Foititopoli.gameSkin);
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MainMenuScreen(game));
             }
         });
 
