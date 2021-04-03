@@ -3,5 +3,5 @@
 /workspace.xml
 /.idea/
 /.gradle/
-/gradle/
 /desktop/build/
+/core/build/

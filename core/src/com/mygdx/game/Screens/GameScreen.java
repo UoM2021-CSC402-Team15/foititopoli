@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Foititopoli;
+import com.mygdx.game.Pawn;
 
 
 public class GameScreen implements Screen {
@@ -24,12 +26,10 @@ public class GameScreen implements Screen {
 
     Texture background;
     Batch batch;
-    //me lene panteli
-    // geia panteli
-    // try again
-    // teleia
 
     OrthographicCamera camera;
+
+    private Pawn pawn;
 
     public GameScreen(final Foititopoli game) {
         this.game = game;
@@ -41,13 +41,13 @@ public class GameScreen implements Screen {
 
         Label title = new Label("Game Screen", Foititopoli.gameSkin);
         title.setAlignment(Align.center);
-        title.setY(Gdx.graphics.getHeight()*2/3);
+        title.setY(Gdx.graphics.getHeight()*4/5);
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
         TextButton backButton = new TextButton("Back", Foititopoli.gameSkin);
         backButton.setWidth(Gdx.graphics.getWidth()/2);
-        backButton.setPosition(Gdx.graphics.getWidth()/2-backButton.getWidth()/2,Gdx.graphics.getHeight()/4-backButton.getHeight()/2);
+        backButton.setPosition(Gdx.graphics.getWidth()/2-backButton.getWidth()/2,20);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -59,6 +59,8 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
 
+        pawn = game.getGameInstance().getPlayers().get(0).getPawn();
+
     }
 
     @Override
@@ -68,11 +70,20 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(background,0,0,1280,720);
+        batch.draw(background,240,100,800,600);
+        batch.draw(pawn,pawn.x, pawn.y,80,60);
         batch.end();
 
         stage.act();
         stage.draw();
+
+        if (Gdx.input.isTouched()) {
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touchPos);
+            pawn.setTarget(touchPos.x,touchPos.y);
+        }
+        pawn.update();
 
     }
 

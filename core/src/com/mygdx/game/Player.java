@@ -7,4 +7,8 @@ public class Player {
     public Player(String name, Pawn selectedPawn) {
         this.pawn = selectedPawn;
     }
+
+    public Pawn getPawn() {
+        return pawn;
+    }
 }
