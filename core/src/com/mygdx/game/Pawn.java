@@ -12,6 +12,8 @@ public class Pawn extends Texture {
     private float targetY;
     private float moveX;
     private float moveY;
+    private final int moves = 20;
+    private int currentMove = 0;
 
 
     public Pawn(String name) {
@@ -25,26 +27,27 @@ public class Pawn extends Texture {
     }
 
     public void setTarget(float targetX, float targetY) {
-        this.targetX = targetX;
-        this.targetY = targetY;
-        this.moveX = (targetX - this.x)/20;
-        this.moveY = (targetY - this.y)/20;
+        this.targetX = targetX-40;
+        this.targetY = targetY-30;
+        this.moveX = (targetX - this.x)/moves;
+        this.moveY = (targetY - this.y)/moves;
+        currentMove = 0;
     }
 
     public void update() {
-//        if ( isCloseToTarget(3*moveX) ) {
-//            setTarget(targetX,targetY);
-//        }
-        if ( isCloseToTarget(moveX) ) {
+        if ( currentMove == moves ) {
             moveX = 0;
             moveY = 0;
         }
+
+        if ( currentMove >= moves -2 ) {
+            moveX = moveX/1.5f;
+            moveY = moveY/1.5f;
+        }
+
         this.x+=moveX;
         this.y+=moveY;
-    }
-
-    private Boolean isCloseToTarget(float distance) {
-        return Math.abs(this.targetX - this.x) < Math.abs(distance);
+        currentMove++;
     }
 
 }
