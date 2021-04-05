@@ -57,6 +57,17 @@ public class MainMenuScreen implements Screen {
                 game.setScreen(new LoadGameScreen(game));
             }
         });
+        TextButton fullscreenButton = new TextButton("Toggle Fullscreen", Foititopoli.gameSkin);
+        fullscreenButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (Gdx.graphics.isFullscreen()) {
+                    Gdx.graphics.setWindowedMode(1280,720);
+                } else {
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                }
+            }
+        });
 
         TextButton exitButton = new TextButton("Exit to Desktop", Foititopoli.gameSkin);
         exitButton.addListener(new ChangeListener() {
@@ -72,6 +83,7 @@ public class MainMenuScreen implements Screen {
         table.columnDefaults(0).width(500).height(64).fill();
         table.add(playButton).row();
         table.add(loadGamesButton).row();
+        table.add(fullscreenButton).row();
         table.add(exitButton);
 
 
