@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -14,9 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Pawn;
+
+import java.util.ArrayList;
 
 
 public class GameScreen implements Screen {
@@ -29,13 +32,12 @@ public class GameScreen implements Screen {
 
     OrthographicCamera camera;
 
-    private Pawn pawn;
+    private ArrayList<Pawn> pawns = new ArrayList<>();
 
     public GameScreen(final Foititopoli game) {
         this.game = game;
-        this.stage = new Stage(new ScreenViewport());
-
         batch = new SpriteBatch();
+        this.stage = new Stage(new ScreenViewport(), batch);
 
         background = new Texture(Gdx.files.internal("board.png"));
 
@@ -59,7 +61,12 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
 
-        pawn = game.getGameInstance().getPlayers().get(0).getPawn();
+        for (int i = 0; i < game.getGameInstance().getPlayers().size(); i++) {
+            Pawn pawn = game.getGameInstance().getPlayers().get(i).getPawn();
+            pawns.add(pawn);
+            pawn.moveTo((i*100)+50, pawn.getY());
+            stage.addActor(pawn);
+        }
 
     }
 
@@ -71,19 +78,14 @@ public class GameScreen implements Screen {
 
         batch.begin();
         batch.draw(background,240,100,800,600);
-        batch.draw(pawn,pawn.x, pawn.y,80,60);
         batch.end();
 
         stage.act();
         stage.draw();
 
         if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            pawn.setTarget(touchPos.x,touchPos.y);
+            pawns.get(1).moveTo(Gdx.input.getX(),Gdx.input.getY(),1);
         }
-        pawn.update();
 
     }
 
@@ -115,6 +117,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 }

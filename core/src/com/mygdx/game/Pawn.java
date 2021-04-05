@@ -2,23 +2,33 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-public class Pawn extends Texture {
+public class Pawn extends Actor {
+
+    private Sprite sprite;
 
     private String name;
-    public float x = 20;
-    public float y = 20;
-    private float targetX;
-    private float targetY;
-    private float moveX;
-    private float moveY;
-    private final int moves = 20;
-    private int currentMove = 0;
-
 
     public Pawn(String name) {
-        super(Gdx.files.internal("pawn.png"));
+        sprite = new Sprite( new Texture(Gdx.files.internal("pawn.png")));
         this.name = name;
+        setPosition(50,50);
+        setSize(60,40);
+    }
+
+    public void moveTo(float X, float Y) {
+        float speed = 300;  //pixels per second
+        float distance = (float) Math.sqrt( Math.pow(X-getX(),2) + Math.pow(Y-getY(),2) );
+        System.out.println(distance);
+        moveTo(X,Y, distance/speed);
+    }
+
+    public void moveTo(float X, float Y, float duration) {
+        addAction(Actions.moveTo(X - getWidth()/2, Gdx.graphics.getHeight()-Y-getHeight()/2,duration ));
     }
 
     @Override
@@ -26,28 +36,25 @@ public class Pawn extends Texture {
         return name;
     }
 
-    public void setTarget(float targetX, float targetY) {
-        this.targetX = targetX-40;
-        this.targetY = targetY-30;
-        this.moveX = (targetX - this.x)/moves;
-        this.moveY = (targetY - this.y)/moves;
-        currentMove = 0;
+    @Override
+    public void act(float delta) {
+        super.act(delta);
     }
 
-    public void update() {
-        if ( currentMove == moves ) {
-            moveX = 0;
-            moveY = 0;
-        }
-
-        if ( currentMove >= moves -2 ) {
-            moveX = moveX/1.5f;
-            moveY = moveY/1.5f;
-        }
-
-        this.x+=moveX;
-        this.y+=moveY;
-        currentMove++;
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        sprite.draw(batch);
     }
 
+    @Override
+    protected void positionChanged() {
+        super.positionChanged();
+        sprite.setPosition(getX(),getY());
+    }
+
+    @Override
+    protected void sizeChanged() {
+        super.sizeChanged();
+        sprite.setSize(getWidth(),getHeight());
+    }
 }
