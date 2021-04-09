@@ -5,3 +5,5 @@
 /.gradle/
 /desktop/build/
 /core/build/
+/local.properties
+/android/libs
