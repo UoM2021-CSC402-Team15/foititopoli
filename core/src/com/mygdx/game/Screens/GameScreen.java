@@ -2,10 +2,14 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,14 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Board;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Pawn;
+import com.mygdx.game.Square;
 
 import java.util.ArrayList;
-
 
 public class GameScreen implements Screen {
 
@@ -31,6 +34,8 @@ public class GameScreen implements Screen {
     Batch batch;
 
     OrthographicCamera camera;
+
+    private BitmapFont font;
 
     private ArrayList<Pawn> pawns = new ArrayList<>();
 
@@ -61,6 +66,11 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
 
+        Board board = new Board(600,11);
+        board.setPosition(200,100);
+        stage.addActor(board);
+        //stage.setDebugAll(true);
+
         for (int i = 0; i < game.getGameInstance().getPlayers().size(); i++) {
             Pawn pawn = game.getGameInstance().getPlayers().get(i).getPawn();
             pawns.add(pawn);
@@ -68,6 +78,7 @@ public class GameScreen implements Screen {
             stage.addActor(pawn);
         }
 
+        font = new BitmapFont();
     }
 
     @Override
@@ -77,13 +88,15 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(background,240,100,800,600);
+        //batch.draw(background,240,100,800,600);
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
         batch.end();
 
         stage.act();
         stage.draw();
 
         if (Gdx.input.isTouched()) {
+            //System.out.println("X: " +Gdx.input.getX() + " | Y: " +Gdx.input.getY());
             pawns.get(1).moveTo(Gdx.input.getX(),Gdx.input.getY(),1);
         }
 

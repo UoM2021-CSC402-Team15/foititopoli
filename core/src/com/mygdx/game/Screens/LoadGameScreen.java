@@ -18,10 +18,7 @@ public class LoadGameScreen implements Screen {
 
     private class SavedGameItem extends Table {
 
-        Table table;
-
         public SavedGameItem(String name) {
-            this.table = new Table();
 
             TextButton loadButton = new TextButton("Load", Foititopoli.gameSkin);
             loadButton.addListener(new ChangeListener() {
