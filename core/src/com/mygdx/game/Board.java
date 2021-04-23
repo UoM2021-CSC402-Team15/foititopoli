@@ -3,9 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class Board extends Group {
                 sequence.addAction(pawn.getMoveLeftToSquare(destination));
                 pawn.setCurrentSquare(destination);
                 break;
-            } else if ( currentI+1==destination.i && destination.j ==0 ) { // If target is next corner
+            } else if ( currentI+1==destination.i && destination.j ==0 ) { // If target is next corner (next corner is considered other side)
                 sequence.addAction(pawn.getMoveLeftToSquare(destination));
                 RotateByAction rotate = new RotateByAction();
                 rotate.setAmount(-90);

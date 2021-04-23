@@ -115,7 +115,7 @@ public class GameScreen implements Screen {
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            SequenceAction sequence = board.movePawn(pawns.get(0), board.squares[1][8], new SequenceAction());
+            SequenceAction sequence = board.movePawn(pawns.get(0), board.squares[3][0], new SequenceAction());
             pawns.get(0).addAction(sequence);
         }
 
