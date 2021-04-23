@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
@@ -12,14 +11,12 @@ public class Board extends Group {
 
     private final float tileHeightRatio = 1.5f;
     private final int tilesPerSide = 11;
-    private float width;
 
     public Square[][] squares;
 
-    public Board(float width) {
-        this.width = width;
-        setSize(width, width);
-        float basicTileWidth = width/(tilesPerSide-2 + (2 * tileHeightRatio) );
+    public Board(float size) {
+        setSize(size, size);
+        float basicTileWidth = size/(tilesPerSide-2 + (2 * tileHeightRatio) );
         drawBoard(basicTileWidth);
 
     }
@@ -84,10 +81,10 @@ public class Board extends Group {
             }
         }
 
-        debug();
 
         drawSide(0, Arrays.asList(squares[0]), basicTileWidth, getWidth()-basicTileHeight,0);
         drawSide(-90, Arrays.asList(squares[1]), basicTileWidth, 0, basicTileHeight);
+        //noinspection SuspiciousNameCombination
         drawSide(-180, Arrays.asList(squares[2]), basicTileWidth, basicTileHeight, getHeight());
         drawSide(-270, Arrays.asList(squares[3]), basicTileWidth, getWidth(), getHeight()-basicTileHeight);
     }
@@ -95,6 +92,7 @@ public class Board extends Group {
     private void drawSide(int rotation, List<Square> squares, float basicTileWidth, float startX, float startY) {
         float basicTileHeight = basicTileWidth * tileHeightRatio;
 
+        //noinspection SuspiciousNameCombination
         squares.get(0).setSize(basicTileHeight, basicTileHeight);
         squares.get(0).setRotation(rotation);
         squares.get(0).setPosition(startX,startY);
@@ -108,8 +106,4 @@ public class Board extends Group {
         }
     }
 
-    @Override
-    protected void sizeChanged() {
-        super.sizeChanged();
-    }
 }

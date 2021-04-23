@@ -16,10 +16,9 @@ import com.badlogic.gdx.utils.Align;
 
 public class Square extends Group {
 
-    private Sprite sprite;
+    private final Sprite sprite;
 
-    private String name;
-    private Table table;
+    private final String name;
 
     public int i;
     public int j;
@@ -32,7 +31,7 @@ public class Square extends Group {
         this.name = name;
         setOrigin(0,0);
         sprite.setOrigin(0, 0);
-        table = new Table(Foititopoli.gameSkin);
+        Table table = new Table(Foititopoli.gameSkin);
         table.setFillParent(true);
         table.debug();
 

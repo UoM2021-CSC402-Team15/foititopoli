@@ -18,10 +18,6 @@ public class Foititopoli extends Game {
 		this.setScreen(new MainMenuScreen(this));
 	}
 
-	public void render() {
-		super.render(); //important!
-	}
-
 	public void dispose() {
 	}
 

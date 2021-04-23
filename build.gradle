@@ -9,7 +9,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.4'
+        classpath 'com.android.tools.build:gradle:4.0.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
         
 
@@ -21,7 +21,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "Monopoly"
+        appName = "Foititopoly"
         gdxVersion = '1.9.14'
         roboVMVersion = '2.3.12'
         box2DLightsVersion = '1.5'

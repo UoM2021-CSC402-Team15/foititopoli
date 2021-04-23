@@ -13,11 +13,9 @@ import com.mygdx.game.GameInstance;
 
 public class GameSetupScreen implements Screen {
 
-    Foititopoli game;
-    Stage stage;
+    private final Stage stage;
 
     public GameSetupScreen(final Foititopoli game) {
-        this.game = game;
         this.stage = new Stage(new ScreenViewport());
 
         Label title = new Label("Create Game", Foititopoli.gameSkin);
@@ -65,7 +63,7 @@ public class GameSetupScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 GameInstance gameInstance = new GameInstance( (int)playersSlider.getValue(), currencySlider.getValue());
                 game.setGameInstance(gameInstance);
-                game.setScreen(new PlayerCreateScreen(game, game.getGameInstance().getAvailablePawns()));
+                game.setScreen(new PlayerCreateScreen(game, GameInstance.getAvailablePawns()));
             }
         });
 

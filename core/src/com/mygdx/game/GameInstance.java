@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class GameInstance {
 
-    private int numberOfPlayers;
-    private float currency;
-    private ArrayList<Player> players = new ArrayList<>();
+    private final int numberOfPlayers;
+    private final float currency;
+    private final ArrayList<Player> players = new ArrayList<>();
 
     public GameInstance(int numberOfPlayers, float currency) {
         this.numberOfPlayers = numberOfPlayers;
@@ -37,5 +37,9 @@ public class GameInstance {
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
+    }
+
+    public float getCurrency() {
+        return currency;
     }
 }

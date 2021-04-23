@@ -13,8 +13,8 @@ import com.mygdx.game.Foititopoli;
 
 public class LoadGameScreen implements Screen {
 
-    private Stage stage;
-    private Foititopoli game;
+    private final Stage stage;
+    private final Foititopoli game;
 
     private class SavedGameItem extends Table {
 
@@ -57,12 +57,12 @@ public class LoadGameScreen implements Screen {
 
         Label title = new Label("Load Game Screen", Foititopoli.gameSkin);
         title.setAlignment(Align.center);
-        title.setY(Gdx.graphics.getHeight() * 2 / 3);
+        title.setY(Gdx.graphics.getHeight() * 2 / 3f);
         title.setWidth(Gdx.graphics.getWidth());
 
         TextButton backButton = new TextButton("Back", Foititopoli.gameSkin);
-        backButton.setWidth(Gdx.graphics.getWidth() / 2);
-        backButton.setPosition(Gdx.graphics.getWidth() / 2 - backButton.getWidth() / 2, Gdx.graphics.getHeight() / 4 - backButton.getHeight() / 2);
+        backButton.setWidth(Gdx.graphics.getWidth() / 2f);
+        backButton.setPosition(Gdx.graphics.getWidth() / 2f - backButton.getWidth() / 2, Gdx.graphics.getHeight() / 4f - backButton.getHeight() / 2);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

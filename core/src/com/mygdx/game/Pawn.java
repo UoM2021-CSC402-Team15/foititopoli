@@ -4,16 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 public class Pawn extends Actor {
 
-    private Sprite sprite;
+    private final Sprite sprite;
 
-    private String name;
+    private final String name;
 
     private Square currentSquare;
 
@@ -43,13 +42,9 @@ public class Pawn extends Actor {
         float finalX = square.getX()-getWidth()/2;
         float finalY = square.getY()-getHeight()/2;
 
-        float speed = 300;  //pixels per second
-
-        float distance = (float) Math.sqrt(Math.pow(finalX - getX(), 2) + Math.pow(finalY - getY(), 2));
-
         MoveToAction action = new MoveToAction();
         action.setPosition(finalX, finalY);
-        action.setDuration(2);
+        action.setDuration(1);
 
         return action;
     }

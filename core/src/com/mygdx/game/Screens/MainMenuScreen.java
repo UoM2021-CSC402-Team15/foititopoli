@@ -20,16 +20,14 @@ public class MainMenuScreen implements Screen {
 
     final Foititopoli game;
 
-    OrthographicCamera camera;
+    private final OrthographicCamera camera;
 
-    Texture background;
-    Music introAmbience;
+    private final Texture background;
+    private final Music introAmbience;
 
-    Stage stage;
+    private final Stage stage;
 
-    Table table;
-
-    Batch batch;
+    private final Batch batch;
 
     public MainMenuScreen(final Foititopoli game) {
         this.game = game;
@@ -37,7 +35,7 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
 
-        table = new Table();
+        Table table = new Table();
         table.setFillParent(true);
 
         background = new Texture(Gdx.files.internal("background2.jpg"));

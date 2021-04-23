@@ -2,13 +2,19 @@ package com.mygdx.game;
 
 public class Player {
 
-    Pawn pawn;
+    private final String name;
+    private final Pawn pawn;
 
     public Player(String name, Pawn selectedPawn) {
+        this.name = name;
         this.pawn = selectedPawn;
     }
 
     public Pawn getPawn() {
         return pawn;
+    }
+
+    public String getName() {
+        return name;
     }
 }

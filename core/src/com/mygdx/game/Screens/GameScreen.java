@@ -3,15 +3,10 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,48 +21,42 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Board;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Pawn;
-import com.mygdx.game.Square;
 import com.mygdx.game.Windows.PauseWindow;
 
 import java.util.ArrayList;
 
 public class GameScreen implements Screen {
 
-    private Stage stage;
-    private Foititopoli game;
+    private final Stage stage;
 
-    Texture background;
-    Batch batch;
+    private final Batch batch;
 
-    OrthographicCamera camera;
+    private final OrthographicCamera camera;
 
-    private BitmapFont font;
+    private final BitmapFont font;
 
-    PauseWindow pauseWindow;
+    private final PauseWindow pauseWindow;
 
-    Board board;
+    private final Board board;
 
-    private ArrayList<Pawn> pawns = new ArrayList<>();
+    private final ArrayList<Pawn> pawns = new ArrayList<>();
 
     public GameScreen(final Foititopoli game) {
-        this.game = game;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         Viewport viewport = new StretchViewport(1280,720, camera);
         this.stage = new Stage(viewport, batch);
 
-        background = new Texture(Gdx.files.internal("board.png"));
-
         Label title = new Label("Game Screen", Foititopoli.gameSkin);
         title.setAlignment(Align.center);
-        title.setY(Gdx.graphics.getHeight()*4/5);
+        title.setY(Gdx.graphics.getHeight()*4/5f);
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
         TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
-        pauseButton.setWidth(Gdx.graphics.getWidth()/2);
-        pauseButton.setPosition(Gdx.graphics.getWidth()/2-pauseButton.getWidth()/2,20);
+        pauseButton.setWidth(Gdx.graphics.getWidth()/2f);
+        pauseButton.setPosition(Gdx.graphics.getWidth()/2f-pauseButton.getWidth()/2,20);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -105,7 +94,6 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        //batch.draw(background,240,100,800,600);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
         batch.end();
 

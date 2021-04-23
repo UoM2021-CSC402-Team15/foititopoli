@@ -16,11 +16,9 @@ import java.util.ArrayList;
 
 public class PlayerCreateScreen implements Screen {
 
-    Foititopoli game;
-    Stage stage;
+    private final Stage stage;
 
     public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns) {
-        this.game = game;
         this.stage = new Stage(new ScreenViewport());
 
         int currentPlayerNumber = game.getGameInstance().getPlayers().size()+1;
@@ -33,7 +31,7 @@ public class PlayerCreateScreen implements Screen {
         for (int i = 0; i < availablePawns.size(); i++) {
             strings[i] = availablePawns.get(i).toString();
         }
-        final SelectBox pawnSelect = new SelectBox(Foititopoli.gameSkin);
+        final SelectBox<String> pawnSelect = new SelectBox<>(Foititopoli.gameSkin);
         pawnSelect.setItems(strings);
 
         // Next Player Button / Start Game Button
