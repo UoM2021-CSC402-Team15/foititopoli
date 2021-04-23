@@ -1,75 +1,110 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Board extends Group {
 
     private final float tileHeightRatio = 1.5f;
+    private final int tilesPerSide = 11;
     private float width;
 
-    public Board(float width, int tilesPerSide) {
+    public Square[][] squares;
+
+    public Board(float width) {
         this.width = width;
         setSize(width, width);
         float basicTileWidth = width/(tilesPerSide-2 + (2 * tileHeightRatio) );
-        drawBoard(basicTileWidth, tilesPerSide);
+        drawBoard(basicTileWidth);
 
     }
 
-    private void drawBoard(float basicTileWidth, int tilePerSide) {
+    public SequenceAction movePawn(Pawn pawn, Square destination, SequenceAction sequence) {
+
+        for (int i = 0; i < 10; i++) { //So it doesnt continue to infinity
+
+            int currentI = pawn.getCurrentSquare().i;
+            int currentJ = pawn.getCurrentSquare().j;
+
+            if (currentI == destination.i && currentJ < destination.j) { // If on same side and target forward
+                pawn.setCurrentSquare(destination);
+                sequence.addAction(pawn.getMoveLeftToSquare(destination));
+                break;
+            } else {                                                     // else go to the next side and repeat
+                Square endSquare = squares[(currentI+1)%4][0];
+                sequence.addAction(pawn.getMoveLeftToSquare(endSquare));
+                RotateByAction rotate = new RotateByAction();
+                rotate.setAmount(-90);
+                rotate.setDuration(0.5f);
+                sequence.addAction(rotate);
+                pawn.setCurrentSquare(endSquare);
+            }
+        }
+
+        return sequence;
+    }
+
+    private void drawBoard(float basicTileWidth) {
         float basicTileHeight = basicTileWidth * tileHeightRatio;
 
-        // Side 0
-        Square corner0 = new Square("Start","start.png");
-        corner0.setSize(basicTileHeight,basicTileHeight);
-        corner0.setPosition(width-corner0.getWidth(), getY());
-        addActor(corner0);
-        for (int i = 0; i < tilePerSide-2 ; i++) {
-            Square square = new Square("square");
-            square.setSize(basicTileWidth, basicTileHeight);
-            square.setPosition(width-(i+1+tileHeightRatio)*square.getWidth(), getY());
-            addActor(square);
+        squares = new Square[4][tilesPerSide - 1];
+
+        for (int i = 0; i < 4; i++) {
+            switch (i) {
+                case 0:
+                    squares[i][0] = new Square("Start", "start.png");
+                    break;
+                case 1:
+                    squares[i][0] = new Square("cafeteria", "cafeteria.png");
+                    break;
+                case 2:
+                    squares[i][0] = new Square("library", "library.png");
+                    break;
+                case 3:
+                    squares[i][0] = new Square("prison", "prison.png");
+                    break;
+            }
         }
 
-        // Side 1
-        Square corner1 = new Square("cafeteria", "cafeteria.png");
-        corner1.setSize(basicTileHeight,basicTileHeight);
-        corner1.setPosition(getX(), getY()+basicTileHeight);
-        corner1.setRotation(270);
-        addActor(corner1);
-        for (int i = 0; i < tilePerSide-2 ; i++) {
-            Square square = new Square("square");
-            square.setSize(basicTileWidth, basicTileHeight);
-            square.setRotation(270);
-            square.setPosition(getX(), (i+1+tileHeightRatio)*square.getWidth());
-            addActor(square);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 1; j < tilesPerSide - 1; j++) {
+                squares[i][j] = new Square("square: " + i + "| " + j);
+            }
         }
 
-        // Side 2
-        Square corner2 = new Square("library", "library.png");
-        corner2.setSize(basicTileHeight,basicTileHeight);
-        corner2.setPosition(getX()+basicTileHeight, width);
-        corner2.setRotation(180);
-        addActor(corner2);
-        for (int i = 0; i < tilePerSide-2 ; i++) {
-            Square square = new Square("square");
-            square.setSize(basicTileWidth, basicTileHeight);
-            square.setRotation(180);
-            square.setPosition((i+1+tileHeightRatio)*square.getWidth(), corner2.getY());
-            addActor(square);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < tilesPerSide - 1; j++) {
+                squares[i][j].i =i;
+                squares[i][j].j =j;
+            }
         }
 
-        // Side 3
-        Square corner3 = new Square("prison", "prison.png");
-        corner3.setSize(basicTileHeight,basicTileHeight);
-        corner3.setRotation(90);
-        corner3.setPosition(width, width-basicTileHeight);
-        addActor(corner3);
-        for (int i = 0; i < tilePerSide-2 ; i++) {
-            Square square = new Square("square");
-            square.setSize(basicTileWidth, basicTileHeight);
-            square.setRotation(90);
-            square.setPosition(width, width - (i+1+tileHeightRatio)*square.getWidth());
-            addActor(square);
+        debug();
+
+        drawSide(0, Arrays.asList(squares[0]), basicTileWidth, getWidth()-basicTileHeight,0);
+        drawSide(-90, Arrays.asList(squares[1]), basicTileWidth, 0, basicTileHeight);
+        drawSide(-180, Arrays.asList(squares[2]), basicTileWidth, basicTileHeight, getHeight());
+        drawSide(-270, Arrays.asList(squares[3]), basicTileWidth, getWidth(), getHeight()-basicTileHeight);
+    }
+
+    private void drawSide(int rotation, List<Square> squares, float basicTileWidth, float startX, float startY) {
+        float basicTileHeight = basicTileWidth * tileHeightRatio;
+
+        squares.get(0).setSize(basicTileHeight, basicTileHeight);
+        squares.get(0).setRotation(rotation);
+        squares.get(0).setPosition(startX,startY);
+        addActor(squares.get(0));
+        for (int i = 1; i < squares.size(); i++) {
+            squares.get(i).setSize(basicTileWidth, basicTileHeight);
+            squares.get(i).setRotation(rotation);
+            squares.get(i).setPosition(startX,startY);
+            addActor(squares.get(i));
+            squares.get(i).moveLeft(i*basicTileWidth);
         }
     }
 

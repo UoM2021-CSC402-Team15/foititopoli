@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 
 public class Pawn extends Actor {
 
@@ -13,11 +15,17 @@ public class Pawn extends Actor {
 
     private String name;
 
+    private Square currentSquare;
+
     public Pawn(String name) {
         sprite = new Sprite( new Texture(Gdx.files.internal("pawn.png")));
         this.name = name;
         setPosition(50,50);
         setSize(60,40);
+        this.setOrigin(getWidth()/2,getHeight()/2);
+        sprite.setOrigin(getWidth()/2,getHeight()/2);
+
+        debug();
     }
 
     public void moveTo(float X, float Y) {
@@ -28,7 +36,30 @@ public class Pawn extends Actor {
     }
 
     public void moveTo(float X, float Y, float duration) {
-        addAction(Actions.moveTo(X - getWidth()/2, Gdx.graphics.getHeight()-Y-getHeight()/2,duration ));
+        addAction(Actions.moveTo(X - getWidth()/2, Y-getHeight()/2,duration ));
+    }
+
+    public MoveToAction getMoveLeftToSquare(Square square) {
+        float finalX = square.getX()-getWidth()/2;
+        float finalY = square.getY()-getHeight()/2;
+
+        float speed = 300;  //pixels per second
+
+        float distance = (float) Math.sqrt(Math.pow(finalX - getX(), 2) + Math.pow(finalY - getY(), 2));
+
+        MoveToAction action = new MoveToAction();
+        action.setPosition(finalX, finalY);
+        action.setDuration(2);
+
+        return action;
+    }
+
+    public Square getCurrentSquare() {
+        return currentSquare;
+    }
+
+    public void setCurrentSquare(Square currentSquare) {
+        this.currentSquare = currentSquare;
     }
 
     @Override
@@ -56,5 +87,11 @@ public class Pawn extends Actor {
     protected void sizeChanged() {
         super.sizeChanged();
         sprite.setSize(getWidth(),getHeight());
+    }
+
+    @Override
+    protected void rotationChanged() {
+        super.rotationChanged();
+        sprite.setRotation(getRotation());
     }
 }
