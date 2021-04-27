@@ -39,8 +39,8 @@ public class Pawn extends Actor {
     }
 
     public MoveToAction getMoveLeftToSquare(Square square) {
-        float finalX = square.getX()-getWidth()/2;
-        float finalY = square.getY()-getHeight()/2;
+        float finalX = square.getCenter().x -getWidth()/2;
+        float finalY = square.getCenter().y -getHeight()/2;
 
         MoveToAction action = new MoveToAction();
         action.setPosition(finalX, finalY);

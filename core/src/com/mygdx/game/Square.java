@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -70,6 +71,11 @@ public class Square extends Group {
 
         float distance = (float) Math.sqrt(Math.pow(finalX - getX(), 2) + Math.pow(finalY - getY(), 2));
         addAction(Actions.moveTo(finalX, finalY, distance/speed));
+    }
+
+    public Vector2 getCenter() {
+        Vector2 centerInParent = localToParentCoordinates(new Vector2(getWidth() / 2, getHeight() / 2));
+        return centerInParent;
     }
 
     @Override
