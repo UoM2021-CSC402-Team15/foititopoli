@@ -32,7 +32,7 @@ public class Board extends Group {
                 sequence.addAction(pawn.getMoveLeftToSquare(destination));
                 pawn.setCurrentSquare(destination);
                 break;
-            } else if ( currentI+1==destination.i && destination.j ==0 ) { // If target is next corner (next corner is considered other side)
+            } else if ( (currentI+1)%4==destination.i && destination.j ==0 ) { // If target is next corner (next corner is considered other side)
                 sequence.addAction(pawn.getMoveLeftToSquare(destination));
                 RotateByAction rotate = new RotateByAction();
                 rotate.setAmount(-90);
