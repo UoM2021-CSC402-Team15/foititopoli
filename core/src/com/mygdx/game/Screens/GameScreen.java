@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Board;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Pawn;
+import com.mygdx.game.Windows.DebugConsole;
 import com.mygdx.game.Windows.PauseWindow;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class GameScreen implements Screen {
     private final Board board;
 
     private final ArrayList<Pawn> pawns = new ArrayList<>();
+
+    private final DebugConsole console;
 
     public GameScreen(final Foititopoli game) {
         batch = new SpriteBatch();
@@ -82,8 +85,15 @@ public class GameScreen implements Screen {
 
         pauseWindow = new PauseWindow("Game paused", Foititopoli.gameSkin, game);
 
-        pawns.get(0).setCurrentSquare(board.squares[0][0]);
-        pawns.get(0).moveTo(board.squares[0][0].getX(),board.squares[0][0].getY());
+
+        for(Pawn pawn: pawns) {
+            pawn.setCurrentSquare(board.squares[0][0]);
+            pawn.moveTo(board.squares[0][0].getCenter().x, board.squares[0][0].getCenter().y);
+        }
+
+        console = new DebugConsole(stage);
+        console.setBoard(board);
+        console.setPawns(pawns);
     }
 
     @Override
@@ -100,12 +110,6 @@ public class GameScreen implements Screen {
         stage.act();
         stage.draw();
 
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            pawns.get(1).moveTo(touchPos.x, touchPos.y,1);
-        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if (pauseWindow.hasParent()) {
                 pauseWindow.remove();
@@ -114,9 +118,8 @@ public class GameScreen implements Screen {
                 stage.addActor(pauseWindow);
             }
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            SequenceAction sequence = board.movePawn(pawns.get(0), board.squares[3][0], new SequenceAction());
-            pawns.get(0).addAction(sequence);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.GRAVE)) {
+            console.activate();
         }
 
     }
