@@ -38,9 +38,9 @@ public class PauseWindow extends Window{
             }
         });
 
-        add(resumeButton).row();
-        add(saveButton).row();
-        add(exitButton);
+        add(resumeButton).expand().fill().row();
+        add(saveButton).expand().fill().row();
+        add(exitButton).expand().fill();
     }
 
     @Override

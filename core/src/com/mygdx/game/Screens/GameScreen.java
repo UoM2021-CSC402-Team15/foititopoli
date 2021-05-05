@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
 
         TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
         pauseButton.setWidth(Gdx.graphics.getWidth()/2f);
-        pauseButton.setPosition(Gdx.graphics.getWidth()/2f-pauseButton.getWidth()/2,20);
+        pauseButton.setPosition(camera.viewportWidth/2f-pauseButton.getWidth()/2,20);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

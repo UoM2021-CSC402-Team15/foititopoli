@@ -13,7 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 
 public class MainMenuScreen implements Screen {
@@ -32,8 +33,9 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final Foititopoli game) {
         this.game = game;
 
-        stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
+        Viewport viewport = new StretchViewport(1280,720);
+        stage = new Stage(viewport, batch);
 
         Table table = new Table();
         table.setFillParent(true);

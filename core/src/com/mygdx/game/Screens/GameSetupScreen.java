@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.GameInstance;
 
@@ -16,7 +18,9 @@ public class GameSetupScreen implements Screen {
     private final Stage stage;
 
     public GameSetupScreen(final Foititopoli game) {
-        this.stage = new Stage(new ScreenViewport());
+
+        Viewport viewport = new StretchViewport(1280,720);
+        stage = new Stage(viewport);
 
         Label title = new Label("Create Game", Foititopoli.gameSkin);
 

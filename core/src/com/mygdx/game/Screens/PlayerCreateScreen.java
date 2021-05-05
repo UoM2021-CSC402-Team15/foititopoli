@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Pawn;
 
@@ -19,7 +21,9 @@ public class PlayerCreateScreen implements Screen {
     private final Stage stage;
 
     public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns) {
-        this.stage = new Stage(new ScreenViewport());
+
+        Viewport viewport = new StretchViewport(1280,720);
+        stage = new Stage(viewport);
 
         int currentPlayerNumber = game.getGameInstance().getPlayers().size()+1;
         Label title = new Label("Create Player " + currentPlayerNumber, Foititopoli.gameSkin);

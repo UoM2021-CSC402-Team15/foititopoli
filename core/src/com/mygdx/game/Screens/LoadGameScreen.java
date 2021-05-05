@@ -8,17 +8,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 
 public class LoadGameScreen implements Screen {
 
-    private final Stage stage;
+    private Stage stage;
     private final Foititopoli game;
 
     private class SavedGameItem extends Table {
 
         public SavedGameItem(String name) {
+
+            Viewport viewport = new StretchViewport(1280,720);
+            stage = new Stage(viewport);
 
             TextButton loadButton = new TextButton("Load", Foititopoli.gameSkin);
             loadButton.addListener(new ChangeListener() {
@@ -41,7 +45,7 @@ public class LoadGameScreen implements Screen {
 
             this.pad(20);
             //this.debug();
-            this.add(nameLabel).width(500).fill();
+            this.add(nameLabel).expand().fill().width(viewport.getScreenWidth() /3f);
             this.add(loadButton).expandX().fill().height(50).padBottom(10).row();
             this.add(dateLabel).fillX();
             this.add(deleteButton).fill();
@@ -53,7 +57,9 @@ public class LoadGameScreen implements Screen {
 
     public LoadGameScreen(final Foititopoli game) {
         this.game = game;
-        this.stage = new Stage(new ScreenViewport());
+
+        Viewport viewport = new StretchViewport(1280,720);
+        stage = new Stage(viewport);
 
         Label title = new Label("Load Game Screen", Foititopoli.gameSkin);
         title.setAlignment(Align.center);
@@ -73,18 +79,16 @@ public class LoadGameScreen implements Screen {
         Table mainTable = new Table();
 
         VerticalGroup verticalGroup = new VerticalGroup();
-        //verticalGroup.setWidth(Gdx.graphics.getWidth());
         ScrollPane scrollPane = new ScrollPane(verticalGroup);
 
         for (int i = 0; i < 25; i++) {
             SavedGameItem item = new SavedGameItem("test " + i);
-            item.setWidth(Gdx.graphics.getWidth());
             verticalGroup.addActor(item);
         }
 
         mainTable.setFillParent(true);
         mainTable.add(title).padTop(10).padBottom(20).row();
-        mainTable.add(scrollPane).row();
+        mainTable.add(scrollPane).expand().fill().row();
         mainTable.add(backButton).padTop(20).padBottom(10);
 
         stage.addActor(mainTable);
