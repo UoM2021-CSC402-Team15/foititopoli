@@ -35,19 +35,6 @@ public class GameInstance {
         listener.pawnPositionUpdated(pawn);
     }
 
-    public static ArrayList<Pawn> getAvailablePawns() {
-        ArrayList<Pawn> availablePawns = new ArrayList<>();
-        availablePawns.add( new Pawn("dog") );
-        availablePawns.add( new Pawn("hat") );
-        availablePawns.add( new Pawn("thimble") );
-        availablePawns.add( new Pawn("boot") );
-        availablePawns.add( new Pawn("wheelbarrow") );
-        availablePawns.add( new Pawn("cat") );
-        availablePawns.add( new Pawn("racing car") );
-        availablePawns.add( new Pawn("battleship") );
-        return availablePawns;
-    }
-
     public ArrayList<Player> getPlayers() {
         return players;
     }

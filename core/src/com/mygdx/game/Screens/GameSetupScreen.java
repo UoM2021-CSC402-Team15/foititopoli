@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.DataProvider;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.GameInstance;
 
@@ -67,7 +68,7 @@ public class GameSetupScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 GameInstance gameInstance = new GameInstance( (int)playersSlider.getValue(), currencySlider.getValue());
                 game.setGameInstance(gameInstance);
-                game.setScreen(new PlayerCreateScreen(game, GameInstance.getAvailablePawns()));
+                game.setScreen(new PlayerCreateScreen(game, DataProvider.getPawns()));
             }
         });
 
