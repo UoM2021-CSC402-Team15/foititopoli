@@ -7,9 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,33 +19,107 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Board;
-import com.mygdx.game.Foititopoli;
-import com.mygdx.game.Pawn;
+import com.mygdx.game.*;
 import com.mygdx.game.Windows.DebugConsole;
 import com.mygdx.game.Windows.PauseWindow;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GameScreen implements Screen {
 
     private final Stage stage;
-
     private final Batch batch;
-
     private final OrthographicCamera camera;
-
     private final BitmapFont font;
-
     private final PauseWindow pauseWindow;
-
-    private final Board board;
-
-    private final ArrayList<Pawn> pawns = new ArrayList<>();
-
+    private final BoardUI boardUI;
     private final DebugConsole console;
+    private Foititopoli game;
 
-    public GameScreen(final Foititopoli game) {
+    public class BoardUI extends Group {
+
+        private Board board;
+
+        private float tileHeightRatio = 1.5f;
+
+        public BoardUI(Board board, float size) {
+            this.board = board;
+            setSize(size, size);
+            float basicTileWidth = size/(board.tilesPerSide-2 + (2 * tileHeightRatio) );
+            drawBoard(basicTileWidth);
+
+            for(Player player: game.getGameInstance().getPlayers()) {
+                this.addActor(player.getPawn());
+                player.getPawn().setCurrentSquare(board.squares[0][0]);
+                player.getPawn().moveTo(board.squares[0][0].getCenter().x, board.squares[0][0].getCenter().y);
+            }
+        }
+
+        public void movePawn(Pawn pawn, Square destination) {
+
+            SequenceAction sequence = new SequenceAction();
+
+            int currentI = pawn.getOldSquare().i;
+            int currentJ = pawn.getOldSquare().j;
+
+            for (int i = 0; i < 10; i++) { //So it doesnt continue to infinity
+
+                if ( currentI == destination.i && currentJ < destination.j ) { // If on same side and target forward
+                    sequence.addAction(pawn.getMoveLeftToSquare(destination));
+                    break;
+                } else if ( (currentI+1)%4==destination.i && destination.j ==0 ) { // If target is next corner (next corner is considered other side)
+                    sequence.addAction(pawn.getMoveLeftToSquare(destination));
+                    RotateByAction rotate = new RotateByAction();
+                    rotate.setAmount(-90);
+                    rotate.setDuration(0.5f);
+                    sequence.addAction(rotate);
+                    break;
+                } else {                                                       // else go to the next side and repeat
+                    Square endSquare = board.squares[(currentI+1)%4][0];
+                    sequence.addAction(pawn.getMoveLeftToSquare(endSquare));
+                    RotateByAction rotate = new RotateByAction();
+                    rotate.setAmount(-90);
+                    rotate.setDuration(0.5f);
+                    sequence.addAction(rotate);
+                    currentI = endSquare.i;
+                    currentJ = endSquare.j;
+                }
+            }
+            pawn.addAction(sequence);
+        }
+
+        private void drawBoard(float basicTileWidth) {
+            float basicTileHeight = basicTileWidth * tileHeightRatio;
+
+            drawSide(0, Arrays.asList(board.squares[0]), basicTileWidth, getWidth()-basicTileHeight,0);
+            drawSide(-90, Arrays.asList(board.squares[1]), basicTileWidth, 0, basicTileHeight);
+            //noinspection SuspiciousNameCombination
+            drawSide(-180, Arrays.asList(board.squares[2]), basicTileWidth, basicTileHeight, getHeight());
+            drawSide(-270, Arrays.asList(board.squares[3]), basicTileWidth, getWidth(), getHeight()-basicTileHeight);
+        }
+
+        private void drawSide(int rotation, List<Square> squares, float basicTileWidth, float startX, float startY) {
+            float basicTileHeight = basicTileWidth * tileHeightRatio;
+
+            //noinspection SuspiciousNameCombination
+            squares.get(0).setSize(basicTileHeight, basicTileHeight);
+            squares.get(0).setRotation(rotation);
+            squares.get(0).setPosition(startX,startY);
+            addActor(squares.get(0));
+            for (int i = 1; i < squares.size(); i++) {
+                squares.get(i).setSize(basicTileWidth, basicTileHeight);
+                squares.get(i).setRotation(rotation);
+                squares.get(i).setPosition(startX,startY);
+                addActor(squares.get(i));
+                squares.get(i).moveLeft(i*basicTileWidth);
+            }
+        }
+
+    }
+
+    public GameScreen(Foititopoli game) {
+        this.game = game;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
@@ -69,31 +144,23 @@ public class GameScreen implements Screen {
         });
         stage.addActor(pauseButton);
 
-        board = new Board(600);
-        board.setPosition((camera.viewportWidth-board.getWidth())/2, 100);
-        stage.addActor(board);
+        boardUI = new BoardUI(game.getGameInstance().getBoard(), 600);
+        boardUI.setPosition((camera.viewportWidth- boardUI.getWidth())/2, 100);
+        stage.addActor(boardUI);
         //stage.setDebugAll(true);
-
-        for (int i = 0; i < game.getGameInstance().getPlayers().size(); i++) {
-            Pawn pawn = game.getGameInstance().getPlayers().get(i).getPawn();
-            pawns.add(pawn);
-            pawn.moveTo((i*100)+50, pawn.getY());
-            board.addActor(pawn);
-        }
 
         font = new BitmapFont();
 
         pauseWindow = new PauseWindow("Game paused", Foititopoli.gameSkin, game);
 
+        console = new DebugConsole(game.getGameInstance(), stage);
 
-        for(Pawn pawn: pawns) {
-            pawn.setCurrentSquare(board.squares[0][0]);
-            pawn.moveTo(board.squares[0][0].getCenter().x, board.squares[0][0].getCenter().y);
-        }
-
-        console = new DebugConsole(stage);
-        console.setBoard(board);
-        console.setPawns(pawns);
+        game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
+            @Override
+            public void pawnPositionUpdated(Pawn pawn) {
+                boardUI.movePawn(pawn, pawn.getCurrentSquare());
+            }
+        });
     }
 
     @Override

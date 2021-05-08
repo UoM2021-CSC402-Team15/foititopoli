@@ -1,13 +1,9 @@
 package com.mygdx.game.Windows;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.mygdx.game.Board;
 import com.mygdx.game.Foititopoli;
-import com.mygdx.game.Pawn;
-
-import java.util.ArrayList;
+import com.mygdx.game.GameInstance;
 
 public class DebugConsole extends Window {
 
@@ -15,13 +11,14 @@ public class DebugConsole extends Window {
     private Boolean isActive = false;
     private TextField text;
     private Label label;
-    private Board board;
-    private ArrayList<Pawn> pawns;
     private ScrollPane scrollPane;
 
-    public DebugConsole(Stage stage) {
+    private GameInstance game;
+
+    public DebugConsole(GameInstance game, Stage stage) {
         super("Debug", Foititopoli.gameSkin);
         this.stage = stage;
+        this.game = game;
         setPosition(0,stage.getHeight());
         setSize(600,200);
 
@@ -44,14 +41,6 @@ public class DebugConsole extends Window {
         add(text).expand().bottom().fillX();
     }
 
-    public void setPawns(ArrayList<Pawn> pawns) {
-        this.pawns = pawns;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
-    }
-
     public void activate() {
         text.setText("");
         if (isActive) {
@@ -69,13 +58,11 @@ public class DebugConsole extends Window {
         print("->"+command);
 
         try {
-            switch (splitCommand[0]) {
+            switch (splitCommand[0].trim()) {
                 case "move":
                     int side = Integer.parseInt(splitCommand[2].split(",")[0]);
                     int square = Integer.parseInt(splitCommand[2].split(",")[1]);
-                    SequenceAction sequence = board.movePawn(pawns.get(Integer.parseInt(splitCommand[1])), board.squares[side][square], new SequenceAction());
-                    pawns.get(Integer.parseInt(splitCommand[1])).addAction(sequence);
-                    print("Executed sequence of " + sequence.getActions().size +  " actions");
+                    game.movePawn(game.getPlayers().get(Integer.parseInt(splitCommand[1])).getPawn(), game.getBoard().squares[side][square]);
                     break;
                 default:
                     print("Unknown command: "+command);

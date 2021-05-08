@@ -34,7 +34,7 @@ public class Square extends Group {
         sprite.setOrigin(0, 0);
         Table table = new Table(Foititopoli.gameSkin);
         table.setFillParent(true);
-        table.debug();
+        //table.debug();
 
         this.addListener(new ClickListener(){
             @Override

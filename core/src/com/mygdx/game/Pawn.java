@@ -15,6 +15,7 @@ public class Pawn extends Actor {
     private final String name;
 
     private Square currentSquare;
+    private Square oldSquare;
 
     public Pawn(String name) {
         sprite = new Sprite( new Texture(Gdx.files.internal("pawn.png")));
@@ -24,7 +25,7 @@ public class Pawn extends Actor {
         this.setOrigin(getWidth()/2,getHeight()/2);
         sprite.setOrigin(getWidth()/2,getHeight()/2);
 
-        debug();
+        //debug();
     }
 
     public void moveTo(float X, float Y) {
@@ -54,7 +55,12 @@ public class Pawn extends Actor {
     }
 
     public void setCurrentSquare(Square currentSquare) {
+        this.oldSquare = this.currentSquare;
         this.currentSquare = currentSquare;
+    }
+
+    public Square getOldSquare() {
+        return oldSquare;
     }
 
     @Override

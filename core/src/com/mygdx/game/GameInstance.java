@@ -8,14 +8,31 @@ public class GameInstance {
     private final float currency;
     private final ArrayList<Player> players = new ArrayList<>();
 
+    private GameInstanceListener listener;
+    private Board board;
+
+    public interface GameInstanceListener {
+        void pawnPositionUpdated(Pawn pawn);
+    }
+
+    public void setListener(GameInstanceListener listener) {
+        this.listener = listener;
+    }
+
     public GameInstance(int numberOfPlayers, float currency) {
         this.numberOfPlayers = numberOfPlayers;
         this.currency = currency;
+        this.board = new Board(11);
     }
 
     public void setupPlayer(String name, Pawn pawn) {
         Player player = new Player(name, pawn);
         players.add(player);
+    }
+
+    public void movePawn(Pawn pawn, Square square) {
+        pawn.setCurrentSquare(square);
+        listener.pawnPositionUpdated(pawn);
     }
 
     public static ArrayList<Pawn> getAvailablePawns() {
@@ -41,5 +58,9 @@ public class GameInstance {
 
     public float getCurrency() {
         return currency;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
