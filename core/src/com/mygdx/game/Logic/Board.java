@@ -1,4 +1,7 @@
-package com.mygdx.game;
+package com.mygdx.game.Logic;
+
+import com.mygdx.game.Logic.Squares.MoneySquare;
+import com.mygdx.game.Logic.Squares.Square;
 
 public class Board {
 
@@ -16,23 +19,23 @@ public class Board {
         for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0:
-                    squares[i][0] = new Square("Start", "start.png");
+                    squares[i][0] = new MoneySquare("start");
                     break;
                 case 1:
-                    squares[i][0] = new Square("cafeteria", "cafeteria.png");
+                    squares[i][0] = new MoneySquare("cafeteria");
                     break;
                 case 2:
-                    squares[i][0] = new Square("library", "library.png");
+                    squares[i][0] = new MoneySquare("library");
                     break;
                 case 3:
-                    squares[i][0] = new Square("prison", "prison.png");
+                    squares[i][0] = new MoneySquare("prison");
                     break;
             }
         }
 
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < tilesPerSide - 1; j++) {
-                squares[i][j] = new Square("square: " + i + "| " + j);
+                squares[i][j] = new MoneySquare("square: " + i + "| " + j);
             }
         }
 
@@ -45,12 +48,12 @@ public class Board {
     }
 
     public Square getDestination(Pawn pawn, int displacement) {
-
+        //TODO: implement it
         return null;
     }
 
     public Square getDestination(int i, int j) {
-
+        //TODO: implement it
         return null;
     }
 

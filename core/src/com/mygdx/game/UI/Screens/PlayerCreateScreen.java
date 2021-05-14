@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.UI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,11 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
-import com.mygdx.game.Pawn;
+import com.mygdx.game.Logic.Pawn;
+import com.mygdx.game.UI.Components.PawnActor;
 
 import java.util.ArrayList;
 

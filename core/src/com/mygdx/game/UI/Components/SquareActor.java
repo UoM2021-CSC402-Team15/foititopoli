@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.UI.Components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,38 +14,35 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.Foititopoli;
+import com.mygdx.game.Logic.Squares.Square;
 
-public class Square extends Group {
+public class SquareActor extends Group {
 
-    private final Sprite sprite;
+    private Square square;
 
-    private final String name;
+    private Sprite sprite;
 
-    public int i;
-    public int j;
-
-    public Square(String name) {
-        this(name, "square.png");
-    }
-    public Square(final String name, String texture) {
-        sprite = new Sprite( new Texture(Gdx.files.internal(texture)));
-        this.name = name;
+    public SquareActor(final Square square) {
+        this.square = square;
+        try {
+            sprite = new Sprite( new Texture(Gdx.files.internal(square.getName()+".png")));
+        } catch (Exception e) {
+            sprite = new Sprite( new Texture(Gdx.files.internal("square.png")));
+        }
         setOrigin(0,0);
         sprite.setOrigin(0, 0);
         Table table = new Table(Foititopoli.gameSkin);
         table.setFillParent(true);
-        //table.debug();
 
         this.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                System.out.println(name);
+                System.out.println(square.getName());
                 System.out.println(getX() + "|" +getY());
             }
         });
-
-        //debug();
 
         Label label = new Label("Hello", Foititopoli.gameSkin);
         label.setFontScale(0.5f);
@@ -76,11 +73,6 @@ public class Square extends Group {
     public Vector2 getCenter() {
         Vector2 centerInParent = localToParentCoordinates(new Vector2(getWidth() / 2, getHeight() / 2));
         return centerInParent;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     @Override

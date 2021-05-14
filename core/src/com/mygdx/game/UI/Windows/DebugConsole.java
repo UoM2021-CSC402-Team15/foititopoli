@@ -1,9 +1,10 @@
-package com.mygdx.game.Windows;
+package com.mygdx.game.UI.Windows;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.mygdx.game.Foititopoli;
-import com.mygdx.game.GameInstance;
+import com.mygdx.game.Logic.GameInstance;
+import com.mygdx.game.Logic.Pawn;
 
 public class DebugConsole extends Window {
 
@@ -62,7 +63,8 @@ public class DebugConsole extends Window {
                 case "move":
                     int side = Integer.parseInt(splitCommand[2].split(",")[0]);
                     int square = Integer.parseInt(splitCommand[2].split(",")[1]);
-                    game.movePawn(game.getPlayers().get(Integer.parseInt(splitCommand[1])).getPawn(), game.getBoard().squares[side][square]);
+                    Pawn pawn = game.getPlayers().get(Integer.parseInt(splitCommand[1])).getPawn();
+                    game.movePawn(pawn, game.getBoard().squares[side][square]);
                     break;
                 default:
                     print("Unknown command: "+command);

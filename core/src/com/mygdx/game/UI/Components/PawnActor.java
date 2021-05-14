@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.UI.Components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,25 +7,21 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.mygdx.game.Logic.Pawn;
 
-public class Pawn extends Actor {
+public class PawnActor extends Actor {
 
     private final Sprite sprite;
 
-    private final String name;
+    private final Pawn pawn;
 
-    private Square currentSquare;
-    private Square oldSquare;
-
-    public Pawn(String name) {
+    public PawnActor(Pawn pawn) {
         sprite = new Sprite( new Texture(Gdx.files.internal("pawn.png")));
-        this.name = name;
+        this.pawn = pawn;
         setPosition(50,50);
         setSize(60,40);
         this.setOrigin(getWidth()/2,getHeight()/2);
         sprite.setOrigin(getWidth()/2,getHeight()/2);
-
-        //debug();
     }
 
     public void moveTo(float X, float Y) {
@@ -39,7 +35,7 @@ public class Pawn extends Actor {
         addAction(Actions.moveTo(X - getWidth()/2, Y-getHeight()/2,duration ));
     }
 
-    public MoveToAction getMoveLeftToSquare(Square square) {
+    public MoveToAction getMoveLeftToSquare(SquareActor square) {
         float finalX = square.getCenter().x -getWidth()/2;
         float finalY = square.getCenter().y -getHeight()/2;
 
@@ -50,22 +46,8 @@ public class Pawn extends Actor {
         return action;
     }
 
-    public Square getCurrentSquare() {
-        return currentSquare;
-    }
-
-    public void setCurrentSquare(Square currentSquare) {
-        this.oldSquare = this.currentSquare;
-        this.currentSquare = currentSquare;
-    }
-
-    public Square getOldSquare() {
-        return oldSquare;
-    }
-
-    @Override
-    public String toString() {
-        return name;
+    public Pawn getPawn() {
+        return pawn;
     }
 
     @Override

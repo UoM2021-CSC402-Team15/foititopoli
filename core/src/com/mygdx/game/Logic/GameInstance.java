@@ -1,4 +1,6 @@
-package com.mygdx.game;
+package com.mygdx.game.Logic;
+
+import com.mygdx.game.Logic.Squares.Square;
 
 import java.util.ArrayList;
 

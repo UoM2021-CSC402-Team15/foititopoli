@@ -3,7 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mygdx.game.Screens.MainMenuScreen;
+import com.mygdx.game.Logic.GameInstance;
+import com.mygdx.game.UI.Screens.MainMenuScreen;
 
 public class Foititopoli extends Game {
 

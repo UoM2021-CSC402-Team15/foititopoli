@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Logic;
 
 import java.util.ArrayList;
 

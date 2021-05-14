@@ -1,4 +1,4 @@
-package com.mygdx.game.Windows;
+package com.mygdx.game.UI.Windows;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.Foititopoli;
-import com.mygdx.game.Screens.MainMenuScreen;
+import com.mygdx.game.UI.Screens.MainMenuScreen;
 
 
 public class PauseWindow extends Window{
