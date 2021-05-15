@@ -1,5 +1,8 @@
 package com.mygdx.game.UI.Components;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -19,7 +22,9 @@ public class BoardGroup extends Group {
     private HashMap<Pawn, PawnActor> pawnActors = new HashMap<>();
     private SquareActor[][] squareActors;
 
-    private float tileHeightRatio = 1.5f;
+    private Texture background;
+
+    private float tileHeightRatio = 1.6f;
 
     public BoardGroup(Board board, float size, ArrayList<Player> players) {
         this.board = board;
@@ -33,7 +38,7 @@ public class BoardGroup extends Group {
                 squareActors[i][j] = new SquareActor(board.squares[i][j]);
             }
         }
-
+        background = new Texture(Gdx.files.internal("1_3.png"));
         drawBoard(basicTileWidth);
 
         for(Player player: players) {
@@ -115,5 +120,9 @@ public class BoardGroup extends Group {
         }
     }
 
-
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        batch.draw(background,getX(),getY(),getWidth(),getHeight());
+    }
 }

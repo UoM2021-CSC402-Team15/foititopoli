@@ -47,13 +47,13 @@ public class SquareActor extends Group {
         Label label = new Label("Hello", Foititopoli.gameSkin);
         label.setFontScale(0.5f);
         label.setAlignment(Align.center);
-        table.add(label).fillX().row();
+        //table.add(label).fillX().row();
 
         Label label2 = new Label("Hello", Foititopoli.gameSkin);
         label.setColor(Color.RED);
         label2.setFontScale(0.5f);
         label2.setAlignment(Align.center);
-        table.add(label2).expand().fill().row();
+        //table.add(label2).expand().fill().row();
 
         addActor(table);
     }
@@ -83,7 +83,7 @@ public class SquareActor extends Group {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        sprite.draw(batch);
+        //sprite.draw(batch);
     }
 
     @Override
