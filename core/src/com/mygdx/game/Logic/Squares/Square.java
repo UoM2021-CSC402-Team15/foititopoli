@@ -7,6 +7,10 @@ public abstract class Square {
     public int i;
     public int j;
 
+    public Square(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
