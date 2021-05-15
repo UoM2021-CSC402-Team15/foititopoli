@@ -20,7 +20,7 @@ public class PlayerCreateScreen implements Screen {
 
     private final Stage stage;
 
-    public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns) {
+    public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns, final double studyHours) {
 
         Viewport viewport = new StretchViewport(1280,720);
         stage = new Stage(viewport);
@@ -55,13 +55,13 @@ public class PlayerCreateScreen implements Screen {
                     }
                 }
                 // Setup player
-                game.getGameInstance().setupPlayer(nameText.getText(), selectedPawn);
+                game.getGameInstance().setupPlayer(nameText.getText(), selectedPawn,studyHours);
                 // Remove pawn from available pawns
                 availablePawns.remove(selectedPawn);
                 if (isLastPlayer) {
                     game.setScreen(new GameScreen(game));
                 } else {
-                    game.setScreen(new PlayerCreateScreen(game, availablePawns));
+                    game.setScreen(new PlayerCreateScreen(game, availablePawns,studyHours));
                 }
             }
         });

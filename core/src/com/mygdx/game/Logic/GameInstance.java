@@ -27,8 +27,8 @@ public class GameInstance {
         this.board = new Board(11);
     }
 
-    public void setupPlayer(String name, Pawn pawn) {
-        Player player = new Player(name, pawn);
+    public void setupPlayer(String name, Pawn pawn,double studyHours) {
+        Player player = new Player(name, pawn,studyHours);
         players.add(player);
     }
 
