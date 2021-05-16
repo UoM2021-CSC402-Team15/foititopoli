@@ -5,6 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
+import com.mygdx.game.Logic.Player;
+import com.mygdx.game.Logic.Squares.CourseSquare;
+import com.mygdx.game.Logic.Squares.Square;
 
 public class DebugConsole extends Window {
 
@@ -66,6 +69,14 @@ public class DebugConsole extends Window {
                     Pawn pawn = game.getPlayers().get(Integer.parseInt(splitCommand[1])).getPawn();
                     game.movePawn(pawn, game.getBoard().squares[side][square]);
                     break;
+                case "test":
+                    Player player=  game.getPlayers().get(Integer.parseInt(splitCommand[1]));
+                    CourseSquare c = new CourseSquare("paparia",50) ;
+                    player.buySquare(c);
+                    print(player.ownsThisSquare(c)+"");
+                    break;
+
+                    
                 default:
                     print("Unknown command: "+command);
                     break;
