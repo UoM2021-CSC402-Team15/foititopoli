@@ -30,32 +30,6 @@ public class Player {
         c.setGrade(5);
          courseList.add(c);
     }
-    public boolean ownsThisSquare(CourseSquare aSquare){
-
-        for (CourseSquare c : courseList){
-            if (c.getName().equals(aSquare.getName())) return true;
-
-
-
-        }
-        return false;
-    }
-    public void addSquares(ArrayList<CourseSquare> cList){
-       if (!cList.isEmpty()){
-        for (int i=0; i<cList.size(); i++){
-           courseList.add(cList.get(i));
-        }}
-    }
-    public void removeSquares(ArrayList<CourseSquare> cList){
-
-        for (CourseSquare aSquare: courseList){
-            for (CourseSquare sFromRemove: cList){
-                if (aSquare.getName().equals(sFromRemove.getName())){
-                    courseList.remove(aSquare);
-                }
-            }
-        }
-    }
 
     public Square getCurrentSquare() {
         return currentSquare;
@@ -103,5 +77,9 @@ public class Player {
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<CourseSquare> getCourseList() {
+        return courseList;
     }
 }

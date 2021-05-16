@@ -6,39 +6,38 @@ import java.util.ArrayList;
 
 public class Trade {
    private Player sender;
-   private Player Receiver;
-   private ArrayList<CourseSquare> senderCoursesList= new ArrayList<CourseSquare>();
+   private Player receiver;
+   private ArrayList<CourseSquare> senderCourseList = new ArrayList<CourseSquare>();
    private int senderHours;
-   private ArrayList<CourseSquare> receiverCoursesList= new ArrayList<CourseSquare>();
+   private ArrayList<CourseSquare> receiverCourseList = new ArrayList<CourseSquare>();
    private int receiverHours;
 
     public Trade(Player sender, Player receiver) {
         this.sender = sender;
-        Receiver = receiver;
+        this.receiver = receiver;
     }
 
     public void setSenderOffer(ArrayList<CourseSquare> sCourses, int sHours){
-        senderCoursesList = sCourses;
+        senderCourseList = sCourses;
         senderHours = sHours;
     }
     public void setReceiverOffer(ArrayList<CourseSquare> rCourses, int rHours){
-       receiverCoursesList = rCourses;
+       receiverCourseList = rCourses;
        receiverHours= rHours;
     }
 
     public void accept(){
-        Receiver.setStudyHours(Receiver.getStudyHours()+senderHours);
+        receiver.setStudyHours(receiver.getStudyHours()+senderHours);
         sender.setStudyHours(sender.getStudyHours()-senderHours);
 
         sender.setStudyHours(sender.getStudyHours()+receiverHours);
-        Receiver.setStudyHours(Receiver.getStudyHours()-receiverHours);
+        receiver.setStudyHours(receiver.getStudyHours()-receiverHours);
 
-        Receiver.addSquares(senderCoursesList);
-        Receiver.removeSquares(receiverCoursesList);
+        receiver.getCourseList().addAll(senderCourseList);
+        receiver.getCourseList().removeAll(receiverCourseList);
 
-        sender.addSquares(receiverCoursesList);
-        sender.removeSquares(senderCoursesList);
-
+        sender.getCourseList().addAll(receiverCourseList);
+        sender.getCourseList().removeAll(senderCourseList);
     }
 
 

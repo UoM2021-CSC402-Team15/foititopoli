@@ -7,7 +7,6 @@ import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
-import com.mygdx.game.Logic.Squares.Square;
 
 public class DebugConsole extends Window {
 
@@ -63,20 +62,21 @@ public class DebugConsole extends Window {
 
         try {
             switch (splitCommand[0].trim()) {
+
                 case "move":
                     int side = Integer.parseInt(splitCommand[2].split(",")[0]);
                     int square = Integer.parseInt(splitCommand[2].split(",")[1]);
                     Pawn pawn = game.getPlayers().get(Integer.parseInt(splitCommand[1])).getPawn();
                     game.movePawn(pawn, game.getBoard().squares[side][square]);
                     break;
+
                 case "test":
                     Player player=  game.getPlayers().get(Integer.parseInt(splitCommand[1]));
                     CourseSquare c = new CourseSquare("paparia",50) ;
                     player.buySquare(c);
-                    print(player.ownsThisSquare(c)+"");
+                    print(player.getCourseList().contains(c)+"");
                     break;
 
-                    
                 default:
                     print("Unknown command: "+command);
                     break;

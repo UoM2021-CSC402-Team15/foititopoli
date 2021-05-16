@@ -1,15 +1,11 @@
 package com.mygdx.game.Logic.Squares;
 
-import com.badlogic.gdx.Game;
 import com.mygdx.game.Logic.Player;
-
-import java.util.ArrayList;
 
 public class CourseSquare extends Square {
    private int grade=0;
    private int[] salary = new int[]{5,10,20,30,40,50};
    private double price;
-
 
 
     public CourseSquare(String name,double price) {
@@ -23,7 +19,7 @@ public class CourseSquare extends Square {
          return salary[grade-5];
     }
 
-    public void upgradePlayer(Player aPlayer){
+    public void upgrade(Player aPlayer){
         grade++;
         aPlayer.setStudyHours(aPlayer.getStudyHours()-salary[grade-5]);
     }
@@ -36,8 +32,6 @@ public class CourseSquare extends Square {
     public void setGrade(int grade) {
         this.grade = grade;
     }
-
-
 
     public void setSalary(int[] salary) {
         this.salary = salary;
