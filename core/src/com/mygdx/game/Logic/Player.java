@@ -3,9 +3,10 @@ package com.mygdx.game.Logic;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.Logic.Squares.Square;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
 
     private final String name;
     private final Pawn pawn;

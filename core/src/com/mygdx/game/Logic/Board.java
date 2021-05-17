@@ -3,7 +3,9 @@ package com.mygdx.game.Logic;
 import com.mygdx.game.Logic.Squares.MoneySquare;
 import com.mygdx.game.Logic.Squares.Square;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable {
 
     public Square[][] squares;
     public int tilesPerSide;

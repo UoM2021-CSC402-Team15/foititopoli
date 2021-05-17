@@ -2,9 +2,10 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Squares.Square;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameInstance {
+public class GameInstance implements Serializable {
 
     private final int numberOfPlayers;
     private final float currency;

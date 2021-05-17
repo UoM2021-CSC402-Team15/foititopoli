@@ -1,11 +1,17 @@
 package com.mygdx.game.Logic.Squares;
 
-public abstract class Square {
+import com.mygdx.game.Logic.GameInstance;
+
+import java.io.Serializable;
+
+public abstract class Square implements Serializable {
 
     protected String name;
 
     public int i;
     public int j;
+
+
 
     public Square(String name) {
         this.name = name;
