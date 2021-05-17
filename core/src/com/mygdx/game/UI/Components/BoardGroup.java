@@ -122,7 +122,7 @@ public class BoardGroup extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         batch.draw(background,getX(),getY(),getWidth(),getHeight());
+        super.draw(batch, parentAlpha);
     }
 }
