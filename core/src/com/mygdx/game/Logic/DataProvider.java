@@ -1,5 +1,10 @@
 package com.mygdx.game.Logic;
 
+import com.badlogic.gdx.Game;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 public class DataProvider {
@@ -22,5 +27,23 @@ public class DataProvider {
     public static ArrayList<Pawn> getPawns() {
         readPawns();
         return pawns;
+    }
+     public GameInstance loadGame (String source){
+        try {
+            FileInputStream fis = new FileInputStream(source);
+            ObjectInputStream oist = new ObjectInputStream(fis);
+            GameInstance aGame =  (GameInstance) oist.readObject();
+            oist.close();
+            fis.close();
+
+            return aGame;
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -1,9 +1,13 @@
 package com.mygdx.game.Logic;
 
+import java.util.Random;
+
 public class Dice {
 
     public static int Roll() {
-        return 0;
+
+        Random rand = new Random();
+        return (int) (Math.random() * (6) + 1);
     }
 
 }
