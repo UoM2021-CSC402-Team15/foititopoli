@@ -8,11 +8,15 @@ public class CourseSquare extends Square {
    private double price;
 
 
-    public CourseSquare(String name,double price) {
+    public CourseSquare(String name, double price) {
         super(name);
         this.price = price;
 
+    }
 
+    public CourseSquare(String name, int semester, String direction, String description, String Professors, int price) {
+        super(name);
+        this.price = price;
     }
 
     public int getSalary(){

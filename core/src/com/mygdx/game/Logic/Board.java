@@ -1,9 +1,11 @@
 package com.mygdx.game.Logic;
 
+import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.Logic.Squares.MoneySquare;
 import com.mygdx.game.Logic.Squares.Square;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Board implements Serializable {
 
@@ -35,9 +37,10 @@ public class Board implements Serializable {
             }
         }
 
+        ArrayList<CourseSquare> courses = DataProvider.getCourses();
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < tilesPerSide - 1; j++) {
-                squares[i][j] = new MoneySquare("square: " + i + "| " + j);
+                squares[i][j] = courses.get(i*10+j);
             }
         }
 

@@ -1,15 +1,14 @@
 package com.mygdx.game.Logic;
 
-import com.badlogic.gdx.Game;
+import com.mygdx.game.Logic.Squares.CourseSquare;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class DataProvider {
 
     static ArrayList<Pawn> pawns = new ArrayList<>();
+    static ArrayList<CourseSquare> courseSquares = new ArrayList<>();
 
     private static void readPawns() {
         if (pawns.size() == 0) {
@@ -28,7 +27,8 @@ public class DataProvider {
         readPawns();
         return pawns;
     }
-     public static GameInstance loadGame (String source){
+
+    public static GameInstance loadGame (String source){
         try {
             FileInputStream fis = new FileInputStream(source);
             ObjectInputStream oist = new ObjectInputStream(fis);
@@ -45,5 +45,22 @@ public class DataProvider {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void readCourses(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        reader.readLine();
+        String row;
+        while ( (row = reader.readLine()) != null) {
+            String[] data = row.split(",");
+            if (data.length == 6) {
+                CourseSquare courseSquare = new CourseSquare(data[0], Integer.parseInt(data[1]), data[2], data[3], data[4], Integer.parseInt(data[5]));
+                courseSquares.add(courseSquare);
+            }
+        }
+    }
+
+    public static ArrayList<CourseSquare> getCourses() {
+        return courseSquares;
     }
 }
