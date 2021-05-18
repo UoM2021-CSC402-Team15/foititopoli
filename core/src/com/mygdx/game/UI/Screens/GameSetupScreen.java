@@ -13,6 +13,8 @@ import com.mygdx.game.Logic.DataProvider;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.GameInstance;
 
+import java.util.ArrayList;
+
 public class GameSetupScreen implements Screen {
 
     private final Stage stage;
@@ -67,7 +69,7 @@ public class GameSetupScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 GameInstance gameInstance = new GameInstance( (int)playersSlider.getValue(), currencySlider.getValue());
                 game.setGameInstance(gameInstance);
-                game.setScreen(new PlayerCreateScreen(game, DataProvider.getPawns(),currencySlider.getValue()));
+                game.setScreen(new PlayerCreateScreen(game, new ArrayList<>(DataProvider.getPawns()), currencySlider.getValue()));
             }
         });
 
@@ -88,7 +90,7 @@ public class GameSetupScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        ScreenUtils.clear(1, 1, 1, 1);
         stage.act();
         stage.draw();
     }

@@ -128,4 +128,8 @@ public class BoardGroup extends Group {
         batch.draw(background,getX(),getY(),getWidth(),getHeight());
         super.draw(batch, parentAlpha);
     }
+
+    public SquareActor[][] getSquareActors() {
+        return squareActors;
+    }
 }

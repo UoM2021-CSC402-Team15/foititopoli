@@ -35,15 +35,6 @@ public class SquareActor extends Group {
         Table table = new Table(Foititopoli.gameSkin);
         table.setFillParent(true);
 
-        this.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                System.out.println(square.getName());
-                System.out.println(getX() + "|" +getY());
-            }
-        });
-
         Label label = new Label("Hello", Foititopoli.gameSkin);
         label.setFontScale(0.5f);
         label.setAlignment(Align.center);
@@ -97,6 +88,10 @@ public class SquareActor extends Group {
     protected void rotationChanged() {
         super.rotationChanged();
         sprite.setRotation(getRotation());
+    }
+
+    public Object getSquare() {
+        return square;
     }
 }
 

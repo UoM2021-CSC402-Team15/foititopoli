@@ -3,9 +3,13 @@ package com.mygdx.game.Logic.Squares;
 import com.mygdx.game.Logic.Player;
 
 public class CourseSquare extends Square {
-   private int grade=0;
-   private int[] salary = new int[]{5,10,20,30,40,50};
-   private double price;
+    private int grade=0;
+    private int[] salary = new int[]{5,10,20,30,40,50};
+    private int semester;
+    private String direction;
+    private String description;
+    private String professors;
+    private double price;
 
 
     public CourseSquare(String name, double price) {
@@ -16,6 +20,10 @@ public class CourseSquare extends Square {
 
     public CourseSquare(String name, int semester, String direction, String description, String Professors, int price) {
         super(name);
+        this.semester = semester;
+        this.direction = direction;
+        this.description = description;
+        professors = Professors;
         this.price = price;
     }
 
@@ -47,5 +55,21 @@ public class CourseSquare extends Square {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getProfessors() {
+        return professors;
     }
 }

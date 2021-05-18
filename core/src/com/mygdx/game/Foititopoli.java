@@ -15,7 +15,7 @@ public class Foititopoli extends Game {
 	public Boolean backgroundMusicPlaying = false;
 
 	public void create() {
-		gameSkin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+		gameSkin = new Skin(Gdx.files.internal("skin/cloud-form-ui.json"));
 		this.setScreen(new MainMenuScreen(this));
 	}
 

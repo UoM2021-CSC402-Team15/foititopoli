@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -19,7 +21,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
+import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
+import com.mygdx.game.UI.Components.SquareActor;
+import com.mygdx.game.UI.Windows.CourseInfoWindow;
 import com.mygdx.game.UI.Windows.DebugConsole;
 import com.mygdx.game.UI.Windows.PauseWindow;
 
@@ -39,7 +44,7 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
-        Viewport viewport = new StretchViewport(1280,720, camera);
+        final Viewport viewport = new StretchViewport(1280,720, camera);
         this.stage = new Stage(viewport, batch);
 
         Label title = new Label("Game Screen", Foititopoli.gameSkin);
@@ -89,6 +94,23 @@ public class GameScreen implements Screen {
                 boardGroup.movePawn(pawn);
             }
         });
+
+        for (SquareActor[] side: boardGroup.getSquareActors()) {
+            for (final SquareActor square: side) {
+                square.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                        if (square.getSquare() instanceof CourseSquare) {
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare());
+                            infoWindow.setSize(500,150);
+                            infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
+                            stage.addActor(infoWindow);
+                        }
+                    }
+                });
+            }
+        }
     }
 
     @Override
