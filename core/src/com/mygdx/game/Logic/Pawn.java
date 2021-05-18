@@ -2,7 +2,9 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Squares.Square;
 
-public class Pawn {
+import java.io.Serializable;
+
+public class Pawn implements Serializable {
 
     private final String name;
 

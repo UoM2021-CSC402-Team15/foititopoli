@@ -40,6 +40,7 @@ public class PauseWindow extends Window{
 
                     FileOutputStream fouts = new FileOutputStream(f);
                     ObjectOutputStream douts = new ObjectOutputStream(fouts);
+                    game.getGameInstance().setListener(null);
                     douts.writeObject(game.getGameInstance());
                     douts.close();
                     fouts.close();
