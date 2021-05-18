@@ -50,13 +50,13 @@ public class Board implements Serializable {
     }
 
     public Square getDestination(Pawn pawn, int displacement) {
-        //TODO: implement it
-        return null;
+        int i = (pawn.getCurrentSquare().i + (pawn.getCurrentSquare().j + displacement)/squares[0].length)%4;
+        int j = (pawn.getCurrentSquare().j + displacement)%squares[0].length;
+        return squares[i][j];
     }
 
     public Square getDestination(int i, int j) {
-        //TODO: implement it
-        return null;
+        return squares[i][j];
     }
 
 }

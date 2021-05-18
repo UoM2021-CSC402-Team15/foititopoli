@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
     private final DebugConsole console;
     private Foititopoli game;
 
-    public GameScreen(Foititopoli game) {
+    public GameScreen(final Foititopoli game) {
         this.game = game;
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
@@ -47,6 +47,17 @@ public class GameScreen implements Screen {
         title.setY(Gdx.graphics.getHeight()*4/5f);
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
+
+        TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
+        rollButton.setWidth(Gdx.graphics.getWidth()/2f);
+        rollButton.setPosition(camera.viewportWidth/2f-rollButton.getWidth()/2,50);
+        rollButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.getGameInstance().gameLoop();
+            }
+        });
+        stage.addActor(rollButton);
 
         TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
         pauseButton.setWidth(Gdx.graphics.getWidth()/2f);
@@ -71,6 +82,7 @@ public class GameScreen implements Screen {
 
         console = new DebugConsole(game.getGameInstance(), stage);
 
+        game.getGameInstance().initialize();
         game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
             @Override
             public void pawnPositionUpdated(Pawn pawn) {

@@ -14,6 +14,8 @@ public class GameInstance implements Serializable {
     private GameInstanceListener listener;
     private Board board;
 
+    private Player currentPlayer;
+
     public interface GameInstanceListener {
         void pawnPositionUpdated(Pawn pawn);
     }
@@ -36,6 +38,21 @@ public class GameInstance implements Serializable {
     public void movePawn(Pawn pawn, Square square) {
         pawn.setCurrentSquare(square);
         listener.pawnPositionUpdated(pawn);
+    }
+
+    public void initialize() {
+        if (currentPlayer==null) {
+            currentPlayer = players.get(0);
+        }
+    }
+
+    public void gameLoop() {
+        int dice = Dice.roll() + Dice.roll();
+        System.out.println("Roll=" + dice);
+        Square square = board.getDestination(currentPlayer.getPawn(), dice);
+        currentPlayer.getPawn().setCurrentSquare(square);
+        listener.pawnPositionUpdated(currentPlayer.getPawn());
+        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
     }
 
     public ArrayList<Player> getPlayers() {
