@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
+import com.mygdx.game.Logic.DataProvider;
+import com.mygdx.game.Logic.GameInstance;
 
 public class LoadGameScreen implements Screen {
 
@@ -35,6 +37,9 @@ public class LoadGameScreen implements Screen {
             loadButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
+                    GameInstance loadedGame = DataProvider.loadGame("save.ser");
+                    game.setGameInstance(loadedGame);
+                    System.out.println(loadedGame.getPlayers());
                     game.setScreen(new GameScreen(game));
                 }
             });

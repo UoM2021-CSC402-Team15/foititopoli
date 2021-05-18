@@ -58,16 +58,11 @@ public class SquareActor extends Group {
         addActor(table);
     }
 
-    public void moveLeft(float x) {
+    public void setPositionLeft(float x) {
         float moveX = x * MathUtils.cosDeg(getRotation());
         float moveY = x * MathUtils.sinDeg(getRotation());
-        float finalX = getX()-moveX;
-        float finalY = getY()-moveY;
-
-        float speed = 300;  //pixels per second
-
-        float distance = (float) Math.sqrt(Math.pow(finalX - getX(), 2) + Math.pow(finalY - getY(), 2));
-        addAction(Actions.moveTo(finalX, finalY, distance/speed));
+        setX(getX()-moveX);
+        setY(getY()-moveY);
     }
 
     public Vector2 getCenter() {

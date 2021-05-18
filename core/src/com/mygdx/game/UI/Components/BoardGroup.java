@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.game.Logic.Board;
 import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
+import com.mygdx.game.Logic.Squares.Square;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +35,6 @@ public class BoardGroup extends Group {
         squareActors = new SquareActor[board.squares.length][board.squares[0].length];
         for (int i = 0; i < board.squares.length; i++) {
             for (int j = 0; j < board.squares[i].length; j++) {
-                System.out.println("test");
                 squareActors[i][j] = new SquareActor(board.squares[i][j]);
             }
         }
@@ -42,16 +42,19 @@ public class BoardGroup extends Group {
         drawBoard(basicTileWidth);
 
         for(Player player: players) {
-            pawnActors.put(player.getPawn(),new PawnActor(player.getPawn()));
+            pawnActors.put(player.getPawn(), new PawnActor(player.getPawn()));
         }
         for(PawnActor pawnActor: pawnActors.values()) { ;
             this.addActor(pawnActor);
-            pawnActor.getPawn().setCurrentSquare(board.squares[0][0]);
-            pawnActor.moveTo(squareActors[0][0].getCenter().x, squareActors[0][0].getCenter().y);
+            if (pawnActor.getPawn().getCurrentSquare() == null) {
+                pawnActor.getPawn().setCurrentSquare(board.squares[0][0]);
+            }
+            Square currentSquare = pawnActor.getPawn().getCurrentSquare();
+            SquareActor currentSquareActor = squareActors[currentSquare.i][currentSquare.j];
+            pawnActor.setPosition(currentSquareActor.getCenter().x, currentSquareActor.getCenter().y);
+            pawnActor.setRotation(-currentSquare.i*90);
         }
     }
-
-
 
     public void movePawn(Pawn pawn) {
 
@@ -116,7 +119,7 @@ public class BoardGroup extends Group {
             squares.get(i).setRotation(rotation);
             squares.get(i).setPosition(startX,startY);
             addActor(squares.get(i));
-            squares.get(i).moveLeft(i*basicTileWidth);
+            squares.get(i).setPositionLeft(i*basicTileWidth);
         }
     }
 

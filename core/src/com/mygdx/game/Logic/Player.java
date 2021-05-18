@@ -10,7 +10,6 @@ public class Player implements Serializable {
 
     private final String name;
     private final Pawn pawn;
-    private Square currentSquare;
     private double studyHours;
     private double startSalary;
     private int turnsToPlay;
@@ -30,14 +29,6 @@ public class Player implements Serializable {
         this.studyHours = this.studyHours - c.getPrice();
         c.setGrade(5);
          courseList.add(c);
-    }
-
-    public Square getCurrentSquare() {
-        return currentSquare;
-    }
-
-    public void setCurrentSquare(Square currentSquare) {
-        this.currentSquare = currentSquare;
     }
 
     public double getStudyHours() {
@@ -82,5 +73,13 @@ public class Player implements Serializable {
 
     public ArrayList<CourseSquare> getCourseList() {
         return courseList;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "name='" + name + '\'' +
+                ", pawn=" + pawn +
+                '}';
     }
 }

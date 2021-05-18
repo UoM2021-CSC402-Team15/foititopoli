@@ -11,13 +11,20 @@ public abstract class Square implements Serializable {
     public int i;
     public int j;
 
-
-
     public Square(String name) {
         this.name = name;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Square{" +
+                "name='" + name + '\'' +
+                ", i=" + i +
+                ", j=" + j +
+                '}';
     }
 }

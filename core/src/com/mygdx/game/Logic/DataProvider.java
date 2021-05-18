@@ -28,7 +28,7 @@ public class DataProvider {
         readPawns();
         return pawns;
     }
-     public GameInstance loadGame (String source){
+     public static GameInstance loadGame (String source){
         try {
             FileInputStream fis = new FileInputStream(source);
             ObjectInputStream oist = new ObjectInputStream(fis);

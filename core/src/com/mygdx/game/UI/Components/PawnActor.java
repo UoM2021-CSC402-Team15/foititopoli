@@ -77,4 +77,9 @@ public class PawnActor extends Actor {
         super.rotationChanged();
         sprite.setRotation(getRotation());
     }
+
+    @Override
+    public void setPosition(float x, float y) {
+        super.setPosition(x-getWidth()/2, y-getHeight()/2);
+    }
 }
