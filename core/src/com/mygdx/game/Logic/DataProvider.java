@@ -48,9 +48,8 @@ public class DataProvider {
         return null;
     }
 
-    public static void readCourses(File file) throws IOException {
-        try (FileInputStream fis = new FileInputStream(file);
-             InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+    public static void readCourses(InputStream stream) throws IOException {
+        try (InputStreamReader isr = new InputStreamReader(stream, StandardCharsets.UTF_8);
              BufferedReader reader = new BufferedReader(isr)
         ) {
             reader.readLine();

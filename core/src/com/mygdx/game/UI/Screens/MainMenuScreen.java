@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.DataProvider;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MainMenuScreen implements Screen {
@@ -102,7 +101,7 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, 1280, 720);
 
         try {
-            DataProvider.readCourses(Gdx.files.internal("data/courses.csv").file());
+            DataProvider.readCourses(Gdx.files.internal("data/courses.csv").read());
         } catch (IOException e) {
             e.printStackTrace();
         }
