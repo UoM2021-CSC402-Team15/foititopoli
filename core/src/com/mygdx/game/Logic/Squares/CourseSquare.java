@@ -27,8 +27,12 @@ public class CourseSquare extends Square {
         this.price = price;
     }
 
-    public int getSalary(){
+    public int getSalaryValue(){
          return salary[grade-5];
+    }
+
+    public int[] getSalary() {
+        return salary;
     }
 
     public void upgrade(Player aPlayer){
@@ -72,4 +76,6 @@ public class CourseSquare extends Square {
     public String getProfessors() {
         return professors;
     }
+
+
 }

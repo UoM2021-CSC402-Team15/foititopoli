@@ -70,4 +70,10 @@ public class CourseInfoWindow extends Window {
     }
 
 
+    private Boolean checkCanUpgrade() {
+        Boolean isAlreadyBoughtByPlayer = currentPlayer.getCourseList().contains(course);
+        Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getSalary()[course.getGrade()-4];
+        Boolean hasMaximumGrade = course.getGrade() == 10;
+        return isAlreadyBoughtByPlayer && hasEnoughMoney && !hasMaximumGrade;
+    }
 }
