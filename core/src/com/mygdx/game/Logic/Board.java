@@ -46,15 +46,14 @@ public class Board implements Serializable {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < tilesPerSide - 1; j++) {
-                squares[i][j].i =i;
-                squares[i][j].j =j;
+                squares[i][j].setIJ(i,j);
             }
         }
     }
 
     public Square getDestination(Pawn pawn, int displacement) {
-        int i = (pawn.getCurrentSquare().i + (pawn.getCurrentSquare().j + displacement)/squares[0].length)%4;
-        int j = (pawn.getCurrentSquare().j + displacement)%squares[0].length;
+        int i = (pawn.getCurrentSquare().getI() + (pawn.getCurrentSquare().getJ() + displacement)/squares[0].length)%4;
+        int j = (pawn.getCurrentSquare().getJ() + displacement)%squares[0].length;
         return squares[i][j];
     }
 

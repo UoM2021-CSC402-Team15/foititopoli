@@ -9,5 +9,4 @@ public class Dice {
         Random rand = new Random();
         return (int) (Math.random() * (6) + 1);
     }
-
 }

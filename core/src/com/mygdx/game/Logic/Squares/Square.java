@@ -1,14 +1,12 @@
 package com.mygdx.game.Logic.Squares;
 
-import com.mygdx.game.Logic.GameInstance;
-
 import java.io.Serializable;
 
 public abstract class Square implements Serializable {
 
     protected String name;
-    public int i;
-    public int j;
+    private int i;
+    private int j;
 
     public Square(String name) {
         this.name = name;
@@ -25,5 +23,18 @@ public abstract class Square implements Serializable {
                 ", i=" + i +
                 ", j=" + j +
                 '}';
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public void setIJ(int i, int j) {
+        this.i = i;
+        this.j = j;
     }
 }

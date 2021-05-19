@@ -70,4 +70,8 @@ public class GameInstance implements Serializable {
     public Board getBoard() {
         return board;
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }

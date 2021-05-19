@@ -102,7 +102,7 @@ public class GameScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
                         if (square.getSquare() instanceof CourseSquare) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare());
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(),game.getGameInstance().getCurrentPlayer());
                             infoWindow.setSize(500,150);
                             infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
                             stage.addActor(infoWindow);

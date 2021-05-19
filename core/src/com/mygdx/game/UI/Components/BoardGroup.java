@@ -50,9 +50,9 @@ public class BoardGroup extends Group {
                 pawnActor.getPawn().setCurrentSquare(board.squares[0][0]);
             }
             Square currentSquare = pawnActor.getPawn().getCurrentSquare();
-            SquareActor currentSquareActor = squareActors[currentSquare.i][currentSquare.j];
+            SquareActor currentSquareActor = squareActors[currentSquare.getI()][currentSquare.getJ()];
             pawnActor.setPosition(currentSquareActor.getCenter().x, currentSquareActor.getCenter().y);
-            pawnActor.setRotation(-currentSquare.i*90);
+            pawnActor.setRotation(-currentSquare.getI()*90);
         }
     }
 
@@ -62,11 +62,11 @@ public class BoardGroup extends Group {
 
         PawnActor pawnActor = pawnActors.get(pawn);
 
-        int currentI = pawn.getOldSquare().i;
-        int currentJ = pawn.getOldSquare().j;
+        int currentI = pawn.getOldSquare().getI();
+        int currentJ = pawn.getOldSquare().getJ();
 
-        int destinationI = pawn.getCurrentSquare().i;
-        int destinationJ = pawn.getCurrentSquare().j;
+        int destinationI = pawn.getCurrentSquare().getI();
+        int destinationJ = pawn.getCurrentSquare().getJ();
 
         for (int i = 0; i < 10; i++) { //So it doesnt continue to infinity
 
