@@ -37,7 +37,7 @@ public class LoadGameScreen implements Screen {
             loadButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    GameInstance loadedGame = DataProvider.loadGame("save.ser");
+                    GameInstance loadedGame = DataProvider.loadGame(Gdx.files.local("save.ser").read());
                     game.setGameInstance(loadedGame);
                     System.out.println(loadedGame.getPlayers());
                     game.setScreen(new GameScreen(game));

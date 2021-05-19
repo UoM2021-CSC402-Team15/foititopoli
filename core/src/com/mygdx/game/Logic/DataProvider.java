@@ -29,13 +29,12 @@ public class DataProvider {
         return pawns;
     }
 
-    public static GameInstance loadGame (String source){
+    public static GameInstance loadGame (InputStream stream){
         try {
-            FileInputStream fis = new FileInputStream(source);
-            ObjectInputStream oist = new ObjectInputStream(fis);
+            ObjectInputStream oist = new ObjectInputStream(stream);
             GameInstance aGame =  (GameInstance) oist.readObject();
             oist.close();
-            fis.close();
+            stream.close();
 
             return aGame;
         } catch (IOException e) {

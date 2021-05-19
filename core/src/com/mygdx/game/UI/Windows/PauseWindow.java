@@ -1,5 +1,6 @@
 package com.mygdx.game.UI.Windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -9,10 +10,7 @@ import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.UI.Screens.MainMenuScreen;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 
 public class PauseWindow extends Window{
@@ -35,10 +33,7 @@ public class PauseWindow extends Window{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-
-                    File f = new File("save.ser");
-
-                    FileOutputStream fouts = new FileOutputStream(f);
+                    OutputStream fouts = Gdx.files.local("save.ser").write(false);
                     ObjectOutputStream douts = new ObjectOutputStream(fouts);
                     game.getGameInstance().setListener(null);
                     douts.writeObject(game.getGameInstance());
