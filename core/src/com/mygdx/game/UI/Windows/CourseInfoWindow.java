@@ -34,44 +34,19 @@ public class CourseInfoWindow extends Window {
         final TextButton buyButton = new TextButton("Buy", Foititopoli.gameSkin);
         add(buyButton).row();
 
-        final TextButton upgradeButton = new TextButton("Upgrade", Foititopoli.gameSkin);
-        add(upgradeButton).row();
-
+        refreshBuyButton(buyButton);
         buyButton.addListener(new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                currentPlayer.buySquare(course);
+                if (buyButton.getText().toString().toLowerCase().contains("buy")) {
+                    currentPlayer.buySquare(course);
+                } else if (buyButton.getText().toString().toLowerCase().contains("upgrade")) {
+                    course.upgrade(currentPlayer);
+                }
                 moneyLabel.setText(aPlayer.getStudyHours()+"");
-                if (!checkCanBuy()){
-                    buyButton.setDisabled(true);
-                    buyButton.setTouchable(Touchable.disabled);
-                }
-                if (checkCanUpgrade()){
-                    upgradeButton.setDisabled(false);
-                    upgradeButton.setTouchable(Touchable.enabled);
-                }
+                refreshBuyButton(buyButton);
             }
         });
-        if (!checkCanBuy()){
-            buyButton.setDisabled(true);
-            buyButton.setTouchable(Touchable.disabled);
-        }
-        upgradeButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                course.upgrade(currentPlayer);
-                moneyLabel.setText(aPlayer.getStudyHours()+"");
-                if (!checkCanUpgrade()){
-                    upgradeButton.setDisabled(true);
-                    upgradeButton.setTouchable(Touchable.disabled);
-                }
-
-            }
-        });
-        if (!checkCanUpgrade()){
-            upgradeButton.setDisabled(true);
-            upgradeButton.setTouchable(Touchable.disabled);
-        }
 
         TextButton closeButton = new TextButton("Close", Foititopoli.gameSkin);
         closeButton.addListener(new ClickListener() {
@@ -86,13 +61,28 @@ public class CourseInfoWindow extends Window {
         setModal(true);
     }
 
+    private void refreshBuyButton(TextButton button) {
+        if (checkCanBuy()) {
+            button.setTouchable(Touchable.enabled);
+            button.setDisabled(false);
+            button.setText("Buy Course");
+        } else if (checkCanUpgrade()) {
+            button.setTouchable(Touchable.enabled);
+            button.setDisabled(false);
+            button.setText("Upgrade Course");
+        } else {
+            button.setText("Max Upgrades");
+            button.setTouchable(Touchable.disabled);
+            button.setDisabled(true);
+        }
+    }
+
     private Boolean checkCanBuy() {
         Boolean isOnSameSquare = currentPlayer.getPawn().getCurrentSquare().equals(course);
         Boolean isAlreadyBought = course.getGrade() >= 5;
         Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getPrice();
         return !isAlreadyBought && hasEnoughMoney && isOnSameSquare;
     }
-
 
     private Boolean checkCanUpgrade() {
         if (course.getGrade()==0) return false;
