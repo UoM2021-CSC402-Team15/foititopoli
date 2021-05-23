@@ -27,11 +27,16 @@ public class CourseSquare extends Square {
         this.price = price;
     }
 
-    public int getSalaryValue(){
+    public int getSalary(){
          return salary[grade-5];
     }
 
-    public int[] getSalary() {
+    public int getUpgradeCost() {
+        if (grade==10) return 0;
+        return salary[grade-4];
+    }
+
+    public int[] getSalaryArray() {
         return salary;
     }
 

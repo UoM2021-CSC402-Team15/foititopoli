@@ -95,8 +95,9 @@ public class CourseInfoWindow extends Window {
 
 
     private Boolean checkCanUpgrade() {
+        if (course.getGrade()==0) return false;
         Boolean isAlreadyBoughtByPlayer = currentPlayer.getCourseList().contains(course);
-        Boolean hasEnoughMoney = course.getGrade()-4>=0 && currentPlayer.getStudyHours() >= course.getSalary()[course.getGrade()-4];
+        Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getUpgradeCost();
         Boolean hasMaximumGrade = course.getGrade() == 10;
         return isAlreadyBoughtByPlayer && hasEnoughMoney && !hasMaximumGrade;
     }

@@ -61,9 +61,8 @@ public class GameScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
 
                 if (rollButton.getText().toString().equals("Roll")){
-                game.getGameInstance().gameLoop();
-                rollButton.setText("End Turn");
-                    System.out.println("eeeeeeeeeeeeeee");
+                    game.getGameInstance().gameLoop();
+                    rollButton.setText("End Turn");
                 }
                 else{
                     game.getGameInstance().endTurn();
