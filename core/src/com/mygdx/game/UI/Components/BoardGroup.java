@@ -56,7 +56,7 @@ public class BoardGroup extends Group {
         }
     }
 
-    public void movePawn(Pawn pawn) {
+    public int movePawn(Pawn pawn) {
 
         SequenceAction sequence = new SequenceAction();
 
@@ -94,6 +94,7 @@ public class BoardGroup extends Group {
             }
         }
         pawnActor.addAction(sequence);
+        return sequence.getActions().size;
     }
 
     private void drawBoard(float basicTileWidth) {

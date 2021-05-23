@@ -70,10 +70,12 @@ public class CourseInfoWindow extends Window {
             button.setTouchable(Touchable.enabled);
             button.setDisabled(false);
             button.setText("Upgrade Course");
-        } else {
+        } else if (course.getGrade()==10){
             button.setText("Max Upgrades");
             button.setTouchable(Touchable.disabled);
             button.setDisabled(true);
+        } else {
+            button.remove();
         }
     }
 

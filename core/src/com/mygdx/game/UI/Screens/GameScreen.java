@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
@@ -99,8 +100,19 @@ public class GameScreen implements Screen {
         game.getGameInstance().initialize();
         game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
             @Override
-            public void pawnPositionUpdated(Pawn pawn) {
-                boardGroup.movePawn(pawn);
+            public void pawnPositionUpdated(final Pawn pawn) {
+                int time = boardGroup.movePawn(pawn);
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (pawn.getCurrentSquare() instanceof CourseSquare) {
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer());
+                            infoWindow.setSize(500,150);
+                            infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
+                            stage.addActor(infoWindow);
+                        }
+                    }
+                }, time);
             }
         });
 
