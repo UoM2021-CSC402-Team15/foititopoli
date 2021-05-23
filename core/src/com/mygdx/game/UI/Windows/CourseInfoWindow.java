@@ -34,6 +34,9 @@ public class CourseInfoWindow extends Window {
         final TextButton buyButton = new TextButton("Buy", Foititopoli.gameSkin);
         add(buyButton).row();
 
+        final TextButton upgradeButton = new TextButton("Upgrade", Foititopoli.gameSkin);
+        add(upgradeButton).row();
+
         buyButton.addListener(new ChangeListener(){
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -43,11 +46,31 @@ public class CourseInfoWindow extends Window {
                     buyButton.setDisabled(true);
                     buyButton.setTouchable(Touchable.disabled);
                 }
+                if (checkCanUpgrade()){
+                    upgradeButton.setDisabled(false);
+                    upgradeButton.setTouchable(Touchable.enabled);
+                }
             }
         });
         if (!checkCanBuy()){
             buyButton.setDisabled(true);
             buyButton.setTouchable(Touchable.disabled);
+        }
+        upgradeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                course.upgrade(currentPlayer);
+                moneyLabel.setText(aPlayer.getStudyHours()+"");
+                if (!checkCanUpgrade()){
+                    upgradeButton.setDisabled(true);
+                    upgradeButton.setTouchable(Touchable.disabled);
+                }
+
+            }
+        });
+        if (!checkCanUpgrade()){
+            upgradeButton.setDisabled(true);
+            upgradeButton.setTouchable(Touchable.disabled);
         }
 
         TextButton closeButton = new TextButton("Close", Foititopoli.gameSkin);
@@ -64,15 +87,16 @@ public class CourseInfoWindow extends Window {
     }
 
     private Boolean checkCanBuy() {
+        Boolean isOnSameSquare = currentPlayer.getPawn().getCurrentSquare().equals(course);
         Boolean isAlreadyBought = course.getGrade() >= 5;
         Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getPrice();
-        return !isAlreadyBought && hasEnoughMoney;
+        return !isAlreadyBought && hasEnoughMoney && isOnSameSquare;
     }
 
 
     private Boolean checkCanUpgrade() {
         Boolean isAlreadyBoughtByPlayer = currentPlayer.getCourseList().contains(course);
-        Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getSalary()[course.getGrade()-4];
+        Boolean hasEnoughMoney = course.getGrade()-4>=0 && currentPlayer.getStudyHours() >= course.getSalary()[course.getGrade()-4];
         Boolean hasMaximumGrade = course.getGrade() == 10;
         return isAlreadyBoughtByPlayer && hasEnoughMoney && !hasMaximumGrade;
     }

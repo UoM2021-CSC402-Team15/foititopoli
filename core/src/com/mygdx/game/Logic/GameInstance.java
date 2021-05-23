@@ -45,6 +45,9 @@ public class GameInstance implements Serializable {
             currentPlayer = players.get(0);
         }
     }
+    public void endTurn(){
+        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+    }
 
     public void gameLoop() {
         int dice = Dice.roll() + Dice.roll();
@@ -52,7 +55,7 @@ public class GameInstance implements Serializable {
         Square square = board.getDestination(currentPlayer.getPawn(), dice);
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
-        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+
     }
 
     public ArrayList<Player> getPlayers() {

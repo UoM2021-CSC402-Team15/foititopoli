@@ -53,13 +53,23 @@ public class GameScreen implements Screen {
         title.setWidth(Gdx.graphics.getWidth());
         stage.addActor(title);
 
-        TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
+        final TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
         rollButton.setWidth(Gdx.graphics.getWidth()/2f);
         rollButton.setPosition(camera.viewportWidth/2f-rollButton.getWidth()/2,50);
         rollButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
+                if (rollButton.getText().toString().equals("Roll")){
                 game.getGameInstance().gameLoop();
+                rollButton.setText("End Turn");
+                    System.out.println("eeeeeeeeeeeeeee");
+                }
+                else{
+                    game.getGameInstance().endTurn();
+                    rollButton.setText("Roll");
+                }
+
             }
         });
         stage.addActor(rollButton);

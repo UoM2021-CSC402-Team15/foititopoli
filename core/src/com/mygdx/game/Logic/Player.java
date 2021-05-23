@@ -28,7 +28,7 @@ public class Player implements Serializable {
     public void buySquare(CourseSquare c){
         this.studyHours = this.studyHours - c.getPrice();
         c.setGrade(5);
-         courseList.add(c);
+        courseList.add(c);
     }
 
     public double getStudyHours() {
