@@ -101,6 +101,12 @@ public class GameScreen implements Screen {
             @Override
             public void pawnPositionUpdated(Pawn pawn) {
                 boardGroup.movePawn(pawn);
+                if (pawn.getCurrentSquare() instanceof CourseSquare) {
+                    CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer());
+                    infoWindow.setSize(500,150);
+                    infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
+                    stage.addActor(infoWindow);
+                }
             }
         });
 
