@@ -74,12 +74,13 @@ public class GameScreen implements Screen {
         });
         stage.addActor(rollButton);
 
-        TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
+        final TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
         pauseButton.setWidth(Gdx.graphics.getWidth()/2f);
         pauseButton.setPosition(camera.viewportWidth/2f-pauseButton.getWidth()/2,20);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                pauseWindow.setSize(300,200);
                 pauseWindow.setPosition(camera.viewportWidth/2,camera.viewportHeight/2);
                 stage.addActor(pauseWindow);
             }
@@ -125,7 +126,7 @@ public class GameScreen implements Screen {
                         if (square.getSquare() instanceof CourseSquare) {
                             CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(),game.getGameInstance().getCurrentPlayer());
                             infoWindow.setSize(500,150);
-                            infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
+                            infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2f, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2f);
                             stage.addActor(infoWindow);
                         }
                     }
@@ -152,6 +153,7 @@ public class GameScreen implements Screen {
             if (pauseWindow.hasParent()) {
                 pauseWindow.remove();
             } else {
+                pauseWindow.setSize(300,200);
                 pauseWindow.setPosition(camera.viewportWidth/2,camera.viewportHeight/2);
                 stage.addActor(pauseWindow);
             }
