@@ -1,15 +1,18 @@
 package com.mygdx.game.Logic;
 
+import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DataProvider {
 
-    static ArrayList<Pawn> pawns = new ArrayList<>();
-    static ArrayList<CourseSquare> courseSquares = new ArrayList<>();
+   private static ArrayList<Pawn> pawns = new ArrayList<>();
+   private static ArrayList<CourseSquare> courseSquares = new ArrayList<>();
+   private static ArrayList<Card> cardList = new ArrayList<>();
 
     private static void readPawns() {
         if (pawns.size() == 0) {
@@ -22,6 +25,11 @@ public class DataProvider {
             pawns.add( new Pawn("racing car") );
             pawns.add( new Pawn("battleship") );
         }
+    }
+    public static  Card drawCard(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(cardList.size());
+         return cardList.get(randomNumber);
     }
 
     public static ArrayList<Pawn> getPawns() {

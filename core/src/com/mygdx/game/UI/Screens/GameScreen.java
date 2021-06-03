@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
+import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
@@ -117,7 +118,19 @@ public class GameScreen implements Screen {
                     }
                 }, time);
             }
+
+            @Override
+            public void playerUpdated(Player aPlayer) {
+
+            }
+
+            @Override
+            public void playerDrewCard(Card aCard) {
+
+            }
         });
+
+
 
         for (SquareActor[] side: boardGroup.getSquareActors()) {
             for (final SquareActor square: side) {

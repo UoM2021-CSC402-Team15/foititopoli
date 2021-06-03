@@ -20,7 +20,7 @@ public class PlayerCreateScreen implements Screen {
 
     private final Stage stage;
 
-    public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns, final double studyHours) {
+    public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns, final float studyHours) {
 
         Viewport viewport = new StretchViewport(720,400);;
         stage = new Stage(viewport);
