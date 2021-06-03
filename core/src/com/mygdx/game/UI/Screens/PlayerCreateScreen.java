@@ -28,7 +28,7 @@ public class PlayerCreateScreen implements Screen {
         int currentPlayerNumber = game.getGameInstance().getPlayers().size()+1;
         Label title = new Label("Create Player " + currentPlayerNumber, Foititopoli.gameSkin);
 
-        final TextField nameText = new TextField("Enter a name", Foititopoli.gameSkin);
+        final TextField nameText = new TextField("Player "+currentPlayerNumber, Foititopoli.gameSkin);
 
         // Pawn Selector
         String[] strings = new String[availablePawns.size()];

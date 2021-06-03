@@ -14,10 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -101,6 +98,32 @@ public class GameScreen implements Screen {
 
         console = new DebugConsole(game.getGameInstance(), stage);
 
+        class PlayerTable extends Button {
+            Player player;
+            Label money;
+            public PlayerTable(Player player) {
+                super(Foititopoli.gameSkin);
+                this.player = player;
+                Label name = new Label(player.getName(), Foititopoli.gameSkin);
+                add(name).expand().fill().row();
+                money = new Label("Money: " + player.getStudyHours(), Foititopoli.gameSkin);
+                add(money).expand().fill();
+                padLeft(30);
+                padRight(30);
+                pad(20);
+            }
+            public void update() {
+                money.setText("Money: " + player.getStudyHours());
+            }
+        }
+        final VerticalGroup playerGroup = new VerticalGroup();
+        for (Player player: game.getGameInstance().getPlayers()) {
+            playerGroup.addActor(new PlayerTable(player));
+        }
+        playerGroup.setPosition(900, 200);
+        playerGroup.setSize(500,500);
+        stage.addActor(playerGroup);
+
         game.getGameInstance().initialize();
         game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
             @Override
@@ -121,7 +144,8 @@ public class GameScreen implements Screen {
 
             @Override
             public void playerUpdated(Player aPlayer) {
-
+                PlayerTable playerTable = (PlayerTable) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(aPlayer));
+                playerTable.update();
             }
 
             @Override
@@ -129,8 +153,6 @@ public class GameScreen implements Screen {
 
             }
         });
-
-
 
         for (SquareActor[] side: boardGroup.getSquareActors()) {
             for (final SquareActor square: side) {
@@ -148,28 +170,12 @@ public class GameScreen implements Screen {
                 });
             }
         }
-        class PlayerTable extends Table {
-            public PlayerTable(Player player) {
-                Label name = new Label(player.getName(), Foititopoli.gameSkin);
-                add(name).expand().fill().row();
-                Label money = new Label("Money: " + player.getStudyHours(), Foititopoli.gameSkin);
-                add(money).expand().fill();
-                pad(10);
-            }
-        }
-        VerticalGroup playerGroup = new VerticalGroup();
-        for (Player player: game.getGameInstance().getPlayers()) {
-            playerGroup.addActor(new PlayerTable(player));
-        }
-        playerGroup.setPosition(900, 200);
-        playerGroup.setSize(500,500);
-        stage.addActor(playerGroup);
     }
 
     @Override
     public void render(float delta) {
 
-        ScreenUtils.clear(1, 1, 1, 1);
+        ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
