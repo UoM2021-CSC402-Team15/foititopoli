@@ -34,6 +34,7 @@ import com.mygdx.game.UI.Components.SquareActor;
 import com.mygdx.game.UI.Windows.CourseInfoWindow;
 import com.mygdx.game.UI.Windows.DebugConsole;
 import com.mygdx.game.UI.Windows.PauseWindow;
+import com.mygdx.game.UI.Windows.TradeWindow;
 
 public class GameScreen implements Screen {
 
@@ -117,8 +118,17 @@ public class GameScreen implements Screen {
             }
         }
         final VerticalGroup playerGroup = new VerticalGroup();
-        for (Player player: game.getGameInstance().getPlayers()) {
-            playerGroup.addActor(new PlayerTable(player));
+        for (final Player player: game.getGameInstance().getPlayers()) {
+            PlayerTable playerTable = new PlayerTable(player);
+            playerTable.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    if (game.getGameInstance().getCurrentPlayer()!=player) {
+                        stage.addActor(new TradeWindow(game.getGameInstance().getCurrentPlayer(), player));
+                    }
+                }
+            });
+            playerGroup.addActor(playerTable);
         }
         playerGroup.setPosition(900, 200);
         playerGroup.setSize(500,500);
