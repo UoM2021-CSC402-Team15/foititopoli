@@ -23,7 +23,7 @@ public class LoadGameScreen implements Screen {
 
         public SavedGameItem(String name) {
 
-            Viewport viewport = new StretchViewport(1280,720);
+            Viewport viewport = new StretchViewport(720,400);;
             stage = new Stage(viewport);
 
             TextButton loadButton = new TextButton("Load", Foititopoli.gameSkin);

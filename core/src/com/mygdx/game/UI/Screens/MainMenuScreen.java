@@ -37,7 +37,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
 
         batch = new SpriteBatch();
-        Viewport viewport = new StretchViewport(1280,720);
+        Viewport viewport = new StretchViewport(720,400);;
         stage = new Stage(viewport, batch);
 
         Table table = new Table();

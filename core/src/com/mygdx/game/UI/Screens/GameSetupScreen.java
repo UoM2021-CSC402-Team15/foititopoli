@@ -21,7 +21,7 @@ public class GameSetupScreen implements Screen {
 
     public GameSetupScreen(final Foititopoli game) {
 
-        Viewport viewport = new StretchViewport(1280,720);
+        Viewport viewport = new StretchViewport(720,400);
         stage = new Stage(viewport);
 
         Label title = new Label("Create Game", Foititopoli.gameSkin);
@@ -54,15 +54,6 @@ public class GameSetupScreen implements Screen {
             }
         });
 
-        VerticalGroup verticalGroup = new VerticalGroup();
-        //verticalGroup.setWidth(Gdx.graphics.getWidth());
-        ScrollPane scrollPane = new ScrollPane(verticalGroup);
-
-        for (int i = 0; i < 15; i++) {
-            CheckBox checkBox = new CheckBox("option " + i, Foititopoli.gameSkin);
-            verticalGroup.addActor(checkBox);
-        }
-
         TextButton createGameButton = new TextButton("Create Game", Foititopoli.gameSkin);
         createGameButton.addListener(new ChangeListener() {
             @Override
@@ -81,7 +72,6 @@ public class GameSetupScreen implements Screen {
         mainTable.add(playersSlider).row();
         mainTable.add(currencyLabel).row();
         mainTable.add(currencySlider).row();
-        mainTable.add(scrollPane).row();
         mainTable.add(createGameButton).row();
         mainTable.add(backButton).padTop(20).padBottom(10);
 

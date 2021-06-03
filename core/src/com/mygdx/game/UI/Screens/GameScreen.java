@@ -3,17 +3,24 @@ package com.mygdx.game.UI.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -22,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
+import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
@@ -47,12 +55,6 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 1280, 720);
         final Viewport viewport = new StretchViewport(1280,720, camera);
         this.stage = new Stage(viewport, batch);
-
-        Label title = new Label("Game Screen", Foititopoli.gameSkin);
-        title.setAlignment(Align.center);
-        title.setY(Gdx.graphics.getHeight()*4/5f);
-        title.setWidth(Gdx.graphics.getWidth());
-        stage.addActor(title);
 
         final TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
         rollButton.setWidth(Gdx.graphics.getWidth()/2f);
@@ -133,12 +135,28 @@ public class GameScreen implements Screen {
                 });
             }
         }
+        class PlayerTable extends Table {
+            public PlayerTable(Player player) {
+                Label name = new Label(player.getName(), Foititopoli.gameSkin);
+                add(name).expand().fill().row();
+                Label money = new Label("Money: " + player.getStudyHours(), Foititopoli.gameSkin);
+                add(money).expand().fill();
+                pad(10);
+            }
+        }
+        VerticalGroup playerGroup = new VerticalGroup();
+        for (Player player: game.getGameInstance().getPlayers()) {
+            playerGroup.addActor(new PlayerTable(player));
+        }
+        playerGroup.setPosition(900, 200);
+        playerGroup.setSize(500,500);
+        stage.addActor(playerGroup);
     }
 
     @Override
     public void render(float delta) {
 
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        ScreenUtils.clear(1, 1, 1, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
