@@ -10,13 +10,13 @@ public class Player implements Serializable {
 
     private final String name;
     private final Pawn pawn;
-    private double studyHours;
-    private double startSalary;
+    private float studyHours;
+    private float startSalary;
     private int turnsToPlay;
     private boolean isActive;
     private ArrayList<CourseSquare> courseList = new ArrayList<CourseSquare>();
 
-    public Player(String name, Pawn selectedPawn,double studyHours) {
+    public Player(String name, Pawn selectedPawn,float studyHours) {
         this.name = name;
         this.pawn = selectedPawn;
         this.studyHours = studyHours;
@@ -31,19 +31,19 @@ public class Player implements Serializable {
         courseList.add(c);
     }
 
-    public double getStudyHours() {
+    public float getStudyHours() {
         return studyHours;
     }
 
-    public void setStudyHours(double studyHours) {
+    public void setStudyHours(float studyHours) {
         this.studyHours = studyHours;
     }
 
-    public double getStartSalary() {
+    public float getStartSalary() {
         return startSalary;
     }
 
-    public void setStartSalary(double startSalary) {
+    public void setStartSalary(float startSalary) {
         this.startSalary = startSalary;
     }
 

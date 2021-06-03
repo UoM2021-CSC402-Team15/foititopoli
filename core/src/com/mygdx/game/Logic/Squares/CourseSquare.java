@@ -1,5 +1,6 @@
 package com.mygdx.game.Logic.Squares;
 
+import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Player;
 
 public class CourseSquare extends Square {
@@ -9,10 +10,10 @@ public class CourseSquare extends Square {
     private String direction;
     private String description;
     private String professors;
-    private double price;
+    private float price;
 
 
-    public CourseSquare(String name, double price) {
+    public CourseSquare(String name, float price) {
         super(name);
         this.price = price;
 
@@ -58,11 +59,11 @@ public class CourseSquare extends Square {
         this.salary = salary;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -83,4 +84,8 @@ public class CourseSquare extends Square {
     }
 
 
+    @Override
+    public void runAction(GameInstance game) {
+
+    }
 }

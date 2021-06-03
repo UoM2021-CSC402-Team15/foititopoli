@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
+import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
@@ -115,7 +116,14 @@ public class GameScreen implements Screen {
                     }
                 }, time);
             }
+
+            @Override
+            public void playerUpdated(Player aPlayer) {
+
+            }
         });
+
+
 
         for (SquareActor[] side: boardGroup.getSquareActors()) {
             for (final SquareActor square: side) {
