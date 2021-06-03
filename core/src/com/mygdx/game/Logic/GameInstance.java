@@ -1,5 +1,6 @@
 package com.mygdx.game.Logic;
 
+import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.Square;
 
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class GameInstance implements Serializable {
     public interface GameInstanceListener {
         void pawnPositionUpdated(Pawn pawn);
         void playerUpdated(Player aPlayer);
+        void playerDrewCard(Card aCard);
     }
 
     public GameInstanceListener getListener() {
