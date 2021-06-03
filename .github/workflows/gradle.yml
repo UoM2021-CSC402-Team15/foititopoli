@@ -27,5 +27,5 @@ jobs:
       run: ./gradlew desktop:dist
     - uses: actions/upload-artifact@v2
       with:
-      name: Package
-      path: desktop/build/libs
+        name: desktop.jar
+        path: desktop/build/libs/desktop-1.0.jar
