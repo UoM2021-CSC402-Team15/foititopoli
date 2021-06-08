@@ -2,6 +2,8 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.Square;
+import com.mygdx.game.UI.Windows.LoseWindow;
+import com.mygdx.game.UI.Windows.WinWindow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -64,7 +66,18 @@ public class GameInstance implements Serializable {
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
         listener.playerUpdated(currentPlayer);
-        //comment by pantelis
+
+        if (currentPlayer.getStudyHours()<0)
+        {
+            new LoseWindow(currentPlayer);
+            players.remove(currentPlayer);
+        }
+
+        if (currentPlayer.getStudyHours()>1000)
+        {
+            new WinWindow(currentPlayer);
+            //end game!
+        }
     }
 
     public ArrayList<Player> getPlayers() {

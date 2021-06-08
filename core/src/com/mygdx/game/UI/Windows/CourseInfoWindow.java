@@ -86,7 +86,6 @@ public class CourseInfoWindow extends Window {
         return !isAlreadyBought && hasEnoughMoney && isOnSameSquare;
     }
 
-
     private Boolean checkCanUpgrade() {
         if (course.getGrade()==0) return false;
         Boolean isAlreadyBoughtByPlayer = currentPlayer.getCourseList().contains(course);

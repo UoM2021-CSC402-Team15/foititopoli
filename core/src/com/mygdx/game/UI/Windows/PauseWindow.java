@@ -12,7 +12,6 @@ import com.mygdx.game.UI.Screens.MainMenuScreen;
 
 import java.io.*;
 
-
 public class PauseWindow extends Window{
     GameInstance currentGame;
 
