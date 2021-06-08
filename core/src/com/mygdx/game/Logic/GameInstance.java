@@ -64,6 +64,7 @@ public class GameInstance implements Serializable {
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
         listener.playerUpdated(currentPlayer);
+        //comment by pantelis
     }
 
     public ArrayList<Player> getPlayers() {
