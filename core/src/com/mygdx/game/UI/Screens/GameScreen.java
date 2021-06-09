@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -130,9 +131,13 @@ public class GameScreen implements Screen {
             @Override
             public void pawnPositionUpdated(final Pawn pawn) {
                 int time = boardGroup.movePawn(pawn);
+                rollButton.setDisabled(true);
+                rollButton.setTouchable(Touchable.disabled);
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
+                        rollButton.setDisabled(false);
+                        rollButton.setTouchable(Touchable.enabled);
                         if (pawn.getCurrentSquare() instanceof CourseSquare) {
                             CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer());
                             infoWindow.setSize(500,150);
