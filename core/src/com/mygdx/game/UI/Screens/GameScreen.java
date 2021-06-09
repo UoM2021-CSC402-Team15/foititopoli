@@ -184,6 +184,7 @@ public class GameScreen implements Screen {
 
             @Override
             public void playerDrewCard(Card aCard) {
+                stage.addActor(new CardWindow(aCard));
 
             }
 
