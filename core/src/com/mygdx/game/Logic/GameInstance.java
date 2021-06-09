@@ -67,6 +67,11 @@ public class GameInstance implements Serializable {
         Square square = board.getDestination(currentPlayer.getPawn(), dice);
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
+
+        if (Board.playerPassedStart(currentPlayer.getPawn().getOldSquare(), currentPlayer.getPawn().getCurrentSquare())) {
+            currentPlayer.setStudyHours(currentPlayer.getStartSalary()+currentPlayer.getStudyHours());
+        }
+
         listener.playerUpdated(currentPlayer);
 
         if (currentPlayer.getStudyHours()<0)

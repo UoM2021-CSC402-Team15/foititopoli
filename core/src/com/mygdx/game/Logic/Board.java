@@ -59,4 +59,8 @@ public class Board implements Serializable {
     public Square getDestination(int i, int j) {
         return squares[i][j];
     }
+
+    public static Boolean playerPassedStart(Square start, Square end) {
+        return Integer.parseInt( end.getI()+""+ end.getJ() ) < Integer.parseInt( start.getI()+""+ start.getJ() );
+    }
 }
