@@ -59,7 +59,6 @@ public class LoadGameScreen implements Screen {
 
     }
 
-
     public LoadGameScreen(final Foititopoli game) {
         this.game = game;
 

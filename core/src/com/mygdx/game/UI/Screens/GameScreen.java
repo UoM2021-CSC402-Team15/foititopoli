@@ -3,22 +3,17 @@ package com.mygdx.game.UI.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -31,10 +26,9 @@ import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
-import com.mygdx.game.UI.Windows.CourseInfoWindow;
-import com.mygdx.game.UI.Windows.DebugConsole;
-import com.mygdx.game.UI.Windows.PauseWindow;
-import com.mygdx.game.UI.Windows.TradeWindow;
+import com.mygdx.game.UI.Windows.*;
+
+import java.util.function.Consumer;
 
 public class GameScreen implements Screen {
 
@@ -47,14 +41,21 @@ public class GameScreen implements Screen {
     private final DebugConsole console;
     private Foititopoli game;
 
+    public interface UI {
+        void updatePlayer(Player player);
+    }
+
     public GameScreen(final Foititopoli game) {
         this.game = game;
-        batch = new SpriteBatch();
-        camera = new OrthographicCamera();
+        this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
+        this.camera = new OrthographicCamera();
+
         camera.setToOrtho(false, 1280, 720);
         final Viewport viewport = new StretchViewport(1280,720, camera);
         this.stage = new Stage(viewport, batch);
 
+        /* Roll-Turn Button */
         final TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
         rollButton.setWidth(Gdx.graphics.getWidth()/2f);
         rollButton.setPosition(camera.viewportWidth/2f-rollButton.getWidth()/2,50);
@@ -73,8 +74,8 @@ public class GameScreen implements Screen {
 
             }
         });
-        stage.addActor(rollButton);
 
+        /* Pause Button */
         final TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
         pauseButton.setWidth(Gdx.graphics.getWidth()/2f);
         pauseButton.setPosition(camera.viewportWidth/2f-pauseButton.getWidth()/2,20);
@@ -86,23 +87,20 @@ public class GameScreen implements Screen {
                 stage.addActor(pauseWindow);
             }
         });
-        stage.addActor(pauseButton);
 
+        /* Board Group */
         boardGroup = new BoardGroup(game.getGameInstance().getBoard(), 600, game.getGameInstance().getPlayers());
         boardGroup.setPosition((camera.viewportWidth- boardGroup.getWidth())/2, 100);
-        stage.addActor(boardGroup);
-        //stage.setDebugAll(true);
 
-        font = new BitmapFont();
-
+        /* In Game Windows (Not the OS :]) */
         pauseWindow = new PauseWindow("Game paused", Foititopoli.gameSkin, game);
-
         console = new DebugConsole(game.getGameInstance(), stage);
 
-        class PlayerTable extends Button {
+        /* Player Button  Class */
+        class PlayerButton extends Button {
             Player player;
             Label money;
-            public PlayerTable(Player player) {
+            public PlayerButton(Player player) {
                 super(Foititopoli.gameSkin);
                 this.player = player;
                 Label name = new Label(player.getName(), Foititopoli.gameSkin);
@@ -117,10 +115,12 @@ public class GameScreen implements Screen {
                 money.setText("Money: " + player.getStudyHours());
             }
         }
+
+        /* Player Buttons */
         final VerticalGroup playerGroup = new VerticalGroup();
         for (final Player player: game.getGameInstance().getPlayers()) {
-            PlayerTable playerTable = new PlayerTable(player);
-            playerTable.addListener(new ChangeListener() {
+            PlayerButton playerButton = new PlayerButton(player);
+            playerButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     if (game.getGameInstance().getCurrentPlayer()!=player) {
@@ -128,42 +128,12 @@ public class GameScreen implements Screen {
                     }
                 }
             });
-            playerGroup.addActor(playerTable);
+            playerGroup.addActor(playerButton);
         }
         playerGroup.setPosition(900, 200);
         playerGroup.setSize(500,500);
-        stage.addActor(playerGroup);
 
-        game.getGameInstance().initialize();
-        game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
-            @Override
-            public void pawnPositionUpdated(final Pawn pawn) {
-                int time = boardGroup.movePawn(pawn);
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        if (pawn.getCurrentSquare() instanceof CourseSquare) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer());
-                            infoWindow.setSize(500,150);
-                            infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
-                            stage.addActor(infoWindow);
-                        }
-                    }
-                }, time);
-            }
-
-            @Override
-            public void playerUpdated(Player aPlayer) {
-                PlayerTable playerTable = (PlayerTable) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(aPlayer));
-                playerTable.update();
-            }
-
-            @Override
-            public void playerDrewCard(Card aCard) {
-
-            }
-        });
-
+        /* Square Click Listener */
         for (SquareActor[] side: boardGroup.getSquareActors()) {
             for (final SquareActor square: side) {
                 square.addListener(new ClickListener() {
@@ -171,7 +141,10 @@ public class GameScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
                         if (square.getSquare() instanceof CourseSquare) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(),game.getGameInstance().getCurrentPlayer());
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
+                                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
+                                playerButton.update();
+                            });
                             infoWindow.setSize(500,150);
                             infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2f, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2f);
                             stage.addActor(infoWindow);
@@ -180,6 +153,64 @@ public class GameScreen implements Screen {
                 });
             }
         }
+
+        /* Adding to Stage */
+        stage.addActor(rollButton);
+        stage.addActor(pauseButton);
+        stage.addActor(boardGroup);
+        stage.addActor(playerGroup);
+
+        //Initialize Game
+        game.getGameInstance().initialize();
+
+        /* Game Listener */
+        game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
+            @Override
+            public void pawnPositionUpdated(final Pawn pawn) {
+                int time = boardGroup.movePawn(pawn);
+                rollButton.setDisabled(true);
+                rollButton.setTouchable(Touchable.disabled);
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        rollButton.setDisabled(false);
+                        rollButton.setTouchable(Touchable.enabled);
+                        if (pawn.getCurrentSquare() instanceof CourseSquare) {
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
+                                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
+                                playerButton.update();
+                            });
+                            infoWindow.setSize(500,150);
+                            infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2);
+                            stage.addActor(infoWindow);
+                        }
+                    }
+                }, time);
+            }
+
+            @Override
+            public void playerUpdated(Player aPlayer) {
+                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(aPlayer));
+                playerButton.update();
+            }
+
+            @Override
+            public void playerDrewCard(Card aCard) {
+                stage.addActor(new CardWindow(aCard));
+
+            }
+
+            @Override
+            public void playerWon(Player aPlayer) {
+                stage.addActor(new WinWindow(aPlayer,game));
+            }
+
+            @Override
+            public void playerLost(Player aPlayer) {
+                stage.addActor(new LoseWindow(aPlayer));
+            }
+        });
+
     }
 
     @Override
@@ -208,7 +239,6 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.GRAVE)) {
             console.activate();
         }
-
     }
 
     @Override

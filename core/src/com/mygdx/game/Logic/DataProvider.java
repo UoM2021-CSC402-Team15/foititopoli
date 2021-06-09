@@ -2,7 +2,6 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.CourseSquare;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -73,7 +72,6 @@ public class DataProvider {
             e.printStackTrace();
         }
     }
-
 
     public static ArrayList<CourseSquare> getCourses() {
         return courseSquares;

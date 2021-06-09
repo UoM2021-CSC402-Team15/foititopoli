@@ -85,9 +85,7 @@ public class DebugConsole extends Window {
             print(e.toString());
         }
         scrollPane.scrollTo(0,0,0,0);
-
     }
-
     private void print(String string) {
         label.setText(label.getText().toString() +"\n"+ string);
     }

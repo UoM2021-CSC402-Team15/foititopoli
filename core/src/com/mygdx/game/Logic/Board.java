@@ -3,7 +3,6 @@ package com.mygdx.game.Logic;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.Logic.Squares.MoneySquare;
 import com.mygdx.game.Logic.Squares.Square;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -61,4 +60,7 @@ public class Board implements Serializable {
         return squares[i][j];
     }
 
+    public static Boolean playerPassedStart(Square start, Square end) {
+        return Integer.parseInt( end.getI()+""+ end.getJ() ) < Integer.parseInt( start.getI()+""+ start.getJ() );
+    }
 }

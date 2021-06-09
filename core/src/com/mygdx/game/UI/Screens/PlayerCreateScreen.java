@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Pawn;
-import com.mygdx.game.UI.Components.PawnActor;
 
 import java.util.ArrayList;
 
