@@ -156,7 +156,7 @@ public class GameScreen implements Screen {
 
             @Override
             public void playerWon(Player aPlayer) {
-                stage.addActor(new WinWindow(aPlayer));
+                stage.addActor(new WinWindow(aPlayer,game));
             }
 
             @Override
