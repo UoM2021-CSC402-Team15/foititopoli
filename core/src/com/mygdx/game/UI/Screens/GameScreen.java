@@ -25,10 +25,7 @@ import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
-import com.mygdx.game.UI.Windows.CourseInfoWindow;
-import com.mygdx.game.UI.Windows.DebugConsole;
-import com.mygdx.game.UI.Windows.PauseWindow;
-import com.mygdx.game.UI.Windows.TradeWindow;
+import com.mygdx.game.UI.Windows.*;
 
 public class GameScreen implements Screen {
 
@@ -155,6 +152,16 @@ public class GameScreen implements Screen {
             @Override
             public void playerDrewCard(Card aCard) {
 
+            }
+
+            @Override
+            public void playerWon(Player aPlayer) {
+                stage.addActor(new WinWindow(aPlayer));
+            }
+
+            @Override
+            public void playerLost(Player aPlayer) {
+                stage.addActor(new LoseWindow(aPlayer));
             }
         });
 

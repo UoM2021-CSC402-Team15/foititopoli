@@ -23,6 +23,8 @@ public class GameInstance implements Serializable {
         void pawnPositionUpdated(Pawn pawn);
         void playerUpdated(Player aPlayer);
         void playerDrewCard(Card aCard);
+        void playerWon(Player aPlayer);
+        void playerLost(Player aPlayer);
     }
 
     public GameInstanceListener getListener() {
@@ -69,13 +71,13 @@ public class GameInstance implements Serializable {
 
         if (currentPlayer.getStudyHours()<0)
         {
-            new LoseWindow(currentPlayer);
+           listener.playerLost(currentPlayer);
             players.remove(currentPlayer);
         }
 
         if (currentPlayer.getStudyHours()>1000)
         {
-            new WinWindow(currentPlayer);
+            listener.playerWon(currentPlayer);
             //end game!
         }
     }
