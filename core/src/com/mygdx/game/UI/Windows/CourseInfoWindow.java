@@ -11,13 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
+import com.mygdx.game.UI.Screens.GameScreen;
+
+import java.util.concurrent.Callable;
 
 public class CourseInfoWindow extends Window {
 
     private CourseSquare course;
     private Player currentPlayer;
 
-    public CourseInfoWindow(final CourseSquare course, final Player aPlayer) {
+    public CourseInfoWindow(final CourseSquare course, final Player aPlayer, GameScreen.UI ui) {
         super(course.getName(), Foititopoli.gameSkin);
         this.course = course;
         this.currentPlayer = aPlayer;
@@ -45,6 +48,7 @@ public class CourseInfoWindow extends Window {
                 }
                 moneyLabel.setText(aPlayer.getStudyHours()+"");
                 refreshBuyButton(buyButton);
+                ui.updatePlayer(aPlayer);
             }
         });
 

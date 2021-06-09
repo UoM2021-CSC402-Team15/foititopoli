@@ -28,6 +28,8 @@ import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
 import com.mygdx.game.UI.Windows.*;
 
+import java.util.function.Consumer;
+
 public class GameScreen implements Screen {
 
     private final Stage stage;
@@ -38,6 +40,10 @@ public class GameScreen implements Screen {
     private final BoardGroup boardGroup;
     private final DebugConsole console;
     private Foititopoli game;
+
+    public interface UI {
+        void updatePlayer(Player player);
+    }
 
     public GameScreen(final Foititopoli game) {
         this.game = game;
@@ -135,7 +141,10 @@ public class GameScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
                         if (square.getSquare() instanceof CourseSquare) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(),game.getGameInstance().getCurrentPlayer());
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
+                                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
+                                playerButton.update();
+                            });
                             infoWindow.setSize(500,150);
                             infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2f, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2f);
                             stage.addActor(infoWindow);
@@ -167,9 +176,12 @@ public class GameScreen implements Screen {
                         rollButton.setDisabled(false);
                         rollButton.setTouchable(Touchable.enabled);
                         if (pawn.getCurrentSquare() instanceof CourseSquare) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer());
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
+                                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
+                                playerButton.update();
+                            });
                             infoWindow.setSize(500,150);
-                            infoWindow.setPosition(viewport.getScreenWidth()/2-infoWindow.getWidth()/2, viewport.getScreenHeight()/2-infoWindow.getHeight()/2);
+                            infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2);
                             stage.addActor(infoWindow);
                         }
                     }
