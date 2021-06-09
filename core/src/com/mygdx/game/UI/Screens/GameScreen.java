@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -25,10 +26,7 @@ import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
-import com.mygdx.game.UI.Windows.CourseInfoWindow;
-import com.mygdx.game.UI.Windows.DebugConsole;
-import com.mygdx.game.UI.Windows.PauseWindow;
-import com.mygdx.game.UI.Windows.TradeWindow;
+import com.mygdx.game.UI.Windows.*;
 
 public class GameScreen implements Screen {
 
@@ -161,9 +159,13 @@ public class GameScreen implements Screen {
             @Override
             public void pawnPositionUpdated(final Pawn pawn) {
                 int time = boardGroup.movePawn(pawn);
+                rollButton.setDisabled(true);
+                rollButton.setTouchable(Touchable.disabled);
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
+                        rollButton.setDisabled(false);
+                        rollButton.setTouchable(Touchable.enabled);
                         if (pawn.getCurrentSquare() instanceof CourseSquare) {
                             CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer());
                             infoWindow.setSize(500,150);
@@ -183,6 +185,16 @@ public class GameScreen implements Screen {
             @Override
             public void playerDrewCard(Card aCard) {
 
+            }
+
+            @Override
+            public void playerWon(Player aPlayer) {
+                stage.addActor(new WinWindow(aPlayer,game));
+            }
+
+            @Override
+            public void playerLost(Player aPlayer) {
+                stage.addActor(new LoseWindow(aPlayer));
             }
         });
 
@@ -214,7 +226,6 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.GRAVE)) {
             console.activate();
         }
-
     }
 
     @Override

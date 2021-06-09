@@ -132,10 +132,8 @@ public class TradeWindow extends Window {
         add(receiverMoneySlider).row();
         add(senderTable).expandY();
         add(receiverTable).expandY().row();
-
         
         setModal(true);
     }
-
 }
 

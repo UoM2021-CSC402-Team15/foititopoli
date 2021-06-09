@@ -1,8 +1,6 @@
 package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Squares.CourseSquare;
-import com.mygdx.game.Logic.Squares.Square;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,7 +9,6 @@ public class Player implements Serializable {
     private final String name;
     private final Pawn pawn;
     private float studyHours;
-    private float startSalary;
     private int turnsToPlay;
     private boolean isActive;
     private ArrayList<CourseSquare> courseList = new ArrayList<CourseSquare>();
@@ -20,7 +17,6 @@ public class Player implements Serializable {
         this.name = name;
         this.pawn = selectedPawn;
         this.studyHours = studyHours;
-        this.startSalary =100;
         this.turnsToPlay = 1;
         this.isActive = true;
 
@@ -40,11 +36,11 @@ public class Player implements Serializable {
     }
 
     public float getStartSalary() {
+        float startSalary = 0;
+        for (CourseSquare course: courseList) {
+            startSalary+=course.getSalary();
+        }
         return startSalary;
-    }
-
-    public void setStartSalary(float startSalary) {
-        this.startSalary = startSalary;
     }
 
     public int getTurnsToPlay() {

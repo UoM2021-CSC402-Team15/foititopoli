@@ -2,6 +2,8 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.Square;
+import com.mygdx.game.UI.Windows.LoseWindow;
+import com.mygdx.game.UI.Windows.WinWindow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +23,8 @@ public class GameInstance implements Serializable {
         void pawnPositionUpdated(Pawn pawn);
         void playerUpdated(Player aPlayer);
         void playerDrewCard(Card aCard);
+        void playerWon(Player aPlayer);
+        void playerLost(Player aPlayer);
     }
 
     public GameInstanceListener getListener() {
@@ -63,7 +67,24 @@ public class GameInstance implements Serializable {
         Square square = board.getDestination(currentPlayer.getPawn(), dice);
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
+
+        if (Board.playerPassedStart(currentPlayer.getPawn().getOldSquare(), currentPlayer.getPawn().getCurrentSquare())) {
+            currentPlayer.setStudyHours(currentPlayer.getStartSalary()+currentPlayer.getStudyHours());
+        }
+
         listener.playerUpdated(currentPlayer);
+
+        if (currentPlayer.getStudyHours()<0)
+        {
+           listener.playerLost(currentPlayer);
+            players.remove(currentPlayer);
+        }
+
+        if (currentPlayer.getStudyHours()>1000)
+        {
+            listener.playerWon(currentPlayer);
+            //end game!
+        }
     }
 
     public ArrayList<Player> getPlayers() {
