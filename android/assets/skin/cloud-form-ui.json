@@ -227,6 +227,16 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		checked: button-menu-pressed
 		checkedOver: button-menu-pressed-over
 	}
+	menu2: {
+		font: DejaVuSans
+		fontColor: black
+		up: button
+		down: button-menu-over
+		over: button-menu-over
+		checked: button-menu-pressed
+		checkedOver: button-menu-pressed-over
+	}
+
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {

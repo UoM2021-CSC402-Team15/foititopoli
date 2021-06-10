@@ -1,10 +1,10 @@
 package com.mygdx.game.Logic;
 
-import com.mygdx.game.Logic.Squares.CourseSquare;
-import com.mygdx.game.Logic.Squares.MoneySquare;
-import com.mygdx.game.Logic.Squares.Square;
+import com.mygdx.game.Logic.Squares.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Board implements Serializable {
 
@@ -19,33 +19,43 @@ public class Board implements Serializable {
     public void initialize() {
         squares = new Square[4][tilesPerSide - 1];
 
-        for (int i = 0; i < 4; i++) {
-            switch (i) {
-                case 0:
-                    squares[i][0] = new MoneySquare("start");
-                    break;
-                case 1:
-                    squares[i][0] = new MoneySquare("cafeteria");
-                    break;
-                case 2:
-                    squares[i][0] = new MoneySquare("library");
-                    break;
-                case 3:
-                    squares[i][0] = new MoneySquare("prison");
-                    break;
-            }
-        }
+        // Corner Square setup
+        squares[0][0] = new MoneySquare("start");           // TODO: Change the types of squares
+        squares[1][0] = new MoneySquare("cafeteria");
+        squares[2][0] = new MoneySquare("library");
+        squares[3][0] = new MoneySquare("prison");
+
+        // Middle Square setup
+        squares[0][5] = new TurnSquare("Τραπεζάκια Κομμάτων",-1);
+        squares[1][5] = new TurnSquare("Γυμναστήριο",1);
+        squares[2][5] = new MoneySquare("Αίθουσα Υπολογιστών");
+        squares[3][5] = new MoneySquare("Κυλικείο");
+
+        // Card Square setup
+        squares[0][2] = new CardSquare("Card Square");
+        squares[0][7] = new CardSquare("Card Square");
+        squares[1][2] = new CardSquare("Card Square");
+        squares[1][7] = new CardSquare("Card Square");
+        squares[2][2] = new CardSquare("Card Square");
+        squares[2][8] = new CardSquare("Card Square");
+        squares[3][3] = new CardSquare("Card Square");
+        squares[3][8] = new CardSquare("Card Square");
 
         ArrayList<CourseSquare> courses = DataProvider.getCourses();
+        Iterator<CourseSquare> iterator = courses.iterator();
         for (int i = 0; i < 4; i++) {
-            for (int j = 1; j < tilesPerSide - 1; j++) {
-                squares[i][j] = courses.get(i*10+j);
+            for (int j = 0; j < tilesPerSide - 1; j++) {
+                if (squares[i][j] == null && iterator.hasNext()) {
+                    squares[i][j] = iterator.next();
+                }
             }
         }
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < tilesPerSide - 1; j++) {
-                squares[i][j].setIJ(i,j);
+                if (squares[i][j] != null) {
+                    squares[i][j].setIJ(i, j);
+                }
             }
         }
     }
