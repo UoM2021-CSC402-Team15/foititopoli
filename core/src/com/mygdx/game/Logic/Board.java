@@ -20,16 +20,16 @@ public class Board implements Serializable {
         squares = new Square[4][tilesPerSide - 1];
 
         // Corner Square setup
-        squares[0][0] = new MoneySquare("start");           // TODO: Change the types of squares
-        squares[1][0] = new MoneySquare("cafeteria");
-        squares[2][0] = new MoneySquare("library");
-        squares[3][0] = new MoneySquare("prison");
+        squares[0][0] = new MoneySquare("start",0);
+        squares[1][0] = new MoneySquare("cafeteria", 0);
+        squares[2][0] = new MoneySquare("library", 20);
+        squares[3][0] = new TurnSquare("prison",-3);
 
         // Middle Square setup
         squares[0][5] = new TurnSquare("Τραπεζάκια Κομμάτων",-1);
         squares[1][5] = new TurnSquare("Γυμναστήριο",1);
-        squares[2][5] = new MoneySquare("Αίθουσα Υπολογιστών");
-        squares[3][5] = new MoneySquare("Κυλικείο");
+        squares[2][5] = new MoneySquare("Αίθουσα Υπολογιστών", 15);
+        squares[3][5] = new MoneySquare("Κυλικείο", -15);
 
         // Card Square setup
         squares[0][2] = new CardSquare("Card Square");
