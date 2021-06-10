@@ -57,13 +57,37 @@ public class GameInstance implements Serializable {
         }
     }
     public void endTurn(){
+        //Your turn is done for this Round
+        if (currentPlayer.getTurnsToPlay() <= 1){
         listener.playerUpdated(currentPlayer);
-        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+        //Find and set the next player
+            SetTheNextTurn();
+        }
+
+        //In other case th player must plays again in this round and the turn must be updated
+        else {
+            currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()-1);
+        }
     }
 
+    private void SetTheNextTurn() {
+        //Set the first nominated player
+        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+
+       //If this player cant play change players until you find the one
+        while (currentPlayer.getTurnsToPlay() <=1){
+            currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()+1);
+            currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+
+        }
+    }
+
+
     public void gameLoop() {
+
         int dice = Dice.roll() + Dice.roll();
         System.out.println("Roll=" + dice);
+
         Square square = board.getDestination(currentPlayer.getPawn(), dice);
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
