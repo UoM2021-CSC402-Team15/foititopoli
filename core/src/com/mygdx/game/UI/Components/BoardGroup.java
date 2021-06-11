@@ -68,6 +68,10 @@ public class BoardGroup extends Group {
         int destinationI = pawn.getCurrentSquare().getI();
         int destinationJ = pawn.getCurrentSquare().getJ();
 
+        if (pawn.getCurrentSquare() == pawn.getOldSquare()) {
+            return 0;
+        }
+
         for (int i = 0; i < 10; i++) { //So it doesnt continue to infinity
 
             if ( currentI == destinationI && currentJ < destinationJ ) { // If on same side and target forward

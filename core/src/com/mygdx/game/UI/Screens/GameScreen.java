@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Dice;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
@@ -64,7 +65,7 @@ public class GameScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
 
                 if (rollButton.getText().toString().equals("Roll")){
-                    game.getGameInstance().gameLoop();
+                    game.getGameInstance().gameLoop(Dice.roll() + Dice.roll());
                     rollButton.setText("End Turn");
                 }
                 else{
@@ -168,14 +169,17 @@ public class GameScreen implements Screen {
             @Override
             public void pawnPositionUpdated(final Pawn pawn) {
                 int time = boardGroup.movePawn(pawn);
+                // Disable End Turn Button while pawn is moving
                 rollButton.setDisabled(true);
                 rollButton.setTouchable(Touchable.disabled);
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
+                        // Re-enable End Turn Button when pawn has finished moving
                         rollButton.setDisabled(false);
                         rollButton.setTouchable(Touchable.enabled);
-                        if (pawn.getCurrentSquare() instanceof CourseSquare) {
+                        // If new square is a CourseSquare (and no other window is open), open a new CourseInfoWindow
+                        if (pawn.getCurrentSquare() instanceof CourseSquare && !((stage.getActors().get(stage.getActors().size-1)) instanceof Window) ) {
                             CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
                                 PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
                                 playerButton.update();

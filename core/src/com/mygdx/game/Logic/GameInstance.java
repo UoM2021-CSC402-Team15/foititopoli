@@ -2,8 +2,6 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.Square;
-import com.mygdx.game.UI.Windows.LoseWindow;
-import com.mygdx.game.UI.Windows.WinWindow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -57,13 +55,34 @@ public class GameInstance implements Serializable {
         }
     }
     public void endTurn(){
-        listener.playerUpdated(currentPlayer);
-        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+        //Your turn is done for this Round
+        if (currentPlayer.getTurnsToPlay() <= 1){
+            listener.playerUpdated(currentPlayer);
+            //Find and set the next player
+            SetTheNextPlayer();
+        }
+
+        //In other case th player must play again in this round and his turn must be updated
+        else {
+            currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()-1);
+        }
     }
 
-    public void gameLoop() {
-        int dice = Dice.roll() + Dice.roll();
-        System.out.println("Roll=" + dice);
+    private void SetTheNextPlayer() {
+        //Set the first nominated player
+        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+
+       //If this player cant play change players until you find the one who can
+        while (currentPlayer.getTurnsToPlay() <1) {
+            currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()+1);
+            currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+
+        }
+    }
+
+
+    public void gameLoop(int dice) {
+
         Square square = board.getDestination(currentPlayer.getPawn(), dice);
         currentPlayer.getPawn().setCurrentSquare(square);
         listener.pawnPositionUpdated(currentPlayer.getPawn());
@@ -105,5 +124,9 @@ public class GameInstance implements Serializable {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int i) {
+        this.currentPlayer = players.get(i);
     }
 }

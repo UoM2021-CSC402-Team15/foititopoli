@@ -64,17 +64,22 @@ public class DebugConsole extends Window {
             switch (splitCommand[0].trim()) {
 
                 case "move":
-                    int side = Integer.parseInt(splitCommand[2].split(",")[0]);
-                    int square = Integer.parseInt(splitCommand[2].split(",")[1]);
-                    Pawn pawn = game.getPlayers().get(Integer.parseInt(splitCommand[1])).getPawn();
-                    game.movePawn(pawn, game.getBoard().squares[side][square]);
+                    int side = Integer.parseInt(splitCommand[1].split(",")[0]);
+                    int square = Integer.parseInt(splitCommand[1].split(",")[1]);
+                    game.getCurrentPlayer().getPawn().setCurrentSquare(game.getBoard().squares[side][square]);
+                    game.getListener().pawnPositionUpdated(game.getCurrentPlayer().getPawn());
+                    game.gameLoop(0);
                     break;
 
-                case "test":
-                    Player player=  game.getPlayers().get(Integer.parseInt(splitCommand[1]));
-                    CourseSquare c = new CourseSquare("paparia",50) ;
-                    player.buySquare(c);
-                    print(player.getCourseList().contains(c)+"");
+                case "hours":
+                    int hours = Integer.parseInt(splitCommand[1]);
+                    game.getCurrentPlayer().setStudyHours(game.getCurrentPlayer().getStudyHours()+hours);
+                    game.getListener().playerUpdated(game.getCurrentPlayer());
+                    break;
+
+                case "select":
+                    int selection = Integer.parseInt(splitCommand[1])-1;
+                    game.setCurrentPlayer(selection);
                     break;
 
                 default:
