@@ -73,7 +73,7 @@ public class GameInstance implements Serializable {
         currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
 
        //If this player cant play change players until you find the one who can
-        while (currentPlayer.getTurnsToPlay() <=1){
+        while (currentPlayer.getTurnsToPlay() <1){
             currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()+1);
             currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
 
