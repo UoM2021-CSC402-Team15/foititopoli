@@ -2,8 +2,6 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Squares.Square;
-import com.mygdx.game.UI.Windows.LoseWindow;
-import com.mygdx.game.UI.Windows.WinWindow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -61,20 +59,20 @@ public class GameInstance implements Serializable {
         if (currentPlayer.getTurnsToPlay() <= 1){
         listener.playerUpdated(currentPlayer);
         //Find and set the next player
-            SetTheNextTurn();
+            SetTheNextPlayer();
         }
 
-        //In other case th player must plays again in this round and the turn must be updated
+        //In other case th player must plays again in this round and his turn must be updated
         else {
             currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()-1);
         }
     }
 
-    private void SetTheNextTurn() {
+    private void SetTheNextPlayer() {
         //Set the first nominated player
         currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
 
-       //If this player cant play change players until you find the one
+       //If this player cant play change players until you find the one who can
         while (currentPlayer.getTurnsToPlay() <=1){
             currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()+1);
             currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
