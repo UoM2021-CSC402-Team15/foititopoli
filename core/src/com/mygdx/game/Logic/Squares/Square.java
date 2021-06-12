@@ -12,9 +12,6 @@ public abstract class Square implements Serializable {
 
     public abstract void runAction(GameInstance game);
 
-
-
-
     public Square(String name) {
         this.name = name;
     }

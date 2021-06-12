@@ -7,10 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Player;
+import com.mygdx.game.UI.Screens.GameScreen;
 
 public class CardWindow extends Window {
 
-    public CardWindow(Card aCard) {
+    public CardWindow(Player player, Card aCard, GameScreen.UI ui) {
         super("Random Game Card", Foititopoli.gameSkin);
         this.setModal(true);
         Label description = new Label(aCard.getDescription(),Foititopoli.gameSkin);
@@ -20,7 +22,9 @@ public class CardWindow extends Window {
         okButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-              CardWindow.this.remove();
+                aCard.runAction(player);
+                ui.updatePlayer(player);
+                CardWindow.this.remove();
             }
         });
 

@@ -12,7 +12,7 @@ public class MoveCard extends Card {
     }
 
     @Override
-    public float runAction(Player aPlayer) {
-        return location;
+    public void runAction(Player aPlayer) {
+
     }
 }

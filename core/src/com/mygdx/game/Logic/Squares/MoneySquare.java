@@ -14,8 +14,6 @@ public class MoneySquare extends Square {
     public void runAction(GameInstance game) {
           float finalMoney = game.getCurrentPlayer().getStudyHours() + money;
           game.getCurrentPlayer().setStudyHours(finalMoney);
-          game.getListener().playerUpdated(game.getCurrentPlayer());
-
     }
 
 }

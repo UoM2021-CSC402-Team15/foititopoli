@@ -175,15 +175,14 @@ public class GameScreen implements Screen {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
+                        // Update Player
+                        playerUpdated(game.getGameInstance().getCurrentPlayer());
                         // Re-enable End Turn Button when pawn has finished moving
                         rollButton.setDisabled(false);
                         rollButton.setTouchable(Touchable.enabled);
                         // If new square is a CourseSquare (and no other window is open), open a new CourseInfoWindow
                         if (pawn.getCurrentSquare() instanceof CourseSquare && !((stage.getActors().get(stage.getActors().size-1)) instanceof Window) ) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
-                                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
-                                playerButton.update();
-                            });
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer(), player -> playerUpdated(player));
                             infoWindow.setSize(500,150);
                             infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2);
                             stage.addActor(infoWindow);
@@ -200,8 +199,7 @@ public class GameScreen implements Screen {
 
             @Override
             public void playerDrewCard(Card aCard) {
-                stage.addActor(new CardWindow(aCard));
-
+                stage.addActor(new CardWindow(game.getGameInstance().getCurrentPlayer(), aCard, player -> playerUpdated(game.getGameInstance().getCurrentPlayer())));
             }
 
             @Override

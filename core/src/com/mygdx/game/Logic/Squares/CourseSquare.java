@@ -88,6 +88,5 @@ public class CourseSquare extends Square {
     @Override
     public void runAction(GameInstance game) {
 
-
     }
 }

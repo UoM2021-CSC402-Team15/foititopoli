@@ -12,9 +12,7 @@ public MoneyCard(String image, float amount) {
     }
 
     @Override
-    public float runAction(Player aPlayer) {
+    public void runAction(Player aPlayer) {
         aPlayer.setStudyHours(aPlayer.getStudyHours()+amount);
-
-    return -1;
     }
 }

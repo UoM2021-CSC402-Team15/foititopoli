@@ -5,6 +5,8 @@ import com.mygdx.game.Logic.Squares.CourseSquare;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 public class DataProvider {
@@ -27,8 +29,18 @@ public class DataProvider {
     }
     public static  Card drawCard(){
         Random random = new Random();
-        int randomNumber = random.nextInt(cardList.size());
-         return cardList.get(randomNumber);
+        Collections.shuffle(cardList);
+        if (cardList.size() !=0) {
+            return cardList.get(0);
+        } else {
+            return new Card("card") {
+                @Override
+                public void runAction(Player aPlayer) {
+                    aPlayer.setStudyHours(20);
+                }
+            };
+        }
+
     }
 
     public static ArrayList<Pawn> getPawns() {

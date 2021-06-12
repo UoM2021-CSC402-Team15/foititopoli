@@ -5,7 +5,7 @@ import com.mygdx.game.Logic.Player;
 public abstract class Card {
   protected String description;
 
-    public Card(String image) {
+    public Card(String description) {
         this.description = description;
     }
 
@@ -14,7 +14,7 @@ public abstract class Card {
         return description;
     }
 
-    public abstract float runAction(Player aPlayer);
+    public abstract void runAction(Player aPlayer);
 
 
 }

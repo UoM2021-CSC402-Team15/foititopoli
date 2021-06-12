@@ -10,7 +10,7 @@ public class JailCard extends Card{
     }
 
     @Override
-    public float runAction(Player aPlayer) {
-        return jailLocation;
+    public void runAction(Player aPlayer) {
+
     }
 }

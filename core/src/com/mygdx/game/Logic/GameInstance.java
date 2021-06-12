@@ -57,7 +57,6 @@ public class GameInstance implements Serializable {
     public void endTurn(){
         //Your turn is done for this Round
         if (currentPlayer.getTurnsToPlay() <= 1){
-            listener.playerUpdated(currentPlayer);
             //Find and set the next player
             SetTheNextPlayer();
         }
@@ -91,7 +90,7 @@ public class GameInstance implements Serializable {
             currentPlayer.setStudyHours(currentPlayer.getStartSalary()+currentPlayer.getStudyHours());
         }
 
-        listener.playerUpdated(currentPlayer);
+        square.runAction(this);
 
         if (currentPlayer.getStudyHours()<0)
         {
