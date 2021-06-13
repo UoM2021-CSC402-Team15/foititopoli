@@ -125,7 +125,7 @@ public class GameScreen implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                     if (game.getGameInstance().getCurrentPlayer()!=player) {
-                        stage.addActor(new TradeWindow(game.getGameInstance().getCurrentPlayer(), player));
+                        stage.addActor(new TradeWindow(game.getGameInstance().getCurrentPlayer(), player, player -> game.getGameInstance().getListener().playerUpdated(player)));
                     }
                 }
             });
@@ -142,10 +142,7 @@ public class GameScreen implements Screen {
                     public void clicked(InputEvent event, float x, float y) {
                         super.clicked(event, x, y);
                         if (square.getSquare() instanceof CourseSquare) {
-                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(), game.getGameInstance().getCurrentPlayer(), player -> {
-                                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(player));
-                                playerButton.update();
-                            });
+                            CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(), game.getGameInstance().getCurrentPlayer(), player -> game.getGameInstance().getListener().playerUpdated(player));
                             infoWindow.setSize(500,150);
                             infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2f, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2f);
                             stage.addActor(infoWindow);

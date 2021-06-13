@@ -9,6 +9,7 @@ import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.Logic.Trade;
+import com.mygdx.game.UI.Screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class TradeWindow extends Window {
     HashMap<String, CourseSquare> senderCourseMap = new HashMap<>();
     HashMap<String, CourseSquare> receiverCourseMap = new HashMap<>();
 
-    public TradeWindow(Player sender, Player receiver) {
+    public TradeWindow(Player sender, Player receiver, GameScreen.UI ui) {
         super("Trade with "+receiver.getName(), Foititopoli.gameSkin);
         this.sender = sender;
         this.receiver = receiver;
@@ -119,6 +120,8 @@ public class TradeWindow extends Window {
                 trade.setReceiverOffer(receiverSelectedCourses, (int) receiverMoneySlider.getValue());
 
                 trade.accept();
+                ui.updatePlayer(sender);
+                ui.updatePlayer(receiver);
                 TradeWindow.this.remove();
             }
         });
