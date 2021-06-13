@@ -1,6 +1,7 @@
 package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -87,5 +88,26 @@ public class DataProvider {
 
     public static ArrayList<CourseSquare> getCourses() {
         return courseSquares;
+    }
+
+    private static ArrayList<MoveCard> readMoveCards(InputStream stream) throws IOException {
+        ArrayList<MoveCard> moveCards = new ArrayList<>();
+        try (InputStreamReader isr = new InputStreamReader(stream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(isr)
+        ) {
+            reader.readLine();
+            String str;
+            while ((str = reader.readLine()) != null) {
+                String[] data = str.split(",");
+                if (data.length == 4) {
+                    MoveCard moveCard = new MoveCard(data[1], Float.parseFloat(data[2])+Float.parseFloat(data[3])/data[3].length() );
+                    moveCards.add(moveCard);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moveCards;
     }
 }
