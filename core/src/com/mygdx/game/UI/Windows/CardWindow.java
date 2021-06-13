@@ -1,5 +1,6 @@
 package com.mygdx.game.UI.Windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -24,6 +25,7 @@ public class CardWindow extends Window {
         description.pack();
 
         setSize(500,300);
+        setPosition((Gdx.graphics.getWidth()-getWidth())/2,(Gdx.graphics.getHeight()-getHeight())/2 );
 
         TextButton okButton = new TextButton("OK",Foititopoli.gameSkin);
         okButton.addListener(new ChangeListener() {

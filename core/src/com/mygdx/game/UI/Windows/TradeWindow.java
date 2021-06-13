@@ -1,5 +1,7 @@
 package com.mygdx.game.UI.Windows;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -39,6 +41,7 @@ public class TradeWindow extends Window {
         }
 
         setSize(800,500);
+        setPosition((Gdx.graphics.getWidth()-getWidth())/2,(Gdx.graphics.getHeight()-getHeight())/2 );
 
         // TOP BUTTONS
         TextButton cancelButton = new TextButton("Cancel", Foititopoli.gameSkin);

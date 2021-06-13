@@ -39,6 +39,7 @@ public class GameScreen implements Screen {
     private final Batch batch;
     private final OrthographicCamera camera;
     private final BitmapFont font;
+    private final BitmapFont font2;
     private final PauseWindow pauseWindow;
     private final BoardGroup boardGroup;
     private final DebugConsole console;
@@ -52,6 +53,8 @@ public class GameScreen implements Screen {
         this.game = game;
         this.batch = new SpriteBatch();
         this.font = new BitmapFont();
+        this.font2 = new BitmapFont();
+        font2.getData().setScale(1.5f);
         this.camera = new OrthographicCamera();
 
         camera.setToOrtho(false, 1280, 720);
@@ -60,8 +63,10 @@ public class GameScreen implements Screen {
 
         /* Roll-Turn Button */
         final TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
-        rollButton.setWidth(Gdx.graphics.getWidth()/2f);
-        rollButton.setPosition(camera.viewportWidth/2f-rollButton.getWidth()/2,50);
+        rollButton.setSize(150,50);
+        rollButton.setTransform(true);
+        rollButton.setScale(1.8f);
+        rollButton.setPosition(1000, 20);
         rollButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -80,8 +85,8 @@ public class GameScreen implements Screen {
 
         /* Pause Button */
         final TextButton pauseButton = new TextButton("Pause Menu", Foititopoli.gameSkin);
-        pauseButton.setWidth(Gdx.graphics.getWidth()/2f);
-        pauseButton.setPosition(camera.viewportWidth/2f-pauseButton.getWidth()/2,20);
+        pauseButton.setSize(150,40);
+        pauseButton.setPosition(1100,660);
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -92,8 +97,8 @@ public class GameScreen implements Screen {
         });
 
         /* Board Group */
-        boardGroup = new BoardGroup(game.getGameInstance().getBoard(), 600, game.getGameInstance().getPlayers());
-        boardGroup.setPosition((camera.viewportWidth- boardGroup.getWidth())/2, 100);
+        boardGroup = new BoardGroup(game.getGameInstance().getBoard(), 680, game.getGameInstance().getPlayers());
+        boardGroup.setPosition((camera.viewportWidth- boardGroup.getWidth())/2, 20);
 
         /* In Game Windows (Not the OS :]) */
         pauseWindow = new PauseWindow("Game paused", Foititopoli.gameSkin, game);
@@ -133,8 +138,8 @@ public class GameScreen implements Screen {
             });
             playerGroup.addActor(playerButton);
         }
-        playerGroup.setPosition(900, 200);
-        playerGroup.setSize(500,500);
+        playerGroup.setPosition(10, 10);
+        playerGroup.setSize(200,690);
 
         /* Square Click Listener */
         for (SquareActor[] side: boardGroup.getSquareActors()) {
@@ -204,7 +209,6 @@ public class GameScreen implements Screen {
                         pawnPositionUpdated(player.getPawn());
                         game.getGameInstance().gameLoop(0);
                     }
-
                 } ));
             }
 
@@ -229,7 +233,8 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 10, 20);
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1030, 685);
+        font2.draw(batch, "Now Playing:      " + game.getGameInstance().getCurrentPlayer().getName(),1000, 130);
         batch.end();
 
         stage.act();

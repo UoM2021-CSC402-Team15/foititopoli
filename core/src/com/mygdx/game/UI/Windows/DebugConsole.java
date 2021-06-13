@@ -3,6 +3,7 @@ package com.mygdx.game.UI.Windows;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.mygdx.game.Foititopoli;
+import com.mygdx.game.Logic.DataProvider;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
@@ -80,6 +81,10 @@ public class DebugConsole extends Window {
                 case "select":
                     int selection = Integer.parseInt(splitCommand[1])-1;
                     game.setCurrentPlayer(selection);
+                    break;
+
+                case "card":
+                    game.drawCard(DataProvider.drawCard());
                     break;
 
                 default:
