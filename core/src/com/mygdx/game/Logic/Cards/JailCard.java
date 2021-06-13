@@ -1,9 +1,11 @@
 package com.mygdx.game.Logic.Cards;
 
+import com.mygdx.game.Logic.Board;
 import com.mygdx.game.Logic.Player;
+import com.mygdx.game.Logic.Squares.Square;
 
 public class JailCard extends Card{
-    private final float jailLocation = 3;
+    private Square square;
 
     public JailCard(String description) {
         super(description);
@@ -11,6 +13,15 @@ public class JailCard extends Card{
 
     @Override
     public void runAction(Player aPlayer) {
-           aPlayer.setTurnsToPlay(-2);
+        aPlayer.setTurnsToPlay(-2);
+        if (square != null) {
+            aPlayer.getPawn().setCurrentSquare(square);
+        } else {
+            throw new IllegalArgumentException("Set square before running runAction");
+        }
+    }
+
+    public void setSquare(Board board) {
+        this.square = board.getDestination( 3, 0);
     }
 }

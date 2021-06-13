@@ -12,6 +12,6 @@ public class CardSquare extends Square {
     @Override
     public void runAction(GameInstance game) {
         Card randomCard = DataProvider.drawCard();
-        game.getListener().playerDrewCard(randomCard);
+        game.drawCard(randomCard);
     }
 }

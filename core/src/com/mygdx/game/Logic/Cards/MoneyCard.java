@@ -6,8 +6,8 @@ import com.mygdx.game.Logic.Player;
 public class MoneyCard extends Card {
     private float amount;
 
-public MoneyCard(String image, float amount) {
-        super(image);
+public MoneyCard(String description, float amount) {
+        super(description);
         this.amount = amount;
     }
 

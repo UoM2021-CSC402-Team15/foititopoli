@@ -20,6 +20,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.*;
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Cards.JailCard;
+import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Dice;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Pawn;
@@ -196,7 +198,14 @@ public class GameScreen implements Screen {
 
             @Override
             public void playerDrewCard(Card aCard) {
-                stage.addActor(new CardWindow(game.getGameInstance().getCurrentPlayer(), aCard, player -> playerUpdated(game.getGameInstance().getCurrentPlayer())));
+                stage.addActor(new CardWindow(game.getGameInstance().getCurrentPlayer(), aCard, player -> {
+                    playerUpdated(player);
+                    if ( aCard instanceof MoveCard || aCard instanceof JailCard) {
+                        pawnPositionUpdated(player.getPawn());
+                        game.getGameInstance().gameLoop(0);
+                    }
+
+                } ));
             }
 
             @Override

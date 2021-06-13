@@ -1,6 +1,9 @@
 package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Cards.JailCard;
+import com.mygdx.game.Logic.Cards.MoneyCard;
+import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Squares.Square;
 
 import java.io.Serializable;
@@ -49,6 +52,15 @@ public class GameInstance implements Serializable {
         listener.pawnPositionUpdated(pawn);
     }
 
+    public void drawCard(Card card) {
+        if ( card instanceof MoveCard ) {
+            ((MoveCard) card).setSquare(board);
+        } else if ( card instanceof JailCard) {
+            ((JailCard) card).setSquare(board);
+        }
+        listener.playerDrewCard(card);
+    }
+
     public void initialize() {
         if (currentPlayer==null) {
             currentPlayer = players.get(0);
@@ -94,7 +106,7 @@ public class GameInstance implements Serializable {
 
         if (currentPlayer.getStudyHours()<0)
         {
-           listener.playerLost(currentPlayer);
+            listener.playerLost(currentPlayer);
             players.remove(currentPlayer);
         }
 

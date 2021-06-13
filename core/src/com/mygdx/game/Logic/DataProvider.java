@@ -1,6 +1,8 @@
 package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Cards.JailCard;
+import com.mygdx.game.Logic.Cards.MoneyCard;
 import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import java.io.*;
@@ -99,7 +101,7 @@ public class DataProvider {
             while ((str = reader.readLine()) != null) {
                 String[] data = str.split(",");
                 if (data.length == 4) {
-                    MoveCard moveCard = new MoveCard(data[1], Float.parseFloat(data[2])+Float.parseFloat(data[3])/data[3].length() );
+                    MoveCard moveCard = new MoveCard(data[1], (Float.parseFloat(data[2]) + (Float.parseFloat(data[3])/ (float) Math.pow(10, data[3].length())  )));
                     moveCards.add(moveCard);
                 }
             }
@@ -108,5 +110,57 @@ public class DataProvider {
             e.printStackTrace();
         }
         return moveCards;
+    }
+
+    private static ArrayList<MoneyCard> readMoneyCards(InputStream stream) throws IOException {
+        ArrayList<MoneyCard> moneyCards = new ArrayList<>();
+        try (InputStreamReader isr = new InputStreamReader(stream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(isr)
+        ) {
+            reader.readLine();
+            String str;
+            while ((str = reader.readLine()) != null) {
+                String[] data = str.split(",");
+                if (data.length == 3) {
+                    MoneyCard moneyCard = new MoneyCard(data[1], Float.parseFloat(data[2]));
+                    moneyCards.add(moneyCard);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moneyCards;
+    }
+
+    private static ArrayList<JailCard> readJailCards(InputStream stream) throws IOException {
+        ArrayList<JailCard> jailCards = new ArrayList<>();
+        try (InputStreamReader isr = new InputStreamReader(stream, StandardCharsets.UTF_8);
+             BufferedReader reader = new BufferedReader(isr)
+        ) {
+            reader.readLine();
+            String str;
+            while ((str = reader.readLine()) != null) {
+                String[] data = str.split(",");
+                if (data.length == 2) {
+                    JailCard jailCard = new JailCard(data[1]);
+                    jailCards.add(jailCard);
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jailCards;
+    }
+
+    public static void readCards(InputStream moveStream, InputStream moneyStream, InputStream jailStream) throws IOException {
+        ArrayList<MoveCard> moveCards = readMoveCards(moveStream);
+        ArrayList<MoneyCard> moneyCards = readMoneyCards(moneyStream);
+        ArrayList<JailCard> jailCards = readJailCards(jailStream);
+        cardList.clear();
+        cardList.addAll(moveCards);
+        cardList.addAll(moneyCards);
+        cardList.addAll(jailCards);
     }
 }

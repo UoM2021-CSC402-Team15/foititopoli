@@ -102,6 +102,11 @@ public class MainMenuScreen implements Screen {
 
         try {
             DataProvider.readCourses(Gdx.files.internal("data/courses.csv").read());
+            DataProvider.readCards(
+                    Gdx.files.internal("data/moveCards.csv").read(),
+                    Gdx.files.internal("data/moneyCards.csv").read(),
+                    Gdx.files.internal("data/jailCards.csv").read()
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }

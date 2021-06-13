@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Cards.Card;
+import com.mygdx.game.Logic.Cards.JailCard;
+import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Player;
 import com.mygdx.game.UI.Screens.GameScreen;
 
@@ -16,7 +18,12 @@ public class CardWindow extends Window {
         super("Random Game Card", Foititopoli.gameSkin);
         this.setModal(true);
         Label description = new Label(aCard.getDescription(),Foititopoli.gameSkin);
-        description.setPosition(getWidth()/2,getHeight()/2);
+        description.setWrap(true);
+        description.setBounds(getX(), getY(), getWidth(), getHeight());
+        description.invalidate();
+        description.pack();
+
+        setSize(500,300);
 
         TextButton okButton = new TextButton("OK",Foititopoli.gameSkin);
         okButton.addListener(new ChangeListener() {
@@ -28,7 +35,7 @@ public class CardWindow extends Window {
             }
         });
 
+        add(description).expand().fill().row();
         add(okButton);
-        okButton.setPosition(getWidth()/2,0);
     }
 }
