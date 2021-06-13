@@ -23,7 +23,6 @@ public class DataProvider {
             pawns.add( new Pawn("thimble") );
             pawns.add( new Pawn("boot") );
             pawns.add( new Pawn("wheelbarrow") );
-            pawns.add( new Pawn("cat") );
             pawns.add( new Pawn("racing car") );
             pawns.add( new Pawn("battleship") );
         }

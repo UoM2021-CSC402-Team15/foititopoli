@@ -16,7 +16,8 @@ public class PawnActor extends Actor {
     private final Pawn pawn;
 
     public PawnActor(Pawn pawn) {
-        sprite = new Sprite( new Texture(Gdx.files.internal("pawn.png")));
+
+        sprite = new Sprite( new Texture(Gdx.files.internal(pawn+".png")));
         this.pawn = pawn;
         setPosition(50,50);
         setSize(60,40);
