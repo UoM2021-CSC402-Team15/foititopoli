@@ -11,6 +11,14 @@ import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.UI.Screens.MainMenuScreen;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class PauseWindow extends Window{
     GameInstance currentGame;
@@ -32,12 +40,27 @@ public class PauseWindow extends Window{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 try {
-                    OutputStream fouts = Gdx.files.local("save.ser").write(false);
-                    ObjectOutputStream douts = new ObjectOutputStream(fouts);
-                    game.getGameInstance().setListener(null);
-                    douts.writeObject(game.getGameInstance());
-                    douts.close();
-                    fouts.close();
+                    if (Gdx.files.local("./saves").exists() && Gdx.files.local("./saves").isDirectory()) {
+
+                        // Get Current TimeDate as ISO-8601
+                        TimeZone tz = TimeZone.getTimeZone("UTC");
+                        @SuppressWarnings("SimpleDateFormat")
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+                        df.setTimeZone(tz);
+                        String nowAsISO = df.format(new Date());
+
+                        // Write file
+                        OutputStream fouts = Gdx.files.local("./saves/" + nowAsISO + ".ser").write(false);
+                        ObjectOutputStream douts = new ObjectOutputStream(fouts);
+                        game.getGameInstance().setListener(null);
+                        douts.writeObject(game.getGameInstance());
+                        douts.close();
+                        fouts.close();
+
+                    } else {
+                        Gdx.files.local("./saves").mkdirs();
+                        this.changed(event, actor);
+                    }
                 } catch (IOException e) {
 
                     e.printStackTrace();

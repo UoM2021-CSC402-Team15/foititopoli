@@ -32,13 +32,10 @@ public class DebugConsole extends Window {
         scrollPane = new ScrollPane(label, Foititopoli.gameSkin);
 
         text = new TextField("", Foititopoli.gameSkin);
-        text.setTextFieldListener(new TextField.TextFieldListener() {
-            @Override
-            public void keyTyped(TextField textField, char c) {
-                if ( c == '\n' ) {
-                    runCommand(text.getText().trim());
-                    text.setText("");
-                }
+        text.setTextFieldListener((textField, c) -> {
+            if ( c == '\n' ) {
+                runCommand(text.getText().trim());
+                text.setText("");
             }
         });
         add(scrollPane).expand().fill().row();

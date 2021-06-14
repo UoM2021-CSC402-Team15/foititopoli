@@ -2,6 +2,7 @@ package com.mygdx.game.UI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -14,6 +15,16 @@ import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.DataProvider;
 import com.mygdx.game.Logic.GameInstance;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 public class LoadGameScreen implements Screen {
 
     private Stage stage;
@@ -21,7 +32,7 @@ public class LoadGameScreen implements Screen {
 
     private class SavedGameItem extends Table {
 
-        public SavedGameItem(String name) {
+        public SavedGameItem(String name, FileHandle fileHandle) {
 
             Viewport viewport = new StretchViewport(720,400);;
             stage = new Stage(viewport);
@@ -30,27 +41,39 @@ public class LoadGameScreen implements Screen {
             loadButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-
-                }
-            });
-            TextButton deleteButton = new TextButton("Delete", Foititopoli.gameSkin);
-            loadButton.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    GameInstance loadedGame = DataProvider.loadGame(Gdx.files.local("save.ser").read());
+                    GameInstance loadedGame = DataProvider.loadGame(fileHandle.read());
                     game.setGameInstance(loadedGame);
                     System.out.println(loadedGame.getPlayers());
                     game.setScreen(new GameScreen(game));
                 }
             });
+            TextButton deleteButton = new TextButton("Delete", Foititopoli.gameSkin);
+            deleteButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    fileHandle.delete();
+                    remove();
+                }
+            });
 
             Label nameLabel = new Label("", Foititopoli.gameSkin);
             nameLabel.setText(name);
-            Label dateLabel = new Label("Created on 01/01/1970", Foititopoli.gameSkin);
+            Label dateLabel = new Label("Created on --/--/---", Foititopoli.gameSkin);
+
+            @SuppressWarnings("SimpleDateFormat")
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+            df.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String iso = fileHandle.name().replace(".ser","");
+            try {
+                System.out.println(iso);
+                Date result = df.parse(iso);
+                dateLabel.setText(SimpleDateFormat.getDateTimeInstance().format(result));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             this.pad(20);
-            //this.debug();
-            this.add(nameLabel).expand().fill().width(viewport.getScreenWidth() /3f);
+            this.add(nameLabel).expand().fill().width(500);
             this.add(loadButton).expandX().fill().height(50).padBottom(10).row();
             this.add(dateLabel).fillX();
             this.add(deleteButton).fill();
@@ -66,13 +89,8 @@ public class LoadGameScreen implements Screen {
         stage = new Stage(viewport);
 
         Label title = new Label("Load Game Screen", Foititopoli.gameSkin);
-        title.setAlignment(Align.center);
-        title.setY(Gdx.graphics.getHeight() * 2 / 3f);
-        title.setWidth(Gdx.graphics.getWidth());
 
         TextButton backButton = new TextButton("Back", Foititopoli.gameSkin);
-        backButton.setWidth(Gdx.graphics.getWidth() / 2f);
-        backButton.setPosition(Gdx.graphics.getWidth() / 2f - backButton.getWidth() / 2, Gdx.graphics.getHeight() / 4f - backButton.getHeight() / 2);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -85,8 +103,21 @@ public class LoadGameScreen implements Screen {
         VerticalGroup verticalGroup = new VerticalGroup();
         ScrollPane scrollPane = new ScrollPane(verticalGroup);
 
-        for (int i = 0; i < 25; i++) {
-            SavedGameItem item = new SavedGameItem("test " + i);
+
+        ArrayList<FileHandle> gameSaves = new ArrayList<>();
+        if (Gdx.files.local("./saves").exists() && Gdx.files.local("./saves").isDirectory()) {
+            FileHandle[] files = Gdx.files.local("./saves").list(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\dZ\\.ser$");
+                }
+            });
+            gameSaves.addAll(Arrays.asList(files));
+        }
+        System.out.println(gameSaves);
+
+        for (int i = gameSaves.size(); i > 0; i--) {
+            SavedGameItem item = new SavedGameItem("Foititopoli Save " + i, gameSaves.get(i-1));
             verticalGroup.addActor(item);
         }
 

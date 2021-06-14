@@ -5,10 +5,10 @@ import com.mygdx.game.Logic.Cards.JailCard;
 import com.mygdx.game.Logic.Cards.MoneyCard;
 import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Squares.CourseSquare;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
