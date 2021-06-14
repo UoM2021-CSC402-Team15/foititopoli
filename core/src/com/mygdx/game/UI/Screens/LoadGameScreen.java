@@ -61,7 +61,7 @@ public class LoadGameScreen implements Screen {
             Label dateLabel = new Label("Created on --/--/---", Foititopoli.gameSkin);
 
             @SuppressWarnings("SimpleDateFormat")
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm'Z'");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
             String iso = fileHandle.name().replace(".ser","");
             try {
@@ -109,7 +109,7 @@ public class LoadGameScreen implements Screen {
             FileHandle[] files = Gdx.files.local("./saves").list(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String name) {
-                    return name.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\dZ\\.ser$");
+                    return name.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d_\\d\\dZ\\.ser$");
                 }
             });
             gameSaves.addAll(Arrays.asList(files));

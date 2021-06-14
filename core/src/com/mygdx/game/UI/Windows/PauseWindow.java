@@ -45,7 +45,7 @@ public class PauseWindow extends Window{
                         // Get Current TimeDate as ISO-8601
                         TimeZone tz = TimeZone.getTimeZone("UTC");
                         @SuppressWarnings("SimpleDateFormat")
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
                         df.setTimeZone(tz);
                         String nowAsISO = df.format(new Date());
 
