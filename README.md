@@ -1,4 +1,6 @@
 # Foititopoli
+[![Desktop Jar](https://github.com/UoM2021-CSC402-Team15/foititopoli/actions/workflows/desktop.yml/badge.svg)](https://github.com/UoM2021-CSC402-Team15/foititopoli/actions/workflows/desktop.yml)  [![Android Apk](https://github.com/UoM2021-CSC402-Team15/foititopoli/actions/workflows/android.yml/badge.svg)](https://github.com/UoM2021-CSC402-Team15/foititopoli/actions/workflows/android.yml)  
+![GitHub](https://img.shields.io/github/license/UoM2021-CSC402-Team15/foititopoli)  [![GitHub stars](https://img.shields.io/github/stars/UoM2021-CSC402-Team15/foititopoli)](https://github.com/UoM2021-CSC402-Team15/foititopoli/stargazers) [![GitHub forks](https://img.shields.io/github/forks/UoM2021-CSC402-Team15/foititopoli)](https://github.com/UoM2021-CSC402-Team15/foititopoli/network) [![YouTube Video Views](https://img.shields.io/youtube/views/YWZ7AvJJJXA?style=social)](https://youtu.be/YWZ7AvJJJXA?list=LL)
 
 ## Table of contents
 * [General info](#general-info)
@@ -9,7 +11,7 @@
 
 ## General info
 4th Semester Team Project  
-Software Technology course at the University of Macedonia
+Software Engineering course at the University of Macedonia
 
 Foititopoli is a variation of the classic board game Monopoly where the player takes the role of a student in the university.
 
