@@ -1,5 +1,6 @@
 package com.mygdx.game.UI.Windows;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -24,6 +25,10 @@ public class CourseInfoWindow extends Window {
         super(course.getName(), Foititopoli.gameSkin);
         this.course = course;
         this.currentPlayer = aPlayer;
+
+        setSize(400,200);
+        setScale(1.5f);
+        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
 
         Label priceLabel = new Label("Τιμή: " + course.getPrice(), Foititopoli.gameSkin);
         add(priceLabel).row();

@@ -21,12 +21,15 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class PauseWindow extends Window{
-    GameInstance currentGame;
 
     public PauseWindow(String title, Skin skin, final Foititopoli game) {
         super(title, skin);
 
         this.setModal(true);
+
+        setSize(300,200);
+        setScale(1.5f);
+        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
 
         TextButton resumeButton = new TextButton("Resume", Foititopoli.gameSkin);
         resumeButton.addListener(new ChangeListener() {
@@ -83,8 +86,4 @@ public class PauseWindow extends Window{
         add(exitButton).expand().fill();
     }
 
-    @Override
-    public void setPosition(float x, float y) {
-        super.setPosition(x-getWidth()/2, y-getHeight()/2);
-    }
 }

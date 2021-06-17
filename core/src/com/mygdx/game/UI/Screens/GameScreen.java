@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -30,8 +27,6 @@ import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
 import com.mygdx.game.UI.Components.SquareActor;
 import com.mygdx.game.UI.Windows.*;
-
-import java.util.function.Consumer;
 
 public class GameScreen implements Screen {
 
@@ -90,8 +85,6 @@ public class GameScreen implements Screen {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                pauseWindow.setSize(300,200);
-                pauseWindow.setPosition(camera.viewportWidth/2,camera.viewportHeight/2);
                 stage.addActor(pauseWindow);
             }
         });
@@ -150,8 +143,6 @@ public class GameScreen implements Screen {
                         super.clicked(event, x, y);
                         if (square.getSquare() instanceof CourseSquare) {
                             CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) square.getSquare(), game.getGameInstance().getCurrentPlayer(), player -> game.getGameInstance().getListener().playerUpdated(player));
-                            infoWindow.setSize(500,150);
-                            infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2f, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2f);
                             stage.addActor(infoWindow);
                         }
                     }
@@ -187,8 +178,6 @@ public class GameScreen implements Screen {
                         // If new square is a CourseSquare (and no other window is open), open a new CourseInfoWindow
                         if (pawn.getCurrentSquare() instanceof CourseSquare && !((stage.getActors().get(stage.getActors().size-1)) instanceof Window) ) {
                             CourseInfoWindow infoWindow = new CourseInfoWindow((CourseSquare) pawn.getCurrentSquare(), game.getGameInstance().getCurrentPlayer(), player -> playerUpdated(player));
-                            infoWindow.setSize(500,150);
-                            infoWindow.setPosition(viewport.getScreenWidth()/2f-infoWindow.getWidth()/2, viewport.getScreenHeight()/2f-infoWindow.getHeight()/2);
                             stage.addActor(infoWindow);
                         }
                     }
@@ -244,8 +233,6 @@ public class GameScreen implements Screen {
             if (pauseWindow.hasParent()) {
                 pauseWindow.remove();
             } else {
-                pauseWindow.setSize(300,200);
-                pauseWindow.setPosition(camera.viewportWidth/2,camera.viewportHeight/2);
                 stage.addActor(pauseWindow);
             }
         }

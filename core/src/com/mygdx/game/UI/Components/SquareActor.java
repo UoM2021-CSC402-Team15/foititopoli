@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Squares.Square;
@@ -27,6 +28,9 @@ public class SquareActor extends Group {
         } catch (Exception e) {
             sprite = new Sprite( new Texture(Gdx.files.internal("square.png")));
         }
+
+        addListener(new TextTooltip(square.getName(), Foititopoli.gameSkin));
+
         setOrigin(0,0);
         sprite.setOrigin(0, 0);
         Table table = new Table(Foititopoli.gameSkin);
