@@ -56,25 +56,26 @@ public class GameScreen implements Screen {
         final Viewport viewport = new StretchViewport(1280,720, camera);
         this.stage = new Stage(viewport, batch);
 
+        //Initialize Game
+        game.getGameInstance().initialize();
+
         /* Roll-Turn Button */
-        final TextButton rollButton = new TextButton("Roll", Foititopoli.gameSkin);
+        final TextButton rollButton = new TextButton("", Foititopoli.gameSkin);
         rollButton.setSize(150,50);
         rollButton.setTransform(true);
         rollButton.setScale(1.8f);
         rollButton.setPosition(1000, 20);
+        updateRollButton(rollButton);
         rollButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
-                if (rollButton.getText().toString().equals("Roll")){
+                if (game.getGameInstance().getCurrentPlayer().getTurnsToPlay() > 0){
                     game.getGameInstance().gameLoop(Dice.roll() + Dice.roll());
-                    rollButton.setText("End Turn");
-                }
-                else{
+                } else {
                     game.getGameInstance().endTurn();
-                    rollButton.setText("Roll");
                 }
-
+                updateRollButton(rollButton);
             }
         });
 
@@ -124,7 +125,7 @@ public class GameScreen implements Screen {
             playerButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    if (game.getGameInstance().getCurrentPlayer()!=player) {
+                    if (game.getGameInstance().getCurrentPlayer()!=player && player.getStudyHours() >= 0) {
                         stage.addActor(new TradeWindow(game.getGameInstance().getCurrentPlayer(), player, player -> game.getGameInstance().getListener().playerUpdated(player)));
                     }
                 }
@@ -156,9 +157,6 @@ public class GameScreen implements Screen {
         stage.addActor(boardGroup);
         stage.addActor(playerGroup);
 
-        //Initialize Game
-        game.getGameInstance().initialize();
-
         /* Game Listener */
         game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
             @Override
@@ -188,6 +186,7 @@ public class GameScreen implements Screen {
             public void playerUpdated(Player aPlayer) {
                 PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(aPlayer));
                 playerButton.update();
+                updateRollButton(rollButton);
             }
 
             @Override
@@ -209,6 +208,9 @@ public class GameScreen implements Screen {
             @Override
             public void playerLost(Player aPlayer) {
                 stage.addActor(new LoseWindow(aPlayer));
+                boardGroup.removePlayer(aPlayer);
+                PlayerButton playerButton = (PlayerButton) playerGroup.getChild(game.getGameInstance().getPlayers().indexOf(aPlayer));
+                playerButton.money.setText("Player Lost");
             }
         });
 
@@ -238,6 +240,14 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.GRAVE)) {
             console.activate();
+        }
+    }
+
+    private void updateRollButton(TextButton button) {
+        if (game.getGameInstance().getCurrentPlayer().getTurnsToPlay() > 0) {
+            button.setText("Roll");
+        } else {
+            button.setText("End Turn");
         }
     }
 

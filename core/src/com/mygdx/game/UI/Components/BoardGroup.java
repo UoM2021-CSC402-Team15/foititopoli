@@ -44,7 +44,7 @@ public class BoardGroup extends Group {
         for(Player player: players) {
             pawnActors.put(player.getPawn(), new PawnActor(player.getPawn()));
         }
-        for(PawnActor pawnActor: pawnActors.values()) { ;
+        for(PawnActor pawnActor: pawnActors.values()) {
             this.addActor(pawnActor);
             if (pawnActor.getPawn().getCurrentSquare() == null) {
                 pawnActor.getPawn().setCurrentSquare(board.squares[0][0]);
@@ -136,5 +136,10 @@ public class BoardGroup extends Group {
 
     public SquareActor[][] getSquareActors() {
         return squareActors;
+    }
+
+    public void removePlayer(Player player) {
+        removeActor(pawnActors.get(player.getPawn()));
+        pawnActors.remove(player.getPawn());
     }
 }

@@ -67,32 +67,43 @@ public class GameInstance implements Serializable {
         }
     }
     public void endTurn(){
+
+        // Lose check
+        if (currentPlayer.getStudyHours()<0) {
+            listener.playerLost(currentPlayer);
+            currentPlayer.setTurnsToPlay(Integer.MIN_VALUE);
+        }
+
+        // Win check
+        if (currentPlayer.getStudyHours()>1000) {
+            listener.playerWon(currentPlayer);
+            //end game!
+        }
+
         //Your turn is done for this Round
-        if (currentPlayer.getTurnsToPlay() <= 1){
+        if (currentPlayer.getTurnsToPlay() <= 0){
             //Find and set the next player
-            SetTheNextPlayer();
-        }
-
-        //In other case th player must play again in this round and his turn must be updated
-        else {
-            currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()-1);
-        }
-    }
-
-    private void SetTheNextPlayer() {
-        //Set the first nominated player
-        currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
-
-       //If this player cant play change players until you find the one who can
-        while (currentPlayer.getTurnsToPlay() <1) {
             currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()+1);
             currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
-
         }
+
+    }
+
+    private Player getNextValidPlayer(Player player) {
+        //Set the first nominated player
+        Player possibleNextPlayer = players.get((players.indexOf(player)+1)%players.size());
+
+        if (possibleNextPlayer.getTurnsToPlay() >=1) {
+            return possibleNextPlayer;
+        } else {
+            return getNextValidPlayer(possibleNextPlayer);
+        }
+
     }
 
 
     public void gameLoop(int dice) {
+        currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()-1);
 
         Square square = board.getDestination(currentPlayer.getPawn(), dice);
         currentPlayer.getPawn().setCurrentSquare(square);
@@ -104,17 +115,6 @@ public class GameInstance implements Serializable {
 
         square.runAction(this);
 
-        if (currentPlayer.getStudyHours()<0)
-        {
-            listener.playerLost(currentPlayer);
-            players.remove(currentPlayer);
-        }
-
-        if (currentPlayer.getStudyHours()>1000)
-        {
-            listener.playerWon(currentPlayer);
-            //end game!
-        }
     }
 
     public ArrayList<Player> getPlayers() {
