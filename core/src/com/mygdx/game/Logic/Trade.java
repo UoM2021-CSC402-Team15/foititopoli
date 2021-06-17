@@ -1,6 +1,7 @@
 package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Squares.CourseSquare;
+
 import java.util.ArrayList;
 
 public class Trade {

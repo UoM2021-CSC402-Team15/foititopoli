@@ -1,6 +1,5 @@
 package com.mygdx.game.Logic.Squares;
 
-import com.mygdx.game.Logic.DataProvider;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Player;
 

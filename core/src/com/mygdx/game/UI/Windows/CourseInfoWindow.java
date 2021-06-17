@@ -14,8 +14,6 @@ import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Screens.GameScreen;
 
-import java.util.concurrent.Callable;
-
 public class CourseInfoWindow extends Window {
 
     private CourseSquare course;

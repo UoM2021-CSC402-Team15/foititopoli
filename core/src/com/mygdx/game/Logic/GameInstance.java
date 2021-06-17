@@ -2,7 +2,6 @@ package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Cards.Card;
 import com.mygdx.game.Logic.Cards.JailCard;
-import com.mygdx.game.Logic.Cards.MoneyCard;
 import com.mygdx.game.Logic.Cards.MoveCard;
 import com.mygdx.game.Logic.Squares.Square;
 

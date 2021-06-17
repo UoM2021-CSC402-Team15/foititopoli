@@ -1,6 +1,7 @@
 package com.mygdx.game.Logic;
 
 import com.mygdx.game.Logic.Squares.Square;
+
 import java.io.Serializable;
 
 public class Pawn implements Serializable {

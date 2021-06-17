@@ -1,13 +1,13 @@
 package com.mygdx.game.UI.Windows;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.DataProvider;
 import com.mygdx.game.Logic.GameInstance;
-import com.mygdx.game.Logic.Pawn;
-import com.mygdx.game.Logic.Player;
-import com.mygdx.game.Logic.Squares.CourseSquare;
 
 public class DebugConsole extends Window {
 
