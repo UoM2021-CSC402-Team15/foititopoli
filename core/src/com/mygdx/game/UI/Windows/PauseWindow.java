@@ -26,7 +26,7 @@ public class PauseWindow extends Window{
 
         setSize(300,200);
         setScale(1.5f);
-        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
+        setPosition((1280-getWidth()*getScaleX())/2,(720-getHeight()*getScaleY())/2 );
 
         TextButton resumeButton = new TextButton("Resume", Foititopoli.gameSkin);
         resumeButton.addListener(new ChangeListener() {

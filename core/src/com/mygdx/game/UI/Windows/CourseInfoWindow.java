@@ -26,7 +26,7 @@ public class CourseInfoWindow extends Window {
 
         setSize(400,200);
         setScale(1.5f);
-        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
+        setPosition((1280-getWidth()*getScaleX())/2,(720-getHeight()*getScaleY())/2 );
 
         Label priceLabel = new Label("Τιμή: " + course.getPrice(), Foititopoli.gameSkin);
         add(priceLabel).row();
@@ -67,6 +67,8 @@ public class CourseInfoWindow extends Window {
         add(closeButton).expand().fillX().bottom().fillX();
         setModal(true);
     }
+
+
 
     private void refreshBuyButton(TextButton button) {
         if (checkCanBuy()) {

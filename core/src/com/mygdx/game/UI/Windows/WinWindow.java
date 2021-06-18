@@ -17,7 +17,7 @@ public class WinWindow extends Window {
 
         setSize(400,200);
         setScale(1.5f);
-        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
+        setPosition((1280-getWidth()*getScaleX())/2,(720-getHeight()*getScaleY())/2 );
 
         Label winMessage = new Label(aPlayer.getName()+" is the winner",Foititopoli.gameSkin);
         winMessage.setPosition(getWidth()/2,getHeight()/2);

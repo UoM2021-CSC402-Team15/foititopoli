@@ -41,7 +41,7 @@ public class TradeWindow extends Window {
 
         setSize(700,550);
         setScale(1.2f);
-        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
+        setPosition((1280-getWidth()*getScaleX())/2,(720-getHeight()*getScaleY())/2 );
 
         // TOP BUTTONS
         TextButton cancelButton = new TextButton("Cancel", Foititopoli.gameSkin);

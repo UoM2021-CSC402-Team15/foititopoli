@@ -17,7 +17,7 @@ public class LoseWindow extends Window {
 
         setSize(400,400);
         setScale(1.5f);
-        setPosition((Gdx.graphics.getWidth()-getWidth()*getScaleX())/2,(Gdx.graphics.getHeight()-getHeight()*getScaleY())/2 );
+        setPosition((1280-getWidth()*getScaleX())/2,(720-getHeight()*getScaleY())/2 );
 
         Label description = new Label(aPlayer.getName()+" is out of the game", Foititopoli.gameSkin);
         description.setWrap(true);
