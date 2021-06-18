@@ -82,21 +82,21 @@ public class GameInstance implements Serializable {
         //Your turn is done for this Round
         if (currentPlayer.getTurnsToPlay() <= 0){
             //Find and set the next player
-            currentPlayer.setTurnsToPlay(currentPlayer.getTurnsToPlay()+1);
-            currentPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
+             currentPlayer = getNextValidPlayer();
         }
 
     }
 
-    private Player getNextValidPlayer(Player player) {
+    private Player getNextValidPlayer() {
         //Set the first nominated player
-        Player possibleNextPlayer = players.get((players.indexOf(player)+1)%players.size());
+        Player possibleNextPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
 
-        if (possibleNextPlayer.getTurnsToPlay() >=1) {
-            return possibleNextPlayer;
-        } else {
-            return getNextValidPlayer(possibleNextPlayer);
+        while (possibleNextPlayer.getTurnsToPlay()<=0){
+            possibleNextPlayer.setTurnsToPlay(possibleNextPlayer.getTurnsToPlay()+1);
+            possibleNextPlayer = players.get((players.indexOf(possibleNextPlayer)+1)%players.size());
+
         }
+        return  possibleNextPlayer;
 
     }
 
