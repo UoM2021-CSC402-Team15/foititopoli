@@ -20,10 +20,10 @@ public class Board implements Serializable {
         squares = new Square[4][tilesPerSide - 1];
 
         // Corner Square setup
-        squares[0][0] = new MoneySquare("start",0);
-        squares[1][0] = new MoneySquare("cafeteria", 0);
-        squares[2][0] = new MoneySquare("library", 20);
-        squares[3][0] = new TurnSquare("prison",-3);
+        squares[0][0] = new MoneySquare("Αφετηρία",0);
+        squares[1][0] = new MoneySquare("Λέσχη", 0);
+        squares[2][0] = new MoneySquare("Βιβλιοθήκη", 20);
+        squares[3][0] = new TurnSquare("Πρύτανης",-3);
 
         // Middle Square setup
         squares[0][5] = new TurnSquare("Τραπεζάκια Κομμάτων",-1);
@@ -32,14 +32,14 @@ public class Board implements Serializable {
         squares[3][5] = new MoneySquare("Κυλικείο", -15);
 
         // Card Square setup
-        squares[0][2] = new CardSquare("Card Square");
-        squares[0][7] = new CardSquare("Card Square");
-        squares[1][2] = new CardSquare("Card Square");
-        squares[1][7] = new CardSquare("Card Square");
-        squares[2][2] = new CardSquare("Card Square");
-        squares[2][8] = new CardSquare("Card Square");
-        squares[3][3] = new CardSquare("Card Square");
-        squares[3][8] = new CardSquare("Card Square");
+        squares[0][2] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[0][7] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[1][2] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[1][7] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[2][2] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[2][8] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[3][3] = new CardSquare("Τετράγωνο Κάρτας");
+        squares[3][8] = new CardSquare("Τετράγωνο Κάρτας");
 
         ArrayList<CourseSquare> courses = DataProvider.getCourses();
         Iterator<CourseSquare> iterator = courses.iterator();

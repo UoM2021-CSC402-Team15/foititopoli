@@ -19,16 +19,16 @@ public class DataProvider {
    private static ArrayList<Card> cardList = new ArrayList<>();
 
     private static void readPawns() {
-        if (pawns.size() == 0) {
-            pawns.add( new Pawn("dog") );
-            pawns.add( new Pawn("hat") );
-            pawns.add( new Pawn("thimble") );
-            pawns.add( new Pawn("boot") );
-            pawns.add( new Pawn("wheelbarrow") );
-            pawns.add( new Pawn("racing car") );
-            pawns.add( new Pawn("battleship") );
-        }
+        pawns.add( new Pawn("battleship") );
+        pawns.add( new Pawn("boot") );
+        pawns.add( new Pawn("dog") );
+        pawns.add( new Pawn("hat") );
+        pawns.add( new Pawn("iron") );
+        pawns.add( new Pawn("racing car") );
+        pawns.add( new Pawn("thimble") );
+        pawns.add( new Pawn("wheelbarrow") );
     }
+
     public static  Card drawCard(){
         Random random = new Random();
         Collections.shuffle(cardList);

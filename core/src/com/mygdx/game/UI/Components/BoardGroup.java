@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
+import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Board;
 import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
@@ -42,7 +44,9 @@ public class BoardGroup extends Group {
         drawBoard(basicTileWidth);
 
         for(Player player: players) {
-            pawnActors.put(player.getPawn(), new PawnActor(player.getPawn()));
+            PawnActor actor = new PawnActor(player.getPawn());
+            actor.addListener(new TextTooltip(player.getName(), Foititopoli.gameSkin));
+            pawnActors.put(player.getPawn(), actor);
         }
         for(PawnActor pawnActor: pawnActors.values()) {
             this.addActor(pawnActor);

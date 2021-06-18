@@ -28,8 +28,11 @@ import com.mygdx.game.Logic.Pawn;
 import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.CourseSquare;
 import com.mygdx.game.UI.Components.BoardGroup;
+import com.mygdx.game.UI.Components.DiceActor;
 import com.mygdx.game.UI.Components.SquareActor;
 import com.mygdx.game.UI.Windows.*;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 
 public class GameScreen implements Screen {
 
@@ -58,9 +61,19 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 1280, 720);
         final Viewport viewport = new StretchViewport(1280,720, camera);
         this.stage = new Stage(viewport, batch);
+        TooltipManager.getInstance().initialTime = 0;
+        TooltipManager.getInstance().hideAll();
 
         //Initialize Game
         game.getGameInstance().initialize();
+
+        /* Dice Sprites */
+        DiceActor dice1 = new DiceActor();
+        dice1.setPosition(1020,140);
+        dice1.setSize(100,100);
+        DiceActor dice2 = new DiceActor();
+        dice2.setPosition(1140,140);
+        dice2.setSize(100,100);
 
         /* Roll-Turn Button */
         final TextButton rollButton = new TextButton("", Foititopoli.gameSkin);
@@ -74,7 +87,21 @@ public class GameScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
 
                 if (game.getGameInstance().getCurrentPlayer().getTurnsToPlay() > 0){
-                    game.getGameInstance().gameLoop(Dice.roll() + Dice.roll());
+                    int roll1 = Dice.roll();
+                    int roll2 = Dice.roll();
+                    dice1.rollAnimation(roll1);
+                    dice2.rollAnimation(roll2);
+
+                    rollButton.setDisabled(true);
+                    rollButton.setTouchable(Touchable.disabled);
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            rollButton.setDisabled(false);
+                            rollButton.setTouchable(Touchable.enabled);
+                            game.getGameInstance().gameLoop(roll1 + roll2);
+                        }
+                    }, 2);
                 } else {
                     game.getGameInstance().endTurn();
                 }
@@ -110,14 +137,14 @@ public class GameScreen implements Screen {
                 this.player = player;
                 Label name = new Label(player.getName(), Foititopoli.gameSkin);
                 add(name).expand().fill().row();
-                money = new Label("Money: " + player.getStudyHours(), Foititopoli.gameSkin);
+                money = new Label(player.getStudyHours() + " Hours", Foititopoli.gameSkin);
                 add(money).expand().fill();
                 padLeft(30);
                 padRight(30);
                 pad(20);
             }
             public void update() {
-                money.setText("Money: " + player.getStudyHours());
+                money.setText(player.getStudyHours() + " Hours");
             }
         }
 
@@ -159,6 +186,8 @@ public class GameScreen implements Screen {
         stage.addActor(pauseButton);
         stage.addActor(boardGroup);
         stage.addActor(playerGroup);
+        stage.addActor(dice1);
+        stage.addActor(dice2);
 
         /* Game Listener */
         game.getGameInstance().setListener(new GameInstance.GameInstanceListener() {
@@ -258,6 +287,8 @@ public class GameScreen implements Screen {
     public void show() {
         Gdx.app.log("GameScreen","show");
         Gdx.input.setInputProcessor(stage);
+        stage.getRoot().getColor().a = 0;
+        stage.getRoot().addAction(fadeIn(1f));
     }
 
     @Override

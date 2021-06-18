@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+
 public class LoadGameScreen implements Screen {
 
     private Stage stage;
