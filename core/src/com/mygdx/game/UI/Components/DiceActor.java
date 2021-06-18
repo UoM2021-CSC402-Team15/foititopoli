@@ -17,7 +17,7 @@ public class DiceActor extends Actor {
         super();
 
         for (int i = 0; i < 5; i++) {
-            diceTextures[i] = new Texture(Gdx.files.internal("./images/dice/"+ (i + 1) +".png"));
+            diceTextures[i] = new Texture(Gdx.files.internal("images/dice/"+ (i + 1) +".png"));
         }
 
         currentTexture = diceTextures[0];

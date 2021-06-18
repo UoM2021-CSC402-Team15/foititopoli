@@ -24,9 +24,9 @@ public class SquareActor extends Group {
     public SquareActor(final Square square) {
         this.square = square;
         try {
-            sprite = new Sprite( new Texture(Gdx.files.internal("./images/squares/"+square.getName()+".png")));
+            sprite = new Sprite( new Texture(Gdx.files.internal("images/squares/"+square.getName()+".png")));
         } catch (Exception e) {
-            sprite = new Sprite( new Texture(Gdx.files.internal("./images/squares/square.png")));
+            sprite = new Sprite( new Texture(Gdx.files.internal("images/squares/square.png")));
         }
 
         addListener(new TextTooltip(square.getName(), Foititopoli.gameSkin));
