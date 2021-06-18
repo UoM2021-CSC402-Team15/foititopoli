@@ -74,6 +74,7 @@ public class PauseWindow extends Window{
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                getStage().dispose();
                 game.setScreen(new MainMenuScreen(game));
             }
         });

@@ -15,5 +15,4 @@ public abstract class Card {
 
     public abstract void runAction(Player aPlayer);
 
-
 }

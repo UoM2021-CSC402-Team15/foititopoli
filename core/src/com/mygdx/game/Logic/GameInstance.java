@@ -74,7 +74,7 @@ public class GameInstance implements Serializable {
         }
 
         // Win check
-        if (currentPlayer.getStudyHours()>1000) {
+        if (currentPlayer.getStudyHours()>1000 || otherPlayersLost()) {
             listener.playerWon(currentPlayer);
             //end game!
         }
@@ -87,6 +87,15 @@ public class GameInstance implements Serializable {
 
     }
 
+    private Boolean otherPlayersLost() {
+        for (Player player: players) {
+            if (player != currentPlayer && player.getTurnsToPlay()>-10 && player.getStudyHours()>=0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private Player getNextValidPlayer() {
         //Set the first nominated player
         Player possibleNextPlayer = players.get((players.indexOf(currentPlayer)+1)%players.size());
@@ -94,7 +103,6 @@ public class GameInstance implements Serializable {
         while (possibleNextPlayer.getTurnsToPlay()<=0){
             possibleNextPlayer.setTurnsToPlay(possibleNextPlayer.getTurnsToPlay()+1);
             possibleNextPlayer = players.get((players.indexOf(possibleNextPlayer)+1)%players.size());
-
         }
         return  possibleNextPlayer;
 

@@ -43,6 +43,7 @@ public class BoardGroup extends Group {
         background = new Texture(Gdx.files.internal("1_3.png"));
         drawBoard(basicTileWidth);
 
+        pawnActors.clear();
         for(Player player: players) {
             PawnActor actor = new PawnActor(player.getPawn());
             actor.addListener(new TextTooltip(player.getName(), Foititopoli.gameSkin));
@@ -146,4 +147,5 @@ public class BoardGroup extends Group {
         removeActor(pawnActors.get(player.getPawn()));
         pawnActors.remove(player.getPawn());
     }
+
 }
