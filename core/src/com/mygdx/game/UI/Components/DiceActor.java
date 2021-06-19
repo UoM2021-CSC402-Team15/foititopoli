@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class DiceActor extends Actor {
 
-    Texture[] diceTextures = new Texture[6];
+    final Texture[] diceTextures = new Texture[6];
     Texture currentTexture;
 
     public DiceActor() {

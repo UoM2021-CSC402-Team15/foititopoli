@@ -20,17 +20,14 @@ import java.util.List;
 
 public class BoardGroup extends Group {
 
-    private Board board;
+    private final HashMap<Pawn, PawnActor> pawnActors = new HashMap<>();
+    private final SquareActor[][] squareActors;
 
-    private HashMap<Pawn, PawnActor> pawnActors = new HashMap<>();
-    private SquareActor[][] squareActors;
+    private final Texture background;
 
-    private Texture background;
-
-    private float tileHeightRatio = 1.6f;
+    private final float tileHeightRatio = 1.6f;
 
     public BoardGroup(Board board, float size, ArrayList<Player> players) {
-        this.board = board;
         setSize(size, size);
         float basicTileWidth = size/(board.tilesPerSide-2 + (2 * tileHeightRatio) );
 

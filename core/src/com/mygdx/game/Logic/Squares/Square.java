@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public abstract class Square implements Serializable {
 
-    protected String name;
+    protected final String name;
     private int i;
     private int j;
 

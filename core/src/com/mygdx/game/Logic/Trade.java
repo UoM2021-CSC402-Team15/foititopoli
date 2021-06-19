@@ -5,11 +5,11 @@ import com.mygdx.game.Logic.Squares.CourseSquare;
 import java.util.ArrayList;
 
 public class Trade {
-   private Player sender;
-   private Player receiver;
-   private ArrayList<CourseSquare> senderCourseList = new ArrayList<CourseSquare>();
+   private final Player sender;
+   private final Player receiver;
+   private ArrayList<CourseSquare> senderCourseList = new ArrayList<>();
    private int senderHours;
-   private ArrayList<CourseSquare> receiverCourseList = new ArrayList<CourseSquare>();
+   private ArrayList<CourseSquare> receiverCourseList = new ArrayList<>();
    private int receiverHours;
 
     public Trade(Player sender, Player receiver) {

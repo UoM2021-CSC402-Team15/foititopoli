@@ -9,7 +9,7 @@ import java.util.Iterator;
 public class Board implements Serializable {
 
     public Square[][] squares;
-    public int tilesPerSide;
+    public final int tilesPerSide;
 
     public Board(int tilesPerSide) {
         this.tilesPerSide = tilesPerSide;

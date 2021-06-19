@@ -12,7 +12,7 @@ public class Player implements Serializable {
     private float studyHours;
     private int turnsToPlay;
     private boolean isActive;
-    private ArrayList<CourseSquare> courseList = new ArrayList<>();
+    private final ArrayList<CourseSquare> courseList = new ArrayList<>();
 
     public Player(String name, Pawn selectedPawn, float studyHours) {
         this.name = name;

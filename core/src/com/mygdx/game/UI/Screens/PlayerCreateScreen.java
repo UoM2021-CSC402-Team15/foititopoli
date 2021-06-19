@@ -21,7 +21,7 @@ public class PlayerCreateScreen implements Screen {
 
     public PlayerCreateScreen(final Foititopoli game, final ArrayList<Pawn> availablePawns, final float studyHours) {
 
-        Viewport viewport = new StretchViewport(720,400);;
+        Viewport viewport = new StretchViewport(720,400);
         stage = new Stage(viewport);
 
         int currentPlayerNumber = game.getGameInstance().getPlayers().size()+1;

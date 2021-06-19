@@ -11,11 +11,10 @@ import java.util.ArrayList;
 public class GameInstance implements Serializable {
 
     private final int numberOfPlayers;
-    private final float currency;
     private final ArrayList<Player> players = new ArrayList<>();
 
     private GameInstanceListener listener;
-    private Board board;
+    private final Board board;
 
     private Player currentPlayer;
 
@@ -35,14 +34,13 @@ public class GameInstance implements Serializable {
         this.listener = listener;
     }
 
-    public GameInstance(int numberOfPlayers, float currency) {
+    public GameInstance(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
-        this.currency = currency;
         this.board = new Board(11);
     }
 
-    public void setupPlayer(String name, Pawn pawn,float studyHours) {
-        Player player = new Player(name, pawn,studyHours);
+    public void setupPlayer(String name, Pawn pawn, float studyHours) {
+        Player player = new Player(name, pawn, studyHours);
         players.add(player);
     }
 
@@ -130,10 +128,6 @@ public class GameInstance implements Serializable {
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
-    }
-
-    public float getCurrency() {
-        return currency;
     }
 
     public Board getBoard() {

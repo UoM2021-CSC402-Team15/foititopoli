@@ -37,7 +37,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
 
         batch = new SpriteBatch();
-        Viewport viewport = new StretchViewport(720,400);;
+        Viewport viewport = new StretchViewport(720,400);
         stage = new Stage(viewport, batch);
 
         Table table = new Table();
@@ -77,7 +77,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Gdx.app.exit();
-                System.exit(0);
+                //System.exit(0);
             }
         });
 
@@ -101,11 +101,11 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, 1280, 720);
 
         try {
-            DataProvider.readCourses(Gdx.files.internal("data/courses.csv").read());
+            DataProvider.readCourses(Gdx.files.internal("data/courses.csv"));
             DataProvider.readCards(
-                    Gdx.files.internal("data/moveCards.csv").read(),
-                    Gdx.files.internal("data/moneyCards.csv").read(),
-                    Gdx.files.internal("data/jailCards.csv").read()
+                    Gdx.files.internal("data/moveCards.csv"),
+                    Gdx.files.internal("data/moneyCards.csv"),
+                    Gdx.files.internal("data/jailCards.csv")
             );
         } catch (IOException e) {
             e.printStackTrace();

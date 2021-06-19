@@ -3,7 +3,7 @@ package com.mygdx.game.Logic.Squares;
 import com.mygdx.game.Logic.GameInstance;
 
 public class MoneySquare extends Square {
-    private float money;
+    private final float money;
 
     public MoneySquare(String name, float money) {
         super(name);

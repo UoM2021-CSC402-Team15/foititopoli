@@ -11,13 +11,13 @@ import com.mygdx.game.Logic.GameInstance;
 
 public class DebugConsole extends Window {
 
-    private Stage stage;
+    private final Stage stage;
     private Boolean isActive = false;
-    private TextField text;
-    private Label label;
-    private ScrollPane scrollPane;
+    private final TextField text;
+    private final Label label;
+    private final ScrollPane scrollPane;
 
-    private GameInstance game;
+    private final GameInstance game;
 
     public DebugConsole(GameInstance game, Stage stage) {
         super("Debug", Foititopoli.gameSkin);

@@ -1,6 +1,5 @@
 package com.mygdx.game.UI.Windows;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -16,8 +15,8 @@ import com.mygdx.game.UI.Screens.GameScreen;
 
 public class CourseInfoWindow extends Window {
 
-    private CourseSquare course;
-    private Player currentPlayer;
+    private final CourseSquare course;
+    private final Player currentPlayer;
 
     public CourseInfoWindow(final CourseSquare course, final Player aPlayer, GameScreen.UI ui) {
         super(course.getName(), Foititopoli.gameSkin);
@@ -89,17 +88,17 @@ public class CourseInfoWindow extends Window {
     }
 
     private Boolean checkCanBuy() {
-        Boolean isOnSameSquare = currentPlayer.getPawn().getCurrentSquare().equals(course);
-        Boolean isAlreadyBought = course.getGrade() >= 5;
-        Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getPrice();
+        boolean isOnSameSquare = currentPlayer.getPawn().getCurrentSquare().equals(course);
+        boolean isAlreadyBought = course.getGrade() >= 5;
+        boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getPrice();
         return !isAlreadyBought && hasEnoughMoney && isOnSameSquare;
     }
 
     private Boolean checkCanUpgrade() {
         if (course.getGrade()==0) return false;
-        Boolean isAlreadyBoughtByPlayer = currentPlayer.getCourseList().contains(course);
-        Boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getUpgradeCost();
-        Boolean hasMaximumGrade = course.getGrade() == 10;
+        boolean isAlreadyBoughtByPlayer = currentPlayer.getCourseList().contains(course);
+        boolean hasEnoughMoney = currentPlayer.getStudyHours() >= course.getUpgradeCost();
+        boolean hasMaximumGrade = course.getGrade() == 10;
         return isAlreadyBoughtByPlayer && hasEnoughMoney && !hasMaximumGrade;
     }
 }

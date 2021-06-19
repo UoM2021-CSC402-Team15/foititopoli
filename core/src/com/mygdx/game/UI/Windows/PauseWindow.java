@@ -44,18 +44,19 @@ public class PauseWindow extends Window{
 
                         // Get Current TimeDate as ISO-8601
                         TimeZone tz = TimeZone.getTimeZone("UTC");
-                        @SuppressWarnings("SimpleDateFormat")
+
+                        @SuppressWarnings({"SimpleDateFormat", "SpellCheckingInspection"})
                         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
                         df.setTimeZone(tz);
                         String nowAsISO = df.format(new Date());
 
                         // Write file
-                        OutputStream fouts = Gdx.files.local("./saves/" + nowAsISO + ".ser").write(false);
-                        ObjectOutputStream douts = new ObjectOutputStream(fouts);
+                        OutputStream outputStream = Gdx.files.local("./saves/" + nowAsISO + ".ser").write(false);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                         game.getGameInstance().setListener(null);
-                        douts.writeObject(game.getGameInstance());
-                        douts.close();
-                        fouts.close();
+                        objectOutputStream.writeObject(game.getGameInstance());
+                        objectOutputStream.close();
+                        outputStream.close();
 
                     } else {
                         Gdx.files.local("./saves").mkdirs();

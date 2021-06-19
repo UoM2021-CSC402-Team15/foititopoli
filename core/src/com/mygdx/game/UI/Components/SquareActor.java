@@ -17,7 +17,7 @@ import com.mygdx.game.Logic.Squares.Square;
 
 public class SquareActor extends Group {
 
-    private Square square;
+    private final Square square;
 
     private Sprite sprite;
 
@@ -58,8 +58,7 @@ public class SquareActor extends Group {
     }
 
     public Vector2 getCenter() {
-        Vector2 centerInParent = localToParentCoordinates(new Vector2(getWidth() / 2, getHeight() / 2));
-        return centerInParent;
+        return localToParentCoordinates(new Vector2(getWidth() / 2, getHeight() / 2));
     }
 
     @Override

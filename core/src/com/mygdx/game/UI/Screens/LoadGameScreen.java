@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-
 public class LoadGameScreen implements Screen {
 
     private Stage stage;
@@ -35,16 +33,15 @@ public class LoadGameScreen implements Screen {
 
         public SavedGameItem(String name, FileHandle fileHandle) {
 
-            Viewport viewport = new StretchViewport(720,400);;
+            Viewport viewport = new StretchViewport(720,400);
             stage = new Stage(viewport);
 
             TextButton loadButton = new TextButton("Load", Foititopoli.gameSkin);
             loadButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    GameInstance loadedGame = DataProvider.loadGame(fileHandle.read());
+                    GameInstance loadedGame = DataProvider.loadGame(fileHandle);
                     game.setGameInstance(loadedGame);
-                    System.out.println(loadedGame.getPlayers());
                     game.setScreen(new GameScreen(game));
                 }
             });
@@ -61,7 +58,7 @@ public class LoadGameScreen implements Screen {
             nameLabel.setText(name);
             Label dateLabel = new Label("Created on --/--/---", Foititopoli.gameSkin);
 
-            @SuppressWarnings("SimpleDateFormat")
+            @SuppressWarnings({"SimpleDateFormat", "SpellCheckingInspection"})
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH_mm'Z'");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
             String iso = fileHandle.name().replace(".ser","");
@@ -107,12 +104,7 @@ public class LoadGameScreen implements Screen {
 
         ArrayList<FileHandle> gameSaves = new ArrayList<>();
         if (Gdx.files.local("./saves").exists() && Gdx.files.local("./saves").isDirectory()) {
-            FileHandle[] files = Gdx.files.local("./saves").list(new FilenameFilter() {
-                @Override
-                public boolean accept(File dir, String name) {
-                    return name.matches("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d_\\d\\dZ\\.ser$");
-                }
-            });
+            FileHandle[] files = Gdx.files.local("./saves").list((dir, name) -> name.matches("^\\d{4}-\\d{2}-\\d{2}T\\d{2}_\\d{2}Z\\.ser$"));
             gameSaves.addAll(Arrays.asList(files));
         }
         System.out.println(gameSaves);

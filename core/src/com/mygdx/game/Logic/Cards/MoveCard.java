@@ -5,13 +5,11 @@ import com.mygdx.game.Logic.Player;
 import com.mygdx.game.Logic.Squares.Square;
 
 public class MoveCard extends Card {
-    private String description;
-    private float location;
+    private final float location;
     private Square square;
 
     public MoveCard(String description, float location) {
         super(description);
-        this.description = description;
         this.location = location;
 
     }

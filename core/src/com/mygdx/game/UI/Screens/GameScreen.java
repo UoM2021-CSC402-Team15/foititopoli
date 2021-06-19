@@ -44,7 +44,7 @@ public class GameScreen implements Screen {
     private final PauseWindow pauseWindow;
     private final BoardGroup boardGroup;
     private final DebugConsole console;
-    private Foititopoli game;
+    private final Foititopoli game;
 
     public interface UI {
         void updatePlayer(Player player);
@@ -130,8 +130,8 @@ public class GameScreen implements Screen {
 
         /* Player Button  Class */
         class PlayerButton extends Button {
-            Player player;
-            Label money;
+            final Player player;
+            final Label money;
             public PlayerButton(Player player) {
                 super(Foititopoli.gameSkin);
                 this.player = player;

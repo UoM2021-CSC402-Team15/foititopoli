@@ -3,21 +3,16 @@ package com.mygdx.game.Logic.Squares;
 import com.mygdx.game.Logic.GameInstance;
 import com.mygdx.game.Logic.Player;
 
+@SuppressWarnings("unused")
 public class CourseSquare extends Square {
     private int grade=0;
     private int[] salary = new int[]{5,10,20,30,40,50};
-    private int semester;
-    private String direction;
-    private String description;
-    private String professors;
+    private final int semester;
+    private final String direction;
+    private final String description;
+    private final String professors;
     private float price;
 
-
-    public CourseSquare(String name, float price) {
-        super(name);
-        this.price = price;
-
-    }
 
     public CourseSquare(String name, int semester, String direction, String description, String Professors, int price) {
         super(name);

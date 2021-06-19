@@ -1,6 +1,5 @@
 package com.mygdx.game.UI.Windows;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -14,17 +13,18 @@ import com.mygdx.game.UI.Screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class TradeWindow extends Window {
 
-    Player sender;
-    Player receiver;
+    final Player sender;
+    final Player receiver;
 
     final Slider senderMoneySlider;
     final Slider receiverMoneySlider;
 
-    HashMap<String, CourseSquare> senderCourseMap = new HashMap<>();
-    HashMap<String, CourseSquare> receiverCourseMap = new HashMap<>();
+    final HashMap<String, CourseSquare> senderCourseMap = new HashMap<>();
+    final HashMap<String, CourseSquare> receiverCourseMap = new HashMap<>();
 
     public TradeWindow(Player sender, Player receiver, GameScreen.UI ui) {
         super("Trade with "+receiver.getName(), Foititopoli.gameSkin);
@@ -84,8 +84,10 @@ public class TradeWindow extends Window {
         senderCourseGroup.setMinCheckCount(0);
 
         Table senderTable = new Table(Foititopoli.gameSkin);
-        for (TextButton button: senderCourseGroup.getButtons()) {
-            senderTable.add(button).width(Value.percentWidth(0.8f, senderTable)).padBottom(10).row();
+        Iterator<TextButton> iterator = new Array.ArrayIterator<>(senderCourseGroup.getButtons());
+        while (iterator.hasNext()) {
+            TextButton button = iterator.next();
+            senderTable.add().width(Value.percentWidth(0.8f, senderTable)).padBottom(10).row();
             button.getLabel().setWrap(true);
         }
 
@@ -98,7 +100,9 @@ public class TradeWindow extends Window {
         receiverCourseGroup.setMinCheckCount(0);
 
         Table receiverTable = new Table(Foititopoli.gameSkin);
-        for (TextButton button: receiverCourseGroup.getButtons()) {
+        iterator = new Array.ArrayIterator<>(receiverCourseGroup.getButtons());
+        while (iterator.hasNext()) {
+            TextButton button = iterator.next();
             receiverTable.add(button).width(Value.percentWidth(0.8f, receiverTable)).padBottom(10).row();
             button.getLabel().setWrap(true);
         }
