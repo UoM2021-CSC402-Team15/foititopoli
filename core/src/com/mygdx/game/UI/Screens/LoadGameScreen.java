@@ -40,7 +40,7 @@ public class LoadGameScreen implements Screen {
             loadButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    GameInstance loadedGame = DataProvider.loadGame(fileHandle);
+                    GameInstance loadedGame = DataProvider.loadGame(fileHandle.read());
                     game.setGameInstance(loadedGame);
                     game.setScreen(new GameScreen(game));
                 }
