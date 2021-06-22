@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.mygdx.game"},{"l":"com.mygdx.game.Logic"},{"l":"com.mygdx.game.Logic.Cards"},{"l":"com.mygdx.game.Logic.Squares"},{"l":"com.mygdx.game.UI.Components"},{"l":"com.mygdx.game.UI.Screens"},{"l":"com.mygdx.game.UI.Windows"}];updateSearchResults();

@@ -1,0 +1,7 @@
+com.mygdx.game
+com.mygdx.game.Logic
+com.mygdx.game.Logic.Cards
+com.mygdx.game.Logic.Squares
+com.mygdx.game.UI.Components
+com.mygdx.game.UI.Screens
+com.mygdx.game.UI.Windows
