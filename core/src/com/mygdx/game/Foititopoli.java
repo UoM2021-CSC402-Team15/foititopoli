@@ -8,6 +8,7 @@ import com.mygdx.game.UI.Screens.MainMenuScreen;
 
 public class Foititopoli extends Game {
 
+	/** Skin required for scene2d Widgets */
 	static public Skin gameSkin;
 
 	private GameInstance gameInstance;

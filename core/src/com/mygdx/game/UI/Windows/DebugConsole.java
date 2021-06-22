@@ -64,7 +64,7 @@ public class DebugConsole extends Window {
                 case "move":
                     int side = Integer.parseInt(splitCommand[1].split(",")[0]);
                     int square = Integer.parseInt(splitCommand[1].split(",")[1]);
-                    game.getCurrentPlayer().getPawn().setCurrentSquare(game.getBoard().squares[side][square]);
+                    game.getCurrentPlayer().getPawn().setCurrentSquare(game.getBoard().getSquare(side, square));
                     game.getListener().pawnPositionUpdated(game.getCurrentPlayer().getPawn());
                     game.gameLoop(0);
                     break;

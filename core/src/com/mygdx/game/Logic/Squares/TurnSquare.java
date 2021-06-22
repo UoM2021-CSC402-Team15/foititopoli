@@ -10,6 +10,11 @@ public class TurnSquare extends Square{
         this.turns = turns;
     }
 
+    /**
+     * {@inheritDoc}
+     * Removes or adds the specified turns number to the player
+     * @param game The current Game Instance
+     */
     @Override
     public void runAction(GameInstance game) {
         int finalTurns = game.getCurrentPlayer().getTurnsToPlay() + turns;

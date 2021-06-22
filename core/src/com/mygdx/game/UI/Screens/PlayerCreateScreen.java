@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Foititopoli;
 import com.mygdx.game.Logic.Pawn;
+import com.mygdx.game.Logic.Player;
 
 import java.util.ArrayList;
 
@@ -54,7 +55,7 @@ public class PlayerCreateScreen implements Screen {
                     }
                 }
                 // Setup player
-                game.getGameInstance().setupPlayer(nameText.getText(), selectedPawn,studyHours);
+                game.getGameInstance().getPlayers().add(new Player(nameText.getText(), selectedPawn,studyHours));
                 // Remove pawn from available pawns
                 availablePawns.remove(selectedPawn);
                 if (isLastPlayer) {

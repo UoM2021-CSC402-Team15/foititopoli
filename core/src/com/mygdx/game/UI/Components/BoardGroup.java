@@ -29,12 +29,12 @@ public class BoardGroup extends Group {
 
     public BoardGroup(Board board, float size, ArrayList<Player> players) {
         setSize(size, size);
-        float basicTileWidth = size/(board.tilesPerSide-2 + (2 * tileHeightRatio) );
+        float basicTileWidth = size/(board.getTilesPerSide()-2 + (2 * tileHeightRatio) );
 
-        squareActors = new SquareActor[board.squares.length][board.squares[0].length];
-        for (int i = 0; i < board.squares.length; i++) {
-            for (int j = 0; j < board.squares[i].length; j++) {
-                squareActors[i][j] = new SquareActor(board.squares[i][j]);
+        squareActors = new SquareActor[4][board.getTilesPerSide()-1];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < board.getTilesPerSide()-1; j++) {
+                squareActors[i][j] = new SquareActor(board.getSquare(i,j));
             }
         }
         background = new Texture(Gdx.files.internal("1_3.png"));
@@ -49,7 +49,7 @@ public class BoardGroup extends Group {
         for(PawnActor pawnActor: pawnActors.values()) {
             this.addActor(pawnActor);
             if (pawnActor.getPawn().getCurrentSquare() == null) {
-                pawnActor.getPawn().setCurrentSquare(board.squares[0][0]);
+                pawnActor.getPawn().setCurrentSquare(board.getSquare(0,0));
             }
             Square currentSquare = pawnActor.getPawn().getCurrentSquare();
             SquareActor currentSquareActor = squareActors[currentSquare.getI()][currentSquare.getJ()];
