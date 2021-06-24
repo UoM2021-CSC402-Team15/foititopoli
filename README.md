@@ -31,9 +31,9 @@ You can get a runnable jar file of the latest commits [here](https://github.com/
 
 ### Building jar for Windows/Linux/MacOS
 ```
--> ./grandlew desktop:dist        (for Linux/MacOS)
+-> ./gradlew desktop:dist        (if you are running Linux/MacOS)
   or
--> ./grandlew.bat desktop:dist    (for Windows)
+-> .\gradlew.bat desktop:dist    (if you are running Windows)
 ```
 Resulting jar file is in /desktop/build/libs/
 
