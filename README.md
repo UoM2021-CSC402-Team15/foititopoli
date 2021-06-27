@@ -41,9 +41,9 @@ $ cd foititopoli
 
 ### Building jar for Windows/Linux/MacOS
 ```shell
-$ ./grandlew desktop:dist        (Linux/MacOS)
+$ ./gradlew desktop:dist        (Linux/MacOS)
   or
-$ ./grandlew.bat desktop:dist    (Windows)
+$ .\gradlew.bat desktop:dist    (Windows)
 ```
 Resulting jar file is in /desktop/build/libs/
 
