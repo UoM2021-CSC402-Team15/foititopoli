@@ -17,6 +17,8 @@ public class Foititopoli extends Game {
 
 	public void create() {
 		gameSkin = new Skin(Gdx.files.internal("skin/cloud-form-ui.json"));
+		Gdx.graphics.setContinuousRendering(false);
+		Gdx.graphics.requestRendering();
 		this.setScreen(new MainMenuScreen(this));
 	}
 

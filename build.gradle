@@ -15,6 +15,18 @@ buildscript {
 
     }
 }
+ //SonarQube
+plugins {
+    id "org.sonarqube" version "3.3"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "UoM2021-CSC402-Team15_foititopoli"
+        property "sonar.organization", "uom2021-csc402-team15"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
 
 allprojects {
     apply plugin: "eclipse"
